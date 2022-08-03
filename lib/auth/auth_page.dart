@@ -24,9 +24,9 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     if (showLogInPage) {
-      return LoginScreen(showSignUpScreen: toggleScreen);
+      return const LoginScreen();
     } else {
-      return SignUpScreen(showLoginScreen: toggleScreen);
+      return const SignUpScreen();
     }
   }
 }

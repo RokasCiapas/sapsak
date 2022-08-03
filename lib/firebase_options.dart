@@ -51,6 +51,7 @@ class DefaultFirebaseOptions {
     authDomain: 'sapsak-ffb34.firebaseapp.com',
     storageBucket: 'sapsak-ffb34.appspot.com',
     measurementId: 'G-Z2SEQE9MGJ',
+    databaseURL: 'https://sapsak-ffb34-default-rtdb.europe-west1.firebasedatabase.app'
   );
 
   static const FirebaseOptions android = FirebaseOptions(

@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-///
-import '../animation/fadeanimation.dart';
-
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
@@ -58,6 +55,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       child: Scaffold(
         /// APPBAR
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
           title: const Text("FORGOT PASSWORD"),
           centerTitle: true,
         ),
@@ -70,30 +69,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               children: [
                 /// FLUTTER IMAGE
-                FadeAnimation(
-                  delay: 1,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 35),
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/Flutter.png")),
-                    ),
-                    height: h / 4,
-                    width: w / 1.5,
+                Container(
+                  margin: const EdgeInsets.only(right: 35),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("images/flutter.png")),
                   ),
+                  height: h / 4,
+                  width: w / 1.5,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
 
                 /// Top Text
-                FadeAnimation(
-                  delay: 1.5,
-                  child: const Text(
-                    "Enter Your Email and we will send you a password reset link.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
-                  ),
+                const Text(
+                  "Enter Your Email and we will send you a password reset link.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
                 ),
 
                 const SizedBox(
@@ -101,14 +94,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
 
                 /// Email TextField
-                FadeAnimation(
-                  delay: 2.0,
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Email',
                   ),
                 ),
                 const SizedBox(
@@ -116,14 +106,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
 
                 /// LOG IN BUTTON
-                FadeAnimation(
-                  delay: 2.5,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: resetPassword,
-                    child: const Text("Reset Password"),
-                  ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      minimumSize: Size(w / 1.1, h / 15)),
+                  onPressed: resetPassword,
+                  child: const Text("Reset Password"),
                 ),
               ],
             ),

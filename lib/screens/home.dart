@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//
-import '../animation/fadeanimation.dart';
+import 'package:sapsak/services/client_service.dart';
+import 'package:sapsak/models/client.dart';
+import 'package:sapsak/screens/client_details.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,83 +13,69 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  /// CURRENT FIREBASE USER
-  final user = FirebaseAuth.instance.currentUser!;
+
+  final User user = FirebaseAuth.instance.currentUser!;
+  final Stream<QuerySnapshot<Client>> clientStream = ClientService().clientStream();
+
   @override
   Widget build(BuildContext context) {
-    /// CURRENT WIDTH AND HEIGHT
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
 
-    ///
-    return Scaffold(
-      /// APP BAR
-      appBar: AppBar(
-        title: const Text("HOME"),
-        centerTitle: true,
-      ),
-      body: SizedBox(
-        width: w,
-        child: Column(
-          children: [
-            /// FLUTTER IMAGE
-            FadeAnimation(
-              delay: 1,
-              child: Container(
-                margin: const EdgeInsets.only(right: 35, bottom: 20, top: 20),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/Flutter.png")),
-                ),
-                height: h / 4,
-                width: w / 1.5,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: const Color(0xff35b9d6),
+          foregroundColor: Colors.white,
+          title: Center(child: Text('Howdy, ${user.displayName}')),
+          bottom: const TabBar(
+            unselectedLabelColor: Colors.white,
+            labelColor: Colors.white,
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(icon: Icon(Icons.people_outline), text: 'Clients'),
+              Tab(icon: Icon(Icons.ac_unit)),
+            ],
+          ),
+        ),
+        body: TabBarView(
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                stream: clientStream,
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return const Text('Something went wrong');
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading");
+                  }
+
+                  return ListView(
+                    children: snapshot.data!.docs
+                        .map((DocumentSnapshot document) {
+                      Client client =
+                      document.data()! as Client;
+                      return ListTile(
+                        leading: CircleAvatar(backgroundColor: const Color(0xff176087),child: Text(client.name[0] + client.surname[0], style: const TextStyle(color: Colors.white),)),
+                        title: Text('${client.name} ${client.surname}', style: const TextStyle(color: Colors.white),),
+                        tileColor: const Color(0xff35b9d6),
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ClientDetails(client: client))),
+                      );
+                    })
+                        .toList()
+                        .cast(),
+                  );
+                },
               ),
-            ),
+              const Text('Coming'),
+            ]
 
-            /// WELCOME TEXT
-            Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: FadeAnimation(
-                delay: 1.5,
-                child: const Text(
-                  "Welcome Dude",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ),
-
-            /// SIGN IN TEXT
-            FadeAnimation(
-              delay: 2,
-              child: Text(
-                "signed In as: " + user.email!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-
-            /// LOG OUT BUTTON
-            FadeAnimation(
-                delay: 2.5,
-                child: ElevatedButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                    },
-                    child: const Text("Log out")))
-          ],
         ),
       ),
     );
   }
+
 }

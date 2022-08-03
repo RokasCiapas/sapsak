@@ -4,24 +4,30 @@ import 'firebase_options.dart';
 import 'auth/main_page.dart';
 
 void main() async {
+
   /// initialize FireBase App
   WidgetsFlutterBinding();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Flutter Log In & Sign up Authentication with FireBase",
-      home: MainScreen(),
+      home: const MainScreen(),
+      theme: ThemeData(
+        primaryColor: const Color(0xff35b9d6)
+      )
     );
   }
 }

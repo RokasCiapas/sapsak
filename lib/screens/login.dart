@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sapsak/screens/forgot_password.dart';
-//
-import '../animation/fadeanimation.dart';
+import 'package:sapsak/screens/signup.dart';
 
 class LoginScreen extends StatefulWidget {
-  final VoidCallback showSignUpScreen;
-  const LoginScreen({Key? key, required this.showSignUpScreen})
+  const LoginScreen({Key? key})
       : super(key: key);
 
   @override
@@ -107,6 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
+          automaticallyImplyLeading: false,
           title: const Text("LOG IN"),
           centerTitle: true,
         ),
@@ -122,32 +122,26 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 /// FLUTTER IMAGE
-                FadeAnimation(
-                  delay: 1,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 35),
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/Flutter.png")),
-                    ),
-                    height: h / 4,
-                    width: w / 1.5,
+                Container(
+                  margin: const EdgeInsets.only(right: 35),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("images/flutter.png")),
                   ),
+                  height: h / 4,
+                  width: w / 1.5,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
 
                 /// TOP TEXT
-                FadeAnimation(
-                  delay: 1.5,
-                  child: const Text(
-                    "Log In To the App",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 22,
-                    ),
+                const Text(
+                  "Log In To the App",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(
@@ -155,14 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// Email TextField
-                FadeAnimation(
-                  delay: 2.0,
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Email',
                   ),
                 ),
                 const SizedBox(
@@ -170,15 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// Password TextField
-                FadeAnimation(
-                  delay: 2.5,
-                  child: TextField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Password',
-                    ),
+                TextField(
+                  obscureText: true,
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Password',
                   ),
                 ),
 
@@ -191,23 +179,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) =>
-                            const ForgotPasswordScreen(),
-                          ),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                          const ForgotPasswordScreen(),
                         ),
-                        child: FadeAnimation(
-                          delay: 3,
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        )),
+                      ),
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -215,14 +201,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// LOG IN BUTTON
-                FadeAnimation(
-                  delay: 3.5,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: signIn,
-                    child: const Text("Log In"),
-                  ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      minimumSize: Size(w / 1.1, h / 15)),
+                  onPressed: signIn,
+                  child: const Text("Log In"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -230,24 +214,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// REGISTER TEXT
                 GestureDetector(
-                  onTap: widget.showSignUpScreen,
-                  child: FadeAnimation(
-                    delay: 4,
-                    child: RichText(
-                      text: TextSpan(
-                          text: "Don't have an account?",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: " Register",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor))
-                          ]),
-                    ),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
+                  child: RichText(
+                    text: TextSpan(
+                        text: "Don't have an account?",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        children: [
+                          TextSpan(
+                              text: " Register",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor))
+                        ]),
                   ),
                 ),
                 const SizedBox(
