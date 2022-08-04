@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/forgot_password.dart';
 import 'package:sapsak/screens/signup.dart';
 
@@ -40,7 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
-        );
+        ).then((value) => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+            const HomeScreen(),
+          )));
       } else if (_emailController.text.isNotEmpty &
       _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
