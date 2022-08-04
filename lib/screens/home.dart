@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: const Color(0xff35b9d6),
           foregroundColor: Colors.white,
+          automaticallyImplyLeading: false,
           title: Center(child: Text('Howdy, ${user.displayName}')),
           bottom: const TabBar(
             unselectedLabelColor: Colors.white,

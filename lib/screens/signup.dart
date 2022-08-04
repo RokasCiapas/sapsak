@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/login.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -12,10 +13,15 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   /// TextFields Controller
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  // Username is empty
+  var uSnackBar = const SnackBar(
+    content: Text('The username field must be filled!'),
+  );
   /// Password =! ConfirmPassword
   var aSnackBar = const SnackBar(
     content: Text('The password in not match with confirm password'),
@@ -28,27 +34,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   /// Confirm Password is Empty
   var cSnackBar = const SnackBar(
-    content: Text('The Confirm Password field must fill!'),
+    content: Text('The Confirm Password field must be filled!'),
   );
 
   /// Password is Empty
   var dSnackBar = const SnackBar(
-    content: Text('The Password field must fill!'),
+    content: Text('The Password field must be filled!'),
   );
 
   /// Email & Confirm Password is Empty
   var eSnackBar = const SnackBar(
-    content: Text('The Email & Confirm Password fields must fill!'),
+    content: Text('The Email & Confirm Password fields must be filled!'),
   );
 
   /// Email is Empty
   var fSnackBar = const SnackBar(
-    content: Text('The Email field must fill!'),
+    content: Text('The Email field must be filled!'),
   );
 
   /// Email & password is Empty
   var gSnackBar = const SnackBar(
-    content: Text('The Email & Password fields must fill!'),
+    content: Text('The Email & Password fields must be filled!'),
   );
 
   /// All Fields Empty
@@ -58,20 +64,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   /// SIGNING UP METHOD TO FIREBASE
   Future signUp() async {
-    if (_emailController.text.isNotEmpty &
+    if (_usernameController.text.isNotEmpty &
+    _emailController.text.isNotEmpty &
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isNotEmpty) {
       if (passwordConfirmed()) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
-        );
+        ).then((data) => {
+          data.user?.updateDisplayName(_usernameController.text).then((value) => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+            const HomeScreen(),
+          ),
+        ),)
+        });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(aSnackBar);
       }
 
       /// In the below, with if statement we have some simple validate
-    } else if (_emailController.text.isNotEmpty &
+    } else if (_usernameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(bSnackBar);
+    }
+
+    else if (_emailController.text.isNotEmpty &
     _passwordController.text.isEmpty &
     _confirmPasswordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(bSnackBar);
@@ -191,7 +209,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 50,
                 ),
-
+                /// Username TextField
+                TextField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Username',
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
                 /// Email TextField
                 TextField(
                   controller: _emailController,

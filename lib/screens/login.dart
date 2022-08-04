@@ -12,12 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  /////////////////////////////////////
-  //@CodeWithFlexz on Instagram
-  //
-  //AmirBayat0 on Github
-  //Programming with Flexz on Youtube
-  /////////////////////////////////////
   /// TextFields Controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
