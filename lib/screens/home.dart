@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sapsak/services/client_service.dart';
 import 'package:sapsak/models/client.dart';
 import 'package:sapsak/screens/client_details.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading");
+                    return LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30);
                   }
 
                   return ListView(

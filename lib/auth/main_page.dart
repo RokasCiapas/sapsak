@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //
 import '../auth/auth_page.dart';
 import '../Screens/home.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -19,11 +20,16 @@ class _MainScreenState extends State<MainScreen> {
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.SESSION).authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const HomeScreen();
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30));
           } else {
-            return const AuthScreen();
+            if (snapshot.hasData) {
+              return const HomeScreen();
+            } else {
+              return const AuthScreen();
+            }
           }
+
         },
       ),
     );
