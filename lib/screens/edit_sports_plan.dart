@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sapsak/models/client.dart';
 import 'package:sapsak/models/exercise.dart';
 import 'package:sapsak/models/sports_day.dart';
+import 'dart:convert';
 
 class EditSportsPlan extends StatefulWidget {
   const EditSportsPlan({
@@ -209,6 +210,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         primary: Theme.of(context).primaryColor,
                         minimumSize: Size(w / 1.1, h / 15)),
                     onPressed: () => {
+                      print(jsonEncode(sportsDays))
                     },
                     child: const Text("Save"),
                   ),))
