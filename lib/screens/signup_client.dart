@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:sapsak/Screens/home.dart';
+import 'package:sapsak/models/client.dart';
 import 'package:sapsak/screens/login.dart';
+import 'package:sapsak/services/client_service.dart';
 
 class SignUpClient extends StatefulWidget {
   const SignUpClient({Key? key})
@@ -81,19 +84,29 @@ class _SignUpClientState extends State<SignUpClient> {
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isNotEmpty) {
       if (passwordConfirmed()) {
+        Client client;
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
-        ).then((data) => {
-          data.user?.updateDisplayName(_nameController.text)
-              .then((value) => Navigator.of(context)
-              .push(
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+        ).then((UserCredential data) => {
+          data.user!.updateDisplayName(_nameController.text).then((value) =>
+          {
+            client = Client(
+                firstLogin: Timestamp.fromDate(DateTime.now()),
+                name: _nameController.text,
+                surname: _surnameController.text,
+                email: _emailController.text,
+                phoneNumber: _phoneNumberController.text,
+                birthday: Timestamp.fromDate(DateTime.parse(_birthDateController.text)),
+                acceptMarketing: _marketingController,
+                healthIssues: _healthIssuesController.text
             ),
-          ),
-          ),
-
+            ClientService().addClient(data.user!.uid, client).then((value) => Navigator.of(context)
+                .push(MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            )),
+            ),
+          }),
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(passwordMatchSnackBar);

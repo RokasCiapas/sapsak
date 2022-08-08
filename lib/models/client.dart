@@ -5,11 +5,10 @@ class Client {
   final String name;
   final String surname;
   final String email;
-  final int phoneNumber;
+  final String phoneNumber;
   final Timestamp birthday;
   final bool acceptMarketing;
   final String? healthIssues;
-  final String? whereDidYouGetInfo;
 
   Client({
     required this.firstLogin,
@@ -20,7 +19,6 @@ class Client {
     required this.birthday,
     required this.acceptMarketing,
     this.healthIssues,
-    this.whereDidYouGetInfo,
   });
 
   factory Client.fromFirestore(
@@ -37,7 +35,6 @@ class Client {
         birthday: data?['birthday'],
         acceptMarketing: data?['acceptMarketing'],
         healthIssues: data?['healthIssues'],
-        whereDidYouGetInfo: data?['whereDidYouGetInfo']
     );
   }
 
@@ -50,7 +47,7 @@ class Client {
       "phoneNumber": phoneNumber,
       "birthday": birthday,
       "acceptMarketing": acceptMarketing,
-      "whereDidYouGetInfo": whereDidYouGetInfo,
+      "healthIssues": healthIssues,
     };
   }
 }

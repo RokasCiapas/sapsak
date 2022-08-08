@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sapsak/models/client.dart';
-import 'dart:developer';
 
 class ClientService {
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -12,12 +11,11 @@ class ClientService {
   );
 
   Stream<QuerySnapshot<Client>> clientStream() {
-    inspect(collection);
     return collection.snapshots();
   }
 
-  void addClient(Client client) {
-    collection.add(client);
+  Future<void> addClient(String uid, Client client) {
+    return collection.doc(uid).set(client);
   }
 
 }

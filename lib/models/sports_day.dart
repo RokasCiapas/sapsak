@@ -6,4 +6,10 @@ class SportsDay {
   SportsDay({
     required this.exercises
   });
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "exercises": exercises.map((e) => e.toFirestore()),
+    };
+  }
 }

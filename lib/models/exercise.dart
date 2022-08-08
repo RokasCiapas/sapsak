@@ -11,4 +11,13 @@ class Exercise {
     required this.setCount,
   });
 
+  Map<String, dynamic> toFirestore() {
+    return {
+      "muscleGroup": muscleGroup,
+      "name": name,
+      "repCount": repCount,
+      "setCount": setCount,
+    };
+  }
+
 }
