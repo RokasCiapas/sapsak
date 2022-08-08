@@ -15,4 +15,8 @@ class SportsPlanService {
     return collection.add(sportsPlan);
   }
 
+  Stream<QuerySnapshot<SportsPlan>> sportsPlanStream() {
+    return collection.snapshots();
+  }
+
 }

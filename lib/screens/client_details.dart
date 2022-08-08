@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sapsak/models/client.dart';
 import 'package:intl/intl.dart';
 import 'package:sapsak/screens/edit_sports_plan.dart';
+import 'package:sapsak/screens/sports_plan_list.dart';
 
 class ClientDetails extends StatelessWidget {
   const ClientDetails({
@@ -66,13 +67,26 @@ class ClientDetails extends StatelessWidget {
                 ],),
                 )
             ),
-            Padding(padding: const EdgeInsets.only(top: 20.0), child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client))),
-              child: const Text("Create sports plan"),
-            ),)
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                    minimumSize: Size(w / 1.1, h / 15)),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPlanListScreen(client: client))),
+                child: const Text("View all sports plans"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                    minimumSize: Size(w / 1.1, h / 15)),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client))),
+                child: const Text("Create sports plan"),
+              ),
+            )
           ]
       ),
     );
