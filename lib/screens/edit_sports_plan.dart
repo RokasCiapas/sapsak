@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +28,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
 
   final ScrollController listViewScrollController = ScrollController();
   final notesController = TextEditingController();
+  final goalController = TextEditingController();
   final expirationDateController = TextEditingController();
 
   static const widthSpacer = SizedBox(width: 15,);
@@ -47,7 +47,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
-    final User? currentUser = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
         appBar: AppBar(
@@ -70,33 +69,45 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
+                              Expanded(
                                 flex: 1,
-                                child: TextField(
-                                  controller: expirationDateController,
-                                  readOnly: true,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Expiration date',
-                                  ),
-                                  onTap: () async {
-                                    DateTime? pickedDate = await showDatePicker(
-                                        context: context, initialDate: DateTime.now(),
-                                        firstDate: DateTime(1950), //DateTime.now() - not to allow to choose before today.
-                                        lastDate: DateTime(2101)
-                                    );
+                                child: Column(
+                                children: [
+                                  TextField(
+                                    controller: expirationDateController,
+                                    readOnly: true,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Expiration date',
+                                    ),
+                                    onTap: () async {
+                                      DateTime? pickedDate = await showDatePicker(
+                                          context: context, initialDate: DateTime.now(),
+                                          firstDate: DateTime(1950), //DateTime.now() - not to allow to choose before today.
+                                          lastDate: DateTime(2101)
+                                      );
 
-                                    if(pickedDate != null ){
-                                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                      setState(() {
-                                        expirationDateController.text = formattedDate; //set output date to TextField value.
-                                      });
-                                    }
-                                  },
-                                )),
+                                      if(pickedDate != null ){
+                                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                        setState(() {
+                                          expirationDateController.text = formattedDate; //set output date to TextField value.
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  heightSpacer,
+                                  TextField(
+                                    controller: goalController,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Goal',
+                                    ),
+                                  )
+                                ],
+                              ),),
                             widthSpacer,
                             Expanded(
-                                flex: 3,
+                                flex: 4,
                                 child: TextField(
                                   controller: notesController,
                                   maxLines: 3,
@@ -264,6 +275,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
                                     notes: notesController.text,
+                                    goal: goalController.text,
                                     isDraft: false
                                 )
                             )
@@ -288,6 +300,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
                                     notes: notesController.text,
+                                    goal: goalController.text,
                                     isDraft: true
                                 )
                             )

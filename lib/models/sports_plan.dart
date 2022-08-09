@@ -9,6 +9,7 @@ class SportsPlan {
   final Timestamp createdAt;
   final Timestamp bestUntil;
   final String notes;
+  final String goal;
   final bool isDraft;
 
   SportsPlan({
@@ -17,6 +18,7 @@ class SportsPlan {
     required this.createdAt,
     required this.bestUntil,
     required this.notes,
+    required this.goal,
     required this.isDraft,
   });
 
@@ -43,6 +45,7 @@ class SportsPlan {
       createdAt: data?['createdAt'] ?? Timestamp.fromDate(DateTime.now()),
       bestUntil: data?['bestUntil'] ?? Timestamp.fromDate(DateTime.now()),
       notes: data?['notes'] ?? '',
+      goal: data?['goal'] ?? '',
       isDraft: data?['isDraft'] ?? false,
     );
   }
@@ -54,6 +57,7 @@ class SportsPlan {
       "createdAt": createdAt,
       "bestUntil": bestUntil,
       "notes": notes,
+      "goal": goal,
       "isDraft": isDraft,
     };
   }
