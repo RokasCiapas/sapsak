@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 /// Email TextField
                 TextField(
                   controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email',
@@ -167,6 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     border: OutlineInputBorder(),
                     hintText: 'Password',
                   ),
+                  onSubmitted: (x) {
+                    signIn();
+                  },
                 ),
 
                 const SizedBox(

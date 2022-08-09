@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class SportsPlan {
   final List<SportsDay> sportsDays;
-  final String ownerUid;
+  final String ownerEmail;
   final Timestamp createdAt;
   final Timestamp bestUntil;
   final String notes;
@@ -13,7 +13,7 @@ class SportsPlan {
 
   SportsPlan({
     required this.sportsDays,
-    required this.ownerUid,
+    required this.ownerEmail,
     required this.createdAt,
     required this.bestUntil,
     required this.notes,
@@ -39,7 +39,7 @@ class SportsPlan {
               ))
           )
       )),
-      ownerUid: data?['ownerUid'] ?? '',
+      ownerEmail: data?['ownerEmail'] ?? '',
       createdAt: data?['createdAt'] ?? Timestamp.fromDate(DateTime.now()),
       bestUntil: data?['bestUntil'] ?? Timestamp.fromDate(DateTime.now()),
       notes: data?['notes'] ?? '',
@@ -50,7 +50,7 @@ class SportsPlan {
   Map<String, dynamic> toFirestore() {
     return {
       "sportsDays": sportsDays.map((e) => e.toFirestore()),
-      "ownerUid": ownerUid,
+      "ownerEmail": ownerEmail,
       "createdAt": createdAt,
       "bestUntil": bestUntil,
       "notes": notes,

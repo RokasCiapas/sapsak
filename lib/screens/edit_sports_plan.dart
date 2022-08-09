@@ -200,10 +200,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                                       setCount: sportsDays[index].exercises[i].setCount);
                                                 }
                                               },
-                                              keyboardType: TextInputType.number,
-                                              inputFormatters: <TextInputFormatter>[
-                                                FilteringTextInputFormatter.digitsOnly
-                                              ],
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText: 'Rep count',
@@ -235,7 +231,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         sportsDays[sportsDays.length - 1].exercises.add(Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)),
                         scrollDown()
                       }),
-
                     },
                     child: const Text("Add exercise"),
                   ),),),
@@ -265,7 +260,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                             SportsPlanService().addSportsPlan(
                                 SportsPlan(
                                     sportsDays: sportsDays,
-                                    ownerUid: currentUser!.uid,
+                                    ownerEmail: widget.client.email,
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
                                     notes: notesController.text,
@@ -289,7 +284,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                             SportsPlanService().addSportsPlan(
                                 SportsPlan(
                                     sportsDays: sportsDays,
-                                    ownerUid: currentUser!.uid,
+                                    ownerEmail: widget.client.email,
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
                                     notes: notesController.text,

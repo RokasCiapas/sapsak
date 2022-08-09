@@ -43,8 +43,9 @@ dependencies:
   supercharged: ^2.1.1
   http: ^0.13.4
   intl: ^0.17.0
-  loading_animation_widget: 1.2.0
+  loading_animation_widget: ^1.2.0+2
   intl_phone_number_input: ^0.7.0+2
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

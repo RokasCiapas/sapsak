@@ -20,7 +20,7 @@ class SportsPlanListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot<SportsPlan>> sportsPlanStream = SportsPlanService().sportsPlanStream();
+    Stream<QuerySnapshot<SportsPlan>> sportsPlanStream = SportsPlanService().sportsPlanStream(client.email);
 
     return Scaffold(
       /// APP BAR
@@ -34,11 +34,11 @@ class SportsPlanListScreen extends StatelessWidget {
         body: StreamBuilder(
           stream: sportsPlanStream,
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
             if (snapshot.hasError) {
               print(snapshot.error);
               return const Text('Something went wrong');
             }
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30);
             }
@@ -59,7 +59,6 @@ class SportsPlanListScreen extends StatelessWidget {
                   .toList()
                   .cast(),
             );
-
           },
         )
     );
