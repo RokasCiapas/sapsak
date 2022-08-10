@@ -19,13 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final User user = FirebaseAuth.instance.currentUser!;
   final clientSearchController = TextEditingController();
-  String searchQuery = '';
   Timer? _debounce;
-  FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot<Client>> clientStream = ClientService().clientStream(searchQuery);
+    final Stream<QuerySnapshot<Client>> clientStream = ClientService().clientStream();
+    final w = MediaQuery.of(context).size.width;
+    final h = MediaQuery.of(context).size.height;
 
     return DefaultTabController(
       length: 2,
@@ -66,59 +66,74 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Column(
                     children: [
                       Expanded(
-                        flex: 0,
-                        child: TextField(
-                          autofocus: true,
-                          controller: clientSearchController,
-                            focusNode: focusNode,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: 'Search a client by name',
-                              suffixIcon: clientSearchController.text.isNotEmpty ? IconButton(
-                                  icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                    setState(() {
-                                      clientSearchController.text = '';
-                                      searchQuery = '';
-                                    });
-                                },
-                              ) : const SizedBox()
-                          ),
-                          onChanged: (val) {
-                            if (_debounce?.isActive ?? false) _debounce?.cancel();
-                            _debounce = Timer(const Duration(milliseconds: 300), () {
-                              setState(() {
-                                searchQuery = val;
-                              });
-                            });
+                          flex: 0,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  flex: 5,
+                                  child: TextField(
+                                    autofocus: true,
+                                    controller: clientSearchController,
+                                    onSubmitted: (x) {
+                                      setState(() {
 
-                          },
-                        ),
-                      ),
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
+                                        hintText: 'Client name',
+                                        suffixIcon: clientSearchController.text.isNotEmpty ? IconButton(
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () {
+                                            setState(() {
+                                              clientSearchController.clear();
+                                            });
+                                          },
+                                        ) : const SizedBox()
+                                    ),
+                                  )),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Theme.of(context).primaryColor,
+                                        minimumSize: Size(w / 1.1, h / 15)),
+                                    onPressed: () {
+                                      setState(() {});
+                                    },
+                                    child: const Text("Search"),
+                                  )
+                              ),
+                            ],
+                          )),
                       Expanded(
                           flex: 1,
-                          child: ListView(
-                            children: snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                              Client client =
-                              document.data()! as Client;
-                              return ListTile(
-                                leading: CircleAvatar(
-                                    backgroundColor: const Color(0xff176087),
-                                    child: Text(client.name[0] + client.surname[0],
-                                      style: const TextStyle(
-                                          color: Colors.white),)),
-                                title: Text('${client.name} ${client.surname}',
-                                  style: const TextStyle(color: Colors.white),),
-                                tileColor: const Color(0xff35b9d6),
-                                onTap: () =>
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClientDetails(client: client))),
-                              );
-                            })
-                                .toList()
-                                .cast(),
+                          child: ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                var client = (snapshot.data!.docs.toList()[index]).data()! as Client;
+                                if (client.name.toLowerCase().contains(clientSearchController.text.toLowerCase())) {
+                                  return ListTile(
+                                    leading: CircleAvatar(
+                                        backgroundColor: const Color(0xff176087),
+                                        child: Text(client.name[0] + client.surname[0],
+                                          style: const TextStyle(
+                                              color: Colors.white),)),
+                                    title: Text('${client.name} ${client.surname}',
+                                      style: const TextStyle(color: Colors.white),),
+                                    tileColor: const Color(0xff35b9d6),
+                                    onTap: () =>
+                                        Navigator.push(context, MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClientDetails(client: client))),
+                                  );
+                                }
+                                return SizedBox();
+
+                              }
+
                           )
                       )
                     ],

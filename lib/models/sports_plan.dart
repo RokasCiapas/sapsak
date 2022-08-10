@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sapsak/models/exercise.dart';
 import 'package:sapsak/models/sports_day.dart';
-import 'dart:convert';
 
 class SportsPlan {
   final List<SportsDay> sportsDays;
   final String ownerEmail;
-  final Timestamp createdAt;
-  final Timestamp bestUntil;
+  final Timestamp? createdAt;
+  final Timestamp? bestUntil;
   final String notes;
   final String goal;
   final bool isDraft;
@@ -15,8 +14,8 @@ class SportsPlan {
   SportsPlan({
     required this.sportsDays,
     required this.ownerEmail,
-    required this.createdAt,
-    required this.bestUntil,
+    this.createdAt,
+    this.bestUntil,
     required this.notes,
     required this.goal,
     required this.isDraft,
@@ -62,3 +61,13 @@ class SportsPlan {
     };
   }
 }
+
+SportsPlan defaultSportsPlan = SportsPlan(
+    sportsDays: List.filled(1, SportsDay(exercises: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)), growable: true),
+    ownerEmail: '',
+    createdAt: null,
+    bestUntil: null,
+    notes: '',
+    goal: '',
+    isDraft: true
+);

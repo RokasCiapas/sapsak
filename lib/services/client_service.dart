@@ -10,9 +10,8 @@ class ClientService {
           client.toFirestore()
   );
 
-  Stream<QuerySnapshot<Client>> clientStream(String? searchQuery) {
-    return collection.where('name', isGreaterThanOrEqualTo: searchQuery)
-        .where('name', isLessThanOrEqualTo: '$searchQuery\uf8ff').snapshots();
+  Stream<QuerySnapshot<Client>> clientStream() {
+    return collection.snapshots();
   }
 
   Future<void> addClient(String uid, Client client) {

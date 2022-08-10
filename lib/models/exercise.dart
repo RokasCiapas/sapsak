@@ -6,7 +6,7 @@ class Exercise {
   final int repCount;
   final int setCount;
 
-  Exercise({
+  const Exercise({
     required this.muscleGroup,
     required this.name,
     required this.repCount,

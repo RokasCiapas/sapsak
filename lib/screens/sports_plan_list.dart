@@ -50,10 +50,10 @@ class SportsPlanListScreen extends StatelessWidget {
                 document.data()! as SportsPlan;
                 return ListTile(
                   title: Text(
-                    '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil.toDate()).toString()}',
+                    '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt!.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()).toString()}',
                     style: const TextStyle(color: Colors.white),),
                   tileColor: const Color(0xff35b9d6),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client))),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client, sportsPlan: sportsPlan))),
                 );
               })
                   .toList()

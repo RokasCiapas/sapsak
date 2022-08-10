@@ -11,20 +11,21 @@ import 'package:sapsak/services/sports_plan_service.dart';
 import '../models/sports_plan.dart';
 
 class EditSportsPlan extends StatefulWidget {
+
   const EditSportsPlan({
     Key? key,
+    required this.sportsPlan,
     required this.client,
   }) : super(key: key);
 
+  final SportsPlan sportsPlan;
   final Client client;
 
   @override
   State<EditSportsPlan> createState() => _EditSportsPlanState();
-
 }
 
 class _EditSportsPlanState extends State<EditSportsPlan> {
-  List<SportsDay> sportsDays = List.filled(1, SportsDay(exercises: List.filled(1, Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)), growable: true);
 
   final ScrollController listViewScrollController = ScrollController();
   final notesController = TextEditingController();
@@ -33,7 +34,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
 
   static const widthSpacer = SizedBox(width: 15,);
   static const heightSpacer = SizedBox(height: 15,);
-
 
   void scrollDown() {
     listViewScrollController.animateTo(
@@ -47,6 +47,12 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
+
+    expirationDateController.text = widget.sportsPlan.bestUntil != null ?
+    DateFormat('yyyy-MM-dd').format(DateTime.fromMicrosecondsSinceEpoch(widget.sportsPlan.bestUntil!.microsecondsSinceEpoch)) : '';
+    goalController.text = widget.sportsPlan.goal;
+    notesController.text = widget.sportsPlan.notes;
+
 
     return Scaffold(
         appBar: AppBar(
@@ -121,8 +127,9 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         ),
                         ListView.builder(
                           shrinkWrap: true,
-                          itemCount: sportsDays.length,
+                          itemCount: widget.sportsPlan.sportsDays.length,
                           itemBuilder: (BuildContext context, int index) {
+                            SportsDay? sportsDay = widget.sportsPlan.sportsDays[index];
                             return Column(
                               children: [
                                 SizedBox(height: 60,
@@ -134,7 +141,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                   ),),
                                 ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: sportsDays[index].exercises.length,
+                                  itemCount: sportsDay.exercises.length,
                                   itemBuilder: (BuildContext context, int i) {
                                     return Column(
                                       children: [
@@ -144,7 +151,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                           children: [
                                             Expanded(flex: 0,
                                               child: DropdownButton<String>(
-                                                value: sportsDays[index].exercises[i].muscleGroup,
+                                                value: sportsDay.exercises[i].muscleGroup,
                                                 hint: const Text('Muscle group'),
                                                 items: <String>['Shoulders', 'Biceps', 'Triceps', 'Chest', 'Abs', 'Back', 'Legs'].map((String value) {
                                                   return DropdownMenuItem<String>(
@@ -154,22 +161,23 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                                 }).toList(),
                                                 onChanged: (String? newValue) {
                                                   setState(() {
-                                                    sportsDays[index].exercises[i] = Exercise(
+                                                    sportsDay.exercises[i] = Exercise(
                                                         muscleGroup: newValue ?? '',
-                                                        name: sportsDays[index].exercises[i].name,
-                                                        repCount: sportsDays[index].exercises[i].repCount,
-                                                        setCount: sportsDays[index].exercises[i].setCount);
+                                                        name: sportsDay.exercises[i].name,
+                                                        repCount: sportsDay.exercises[i].repCount,
+                                                        setCount: sportsDay.exercises[i].setCount);
                                                   });
                                                 },
                                               ),),
                                             widthSpacer,
-                                            Expanded(flex: 6, child: TextField(
+                                            Expanded(flex: 6, child: TextFormField(
+                                              initialValue: sportsDay.exercises[i].name,
                                               onChanged: (text) {
-                                                sportsDays[index].exercises[i] = Exercise(
-                                                    muscleGroup: sportsDays[index].exercises[i].muscleGroup,
+                                                sportsDay.exercises[i] = Exercise(
+                                                    muscleGroup: sportsDay.exercises[i].muscleGroup,
                                                     name: text,
-                                                    repCount: sportsDays[index].exercises[i].repCount,
-                                                    setCount: sportsDays[index].exercises[i].setCount);
+                                                    repCount: sportsDay.exercises[i].repCount,
+                                                    setCount: sportsDay.exercises[i].setCount);
                                               },
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
@@ -181,13 +189,14 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                         heightSpacer,
                                         Row(
                                           children: [
-                                            Expanded(flex: 1, child: TextField(
+                                            Expanded(flex: 1, child: TextFormField(
+                                              initialValue: sportsDay.exercises[i].setCount > 0 ? sportsDay.exercises[i].setCount.toString() : '',
                                               onChanged: (text) {
                                                 if (text.isNotEmpty) {
-                                                  sportsDays[index].exercises[i] = Exercise(
-                                                      muscleGroup: sportsDays[index].exercises[i].muscleGroup,
-                                                      name: sportsDays[index].exercises[i].name,
-                                                      repCount: sportsDays[index].exercises[i].repCount,
+                                                  sportsDay.exercises[i] = Exercise(
+                                                      muscleGroup: sportsDay.exercises[i].muscleGroup,
+                                                      name: sportsDay.exercises[i].name,
+                                                      repCount: sportsDay.exercises[i].repCount,
                                                       setCount: int.parse(text));
                                                 }
                                               },
@@ -201,14 +210,15 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                               ),
                                             )),
                                             widthSpacer,
-                                            Expanded(flex: 1, child: TextField(
+                                            Expanded(flex: 1, child: TextFormField(
+                                              initialValue: sportsDay.exercises[i].repCount > 0 ? sportsDay.exercises[i].repCount.toString() : '',
                                               onChanged: (text) {
                                                 if (text.isNotEmpty) {
-                                                  sportsDays[index].exercises[i] = Exercise(
-                                                      muscleGroup: sportsDays[index].exercises[i].muscleGroup,
-                                                      name: sportsDays[index].exercises[i].name,
+                                                  sportsDay.exercises[i] = Exercise(
+                                                      muscleGroup: sportsDay.exercises[i].muscleGroup,
+                                                      name: sportsDay.exercises[i].name,
                                                       repCount: int.parse(text),
-                                                      setCount: sportsDays[index].exercises[i].setCount);
+                                                      setCount: sportsDay.exercises[i].setCount);
                                                 }
                                               },
                                               decoration: const InputDecoration(
@@ -239,7 +249,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         minimumSize: Size(w / 1.1, h / 15)),
                     onPressed: () => {
                       setState(() => {
-                        sportsDays[sportsDays.length - 1].exercises.add(Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)),
+                        widget.sportsPlan.sportsDays[widget.sportsPlan.sportsDays.length - 1].exercises.add(const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)),
                         scrollDown()
                       }),
                     },
@@ -252,7 +262,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         minimumSize: Size(w / 1.1, h / 15)),
                     onPressed: () => {
                       setState(() => {
-                        sportsDays.add(SportsDay(exercises: List.filled(1, Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true))),
+                        widget.sportsPlan.sportsDays.add(SportsDay(exercises: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true))),
                         scrollDown()
                       }),
 
@@ -270,7 +280,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                           onPressed: () => {
                             SportsPlanService().addSportsPlan(
                                 SportsPlan(
-                                    sportsDays: sportsDays,
+                                    sportsDays: widget.sportsPlan.sportsDays,
                                     ownerEmail: widget.client.email,
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
@@ -295,7 +305,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                           onPressed: () => {
                             SportsPlanService().addSportsPlan(
                                 SportsPlan(
-                                    sportsDays: sportsDays,
+                                    sportsDays: widget.sportsPlan.sportsDays,
                                     ownerEmail: widget.client.email,
                                     createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
                                     bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),

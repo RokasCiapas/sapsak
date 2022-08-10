@@ -5,7 +5,7 @@ import 'exercise.dart';
 class SportsDay {
   final List<Exercise> exercises;
 
-  SportsDay({
+  const SportsDay({
     required this.exercises
   });
 
