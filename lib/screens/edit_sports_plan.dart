@@ -47,9 +47,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
-
-    expirationDateController.text = widget.sportsPlan.bestUntil != null ?
-    DateFormat('yyyy-MM-dd').format(DateTime.fromMicrosecondsSinceEpoch(widget.sportsPlan.bestUntil!.microsecondsSinceEpoch)) : '';
+    expirationDateController.text = setInitialExpirationDate(expirationDateController.text, widget.sportsPlan.bestUntil);
     goalController.text = widget.sportsPlan.goal;
     notesController.text = widget.sportsPlan.notes;
 
@@ -278,6 +276,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                               primary: Theme.of(context).primaryColor,
                               minimumSize: Size(w / 1.1, h / 15)),
                           onPressed: () => {
+                            print(Timestamp.fromDate(DateTime.parse(expirationDateController.text))),
                             SportsPlanService().addSportsPlan(
                                 SportsPlan(
                                     sportsDays: widget.sportsPlan.sportsDays,
@@ -333,5 +332,19 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  String setInitialExpirationDate(String newValue, Timestamp? oldValue) {
+    if (newValue.isEmpty) {
+      if (oldValue != null) {
+        return DateFormat('yyyy-MM-dd').format(widget.sportsPlan.bestUntil!.toDate());
+      }
+
+      if (oldValue == null) {
+        return DateFormat('yyyy-MM-dd').format(DateTime.now());
+      }
+    }
+
+    return newValue;
   }
 }

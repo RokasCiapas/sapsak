@@ -16,6 +16,6 @@ class SportsPlanService {
   }
 
   Stream<QuerySnapshot<SportsPlan>> sportsPlanStream(String email) {
-    return collection.where('ownerEmail', isEqualTo: email).snapshots();
+    return collection.where('ownerEmail', isEqualTo: email).orderBy('createdAt', descending: true).snapshots();
   }
 }
