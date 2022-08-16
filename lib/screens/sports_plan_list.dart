@@ -43,18 +43,20 @@ class SportsPlanListScreen extends StatelessWidget {
               return LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30);
             }
 
+
             return ListView(
               children: snapshot.data!.docs
                   .map((DocumentSnapshot document) {
                 SportsPlan sportsPlan =
                 document.data()! as SportsPlan;
+
                 return ListTile(
                   leading: sportsPlan.isDraft ? const Icon(Icons.drafts_rounded, color: Colors.white) : null,
                   title: Text(
                     '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt!.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()).toString()}',
                     style: const TextStyle(color: Colors.white),),
                   tileColor: const Color(0xff35b9d6),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client, sportsPlan: sportsPlan))),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client, sportsPlan: sportsPlan, isEdit: true, sportsPlanId: document.id))),
                 );
               })
                   .toList()

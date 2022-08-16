@@ -16,10 +16,14 @@ class EditSportsPlan extends StatefulWidget {
     Key? key,
     required this.sportsPlan,
     required this.client,
+    this.isEdit = false,
+    this.sportsPlanId = '',
   }) : super(key: key);
 
   final SportsPlan sportsPlan;
   final Client client;
+  final bool isEdit;
+  final String sportsPlanId;
 
   @override
   State<EditSportsPlan> createState() => _EditSportsPlanState();
@@ -276,20 +280,9 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                               primary: Theme.of(context).primaryColor,
                               minimumSize: Size(w / 1.1, h / 15)),
                           onPressed: () => {
-                            print(Timestamp.fromDate(DateTime.parse(expirationDateController.text))),
-                            SportsPlanService().addSportsPlan(
-                                SportsPlan(
-                                    sportsDays: widget.sportsPlan.sportsDays,
-                                    ownerEmail: widget.client.email,
-                                    createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
-                                    bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
-                                    notes: notesController.text,
-                                    goal: goalController.text,
-                                    isDraft: false
-                                )
-                            )
+                            widget.isEdit ? editSportsPlan(widget.sportsPlanId, false) : addSportsPlan()
                           },
-                          child: const Text("Save"),
+                          child: widget.isEdit ? const Text("Edit") : const Text("Save"),
                         ),
                       )
                   ),
@@ -302,19 +295,9 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                               primary: Theme.of(context).primaryColor,
                               minimumSize: Size(w / 1.1, h / 15)),
                           onPressed: () => {
-                            SportsPlanService().addSportsPlan(
-                                SportsPlan(
-                                    sportsDays: widget.sportsPlan.sportsDays,
-                                    ownerEmail: widget.client.email,
-                                    createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
-                                    bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
-                                    notes: notesController.text,
-                                    goal: goalController.text,
-                                    isDraft: true
-                                )
-                            )
+                            widget.isEdit ? editSportsPlan(widget.sportsPlanId, true) : addSportsPlan(isDraft: true)
                           },
-                          child: const Text("Save as Draft"),
+                          child: widget.isEdit ? const Text("Edit as Draft") : const Text("Save as Draft"),
                         ),
                       )
                   )
@@ -346,5 +329,31 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
     }
 
     return newValue;
+  }
+
+  void addSportsPlan({bool isDraft = false}) {
+    SportsPlanService().addSportsPlan(
+        SportsPlan(
+            sportsDays: widget.sportsPlan.sportsDays,
+            ownerEmail: widget.client.email,
+            createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
+            bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
+            notes: notesController.text,
+            goal: goalController.text,
+            isDraft: isDraft
+        )
+    );
+  }
+
+  void editSportsPlan(String sportsPlanId, bool isDraft) {
+    SportsPlanService().editSportsPlan(SportsPlan(
+        sportsDays: widget.sportsPlan.sportsDays,
+        ownerEmail: widget.client.email,
+        createdAt: Timestamp.fromDate(DateTime.parse(DateTime.now().toString())),
+        bestUntil: Timestamp.fromDate(DateTime.parse(expirationDateController.text)),
+        notes: notesController.text,
+        goal: goalController.text,
+        isDraft: isDraft
+    ), sportsPlanId);
   }
 }

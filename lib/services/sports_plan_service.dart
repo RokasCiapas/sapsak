@@ -15,6 +15,10 @@ class SportsPlanService {
     return collection.add(sportsPlan);
   }
 
+  Future<void> editSportsPlan(SportsPlan sportsPlan, String sportsPlanId) {
+    return collection.doc(sportsPlanId).update(sportsPlan.toFirestore());
+  }
+
   Stream<QuerySnapshot<SportsPlan>> sportsPlanStream(String email) {
     return collection.where('ownerEmail', isEqualTo: email).orderBy('createdAt', descending: true).snapshots();
   }
