@@ -49,6 +49,7 @@ class SportsPlanListScreen extends StatelessWidget {
                 SportsPlan sportsPlan =
                 document.data()! as SportsPlan;
                 return ListTile(
+                  leading: sportsPlan.isDraft ? const Icon(Icons.drafts_rounded, color: Colors.white) : null,
                   title: Text(
                     '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt!.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()).toString()}',
                     style: const TextStyle(color: Colors.white),),
