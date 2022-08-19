@@ -81,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     height: h / 8,
                     width: w / 3,
                     child: SvgPicture.asset(
-                        'images/logo_small.svg',
+                        'assets/images/logo_small.svg',
                         semanticsLabel: 'Acme Logo'
                     ),
                   ),

@@ -130,8 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: h / 8,
                     width: w / 3,
                     child: SvgPicture.asset(
-                        'images/logo_small.svg',
-                        semanticsLabel: 'Acme Logo'
+                        'assets/images/logo_small.svg',
                     ),
                   ),
                   const SizedBox(
