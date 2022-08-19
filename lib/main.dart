@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Log In & Sign up Authentication with FireBase",
+      title: "ShapeShifters",
       home: const MainScreen(),
       theme: ThemeData(
         primaryColor: const Color(0xff35b9d6),
