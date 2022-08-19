@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/login.dart';
 
@@ -174,122 +175,114 @@ class _SignUpCoachState extends State<SignUpCoach> {
         ),
 
         /// Body
-        body: Container(
-          margin: const EdgeInsets.all(17),
-          width: w,
-          height: h,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                /// FLUTTER IMAGE
-                Container(
-                  margin: const EdgeInsets.only(right: 35),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("images/flutter.png")),
+        body: Center(
+          child: SizedBox(
+            width: w / 1.5,
+            height: h,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 200,
                   ),
-                  height: h / 4,
-                  width: w / 1.5,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                  /// FLUTTER IMAGE
+                  Container(
+                    margin: const EdgeInsets.only(right: 35),
+                    height: h / 8,
+                    width: w / 3,
+                    child: SvgPicture.asset(
+                        'images/logo_small.svg',
+                        semanticsLabel: 'Acme Logo'
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  /// Username TextField
+                  TextField(
+                    controller: _usernameController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Username',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  /// Email TextField
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Email',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
 
-                /// TOP TEXT
-                const Text(
-                  "Coach Sign Up To the App",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 22,
+                  /// Password TextField
+                  TextField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Password',
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                /// Username TextField
-                TextField(
-                  controller: _usernameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Username',
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                /// Email TextField
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Email',
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
 
-                /// Password TextField
-                TextField(
-                  obscureText: true,
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Password',
+                  /// Confrim Password TextField
+                  TextField(
+                    obscureText: true,
+                    controller: _confirmPasswordController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Confirm Password',
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                /// Confrim Password TextField
-                TextField(
-                  obscureText: true,
-                  controller: _confirmPasswordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Confirm Password',
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
 
-                /// SIGN UP BUTTON
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                      minimumSize: Size(w / 1.1, h / 15)),
-                  onPressed: signUp,
-                  child: const Text("Sign Up"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                /// LOGIN TEXT
-                GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
-                  child: RichText(
-                    text: TextSpan(
-                        text: "Have an account?",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        children: [
-                          TextSpan(
-                              text: " Log in",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor))
-                        ]),
+                  /// SIGN UP BUTTON
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        minimumSize: Size(w / 1.1, h / 15)),
+                    onPressed: signUp,
+                    child: const Text("Sign Up"),
                   ),
-                )
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  /// LOGIN TEXT
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
+                    child: Text.rich(
+                      TextSpan(
+                          text: "Have an account?",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: " Log in",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor))
+                          ]
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

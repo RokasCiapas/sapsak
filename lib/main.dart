@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       home: const MainScreen(),
       theme: ThemeData(
         primaryColor: const Color(0xff35b9d6),
-        textTheme: GoogleFonts.montserratTextTheme()
+        textTheme: GoogleFonts.balooBhai2TextTheme()
       )
     );
   }

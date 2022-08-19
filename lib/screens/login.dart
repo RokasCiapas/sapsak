@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/forgot_password.dart';
 import 'package:sapsak/screens/signup.dart';
@@ -111,133 +112,125 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
 
         /// Body
-        body: Container(
-          margin: const EdgeInsets.all(17),
-          width: w,
-          height: h,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                /// FLUTTER IMAGE
-                Container(
-                  margin: const EdgeInsets.only(right: 35),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("images/flutter.png")),
+        body: Center(
+          child: SizedBox(
+            width: w / 1.5,
+            height: h,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 200,
                   ),
-                  height: h / 4,
-                  width: w / 1.5,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                /// TOP TEXT
-                const Text(
-                  "Log In To the App",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 22,
+                  /// FLUTTER IMAGE
+                  Container(
+                    margin: const EdgeInsets.only(right: 35),
+                    height: h / 8,
+                    width: w / 3,
+                    child: SvgPicture.asset(
+                        'images/logo_small.svg',
+                        semanticsLabel: 'Acme Logo'
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-
-                /// Email TextField
-                TextField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Email',
+                  const SizedBox(
+                    height: 100,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
 
-                /// Password TextField
-                TextField(
-                  obscureText: true,
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Password',
+                  /// Email TextField
+                  TextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Email',
+                    ),
                   ),
-                  onSubmitted: (x) {
-                    signIn();
-                  },
-                ),
+                  const SizedBox(
+                    height: 15,
+                  ),
 
-                const SizedBox(
-                  height: 15,
-                ),
+                  /// Password TextField
+                  TextField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Password',
+                    ),
+                    onSubmitted: (x) {
+                      signIn();
+                    },
+                  ),
 
-                /// Forgot Password TEXT
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                          const ForgotPasswordScreen(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+
+                  /// Forgot Password TEXT
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const ForgotPasswordScreen(),
+                          ),
                         ),
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                  /// LOG IN BUTTON
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        minimumSize: Size(w / 1.1, h / 15)),
+                    onPressed: signIn,
+                    child: const Text("Log In"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  /// REGISTER TEXT
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
+                    child: Text.rich(
+                      TextSpan(
+                          text: "Don't have an account?",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: " Register",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor))
+                          ]
                       ),
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-
-                /// LOG IN BUTTON
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                      minimumSize: Size(w / 1.1, h / 15)),
-                  onPressed: signIn,
-                  child: const Text("Log In"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                /// REGISTER TEXT
-                GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
-                  child: RichText(
-                    text: TextSpan(
-                        text: "Don't have an account?",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        children: [
-                          TextSpan(
-                              text: " Register",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor))
-                        ]),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

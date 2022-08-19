@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -62,61 +63,57 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
 
         /// Body
-        body: Padding(
-          padding: const EdgeInsets.all(17.0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                /// FLUTTER IMAGE
-                Container(
-                  margin: const EdgeInsets.only(right: 35),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("images/flutter.png")),
+        body: Center(
+          child: SizedBox(
+            width: w / 1.5,
+            height: h,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  /// FLUTTER IMAGE
+                  const SizedBox(
+                    height: 200,
                   ),
-                  height: h / 4,
-                  width: w / 1.5,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                /// Top Text
-                const Text(
-                  "Enter Your Email and we will send you a password reset link.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                ),
-
-                const SizedBox(
-                  height: 25,
-                ),
-
-                /// Email TextField
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Email',
+                  /// FLUTTER IMAGE
+                  Container(
+                    margin: const EdgeInsets.only(right: 35),
+                    height: h / 8,
+                    width: w / 3,
+                    child: SvgPicture.asset(
+                        'images/logo_small.svg',
+                        semanticsLabel: 'Acme Logo'
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                  const SizedBox(
+                    height: 100,
+                  ),
 
-                /// LOG IN BUTTON
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                      minimumSize: Size(w / 1.1, h / 15)),
-                  onPressed: resetPassword,
-                  child: const Text("Reset Password"),
-                ),
-              ],
+                  /// Email TextField
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Email',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  /// LOG IN BUTTON
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        minimumSize: Size(w / 1.1, h / 15)),
+                    onPressed: resetPassword,
+                    child: const Text("Reset Password"),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        )
       ),
     );
   }
