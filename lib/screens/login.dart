@@ -43,10 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         ).then((value) => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) =>
-            const HomeScreen(),
-          )));
+            MaterialPageRoute(
+              builder: (context) =>
+              const HomeScreen(),
+            )));
       } else if (_emailController.text.isNotEmpty &
       _passwordController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(sSnackBar);
@@ -94,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     /// currrent Width and Height
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
@@ -104,9 +105,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text("LOG IN"),
-          centerTitle: true
+            automaticallyImplyLeading: false,
+            title: const Text("LOG IN"),
+            centerTitle: true
         ),
 
         /// Body
@@ -133,12 +134,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   /// Email TextField
                   TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Email',
+                      ),
+                      textInputAction: TextInputAction.next
                   ),
                   const SizedBox(
                     height: 15,
@@ -152,7 +154,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                       hintText: 'Password',
                     ),
-                    onSaved: (x) {
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (x) {
                       signIn();
                     },
                   ),
@@ -221,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ),
+        )
       ),
     );
   }

@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'exercise.dart';
-
 class SportsDay {
-  final List<Exercise> exercises;
+  List<dynamic> exercises;
 
-  const SportsDay({
+  SportsDay({
     required this.exercises
   });
 
