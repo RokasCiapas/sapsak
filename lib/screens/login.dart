@@ -104,8 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
+          // backgroundColor: Theme.of(context).colorScheme.primary,
+          // foregroundColor: Theme.of(context).colorScheme.surface,
           automaticallyImplyLeading: false,
           title: const Text("LOG IN"),
           centerTitle: true,
@@ -129,9 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: const EdgeInsets.only(right: 35),
                     height: h / 8,
                     width: w / 3,
-                    child: SvgPicture.asset(
-                        'assets/images/logo_small.svg',
-                    ),
+                    child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                   const SizedBox(
                     height: 100,
@@ -178,10 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             const ForgotPasswordScreen(),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Forgot Password?",
                           style: TextStyle(
-                            color: Theme.of(context).primaryColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           ),
@@ -196,7 +193,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   /// LOG IN BUTTON
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
                         minimumSize: Size(w / 1.1, h / 15)),
                     onPressed: signIn,
                     child: const Text("Log In"),
@@ -208,19 +204,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   /// REGISTER TEXT
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
-                    child: Text.rich(
+                    child: const Text.rich(
                       TextSpan(
                           text: "Don't have an account?",
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
                           ),
                           children: [
                             TextSpan(
-                                text: " Register",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor))
+                                text: " Register")
                           ]
                       ),
                     ),

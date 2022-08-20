@@ -48,10 +48,16 @@ dependencies:
   google_fonts: ^3.0.1
   flutter_svg: ^1.1.4
   firebase_storage: ^10.3.6
+  flutter_bloc: ^8.1.1
+  dynamic_color: ^1.4.0
+  animations: ^2.0.3
+  collection: ^1.16.0
+  freezed_annotation: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  freezed: ^2.1.0+1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

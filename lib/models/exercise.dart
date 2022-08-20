@@ -13,10 +13,7 @@ class Exercise {
     required this.setCount,
   });
 
-  factory Exercise.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
+  factory Exercise.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) {
 
     final data = snapshot.data();
     return Exercise(

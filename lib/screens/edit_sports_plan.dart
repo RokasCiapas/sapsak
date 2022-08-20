@@ -77,9 +77,9 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                              Expanded(
-                                flex: 1,
-                                child: Column(
+                            Expanded(
+                              flex: 1,
+                              child: Column(
                                 children: [
                                   TextField(
                                     controller: expirationDateController,
@@ -145,93 +145,125 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                   shrinkWrap: true,
                                   itemCount: sportsDay.exercises.length,
                                   itemBuilder: (BuildContext context, int i) {
-                                    return Column(
-                                      children: [
-                                        CircleAvatar(child: Text((i + 1).toString())),
-                                        heightSpacer,
-                                        Row(
-                                          children: [
-                                            Expanded(flex: 0,
-                                              child: DropdownButton<String>(
-                                                value: sportsDay.exercises[i].muscleGroup,
-                                                hint: const Text('Muscle group'),
-                                                items: <String>['Shoulders', 'Biceps', 'Triceps', 'Chest', 'Abs', 'Back', 'Legs'].map((String value) {
-                                                  return DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (String? newValue) {
-                                                  setState(() {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.secondary
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Spacer(),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 20.0),
+                                                child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      primary: Theme.of(context).primaryColor,
+                                                      minimumSize: Size(w / 12, h / 15)
+                                                  ),
+                                                  onPressed: () => {
+                                                    setState(() => {
+                                                    }),
+                                                  },
+                                                  child: const Text("Make Superset"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          heightSpacer,
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 0,
+                                                child: DropdownButton<String>(
+                                                  value: sportsDay.exercises[i].muscleGroup,
+                                                  hint: const Text('Muscle group'),
+                                                  items: <String>['Shoulders', 'Biceps', 'Triceps', 'Chest', 'Abs', 'Back', 'Legs'].map((String value) {
+                                                    return DropdownMenuItem<String>(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (String? newValue) {
+                                                    setState(() {
+                                                      sportsDay.exercises[i] = Exercise(
+                                                          muscleGroup: newValue ?? '',
+                                                          name: sportsDay.exercises[i].name,
+                                                          repCount: sportsDay.exercises[i].repCount,
+                                                          setCount: sportsDay.exercises[i].setCount);
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              widthSpacer,
+                                              Expanded(
+                                                flex: 6,
+                                                child: TextFormField(
+                                                  initialValue: sportsDay.exercises[i].name,
+                                                  onChanged: (text) {
                                                     sportsDay.exercises[i] = Exercise(
-                                                        muscleGroup: newValue ?? '',
-                                                        name: sportsDay.exercises[i].name,
+                                                        muscleGroup: sportsDay.exercises[i].muscleGroup,
+                                                        name: text,
                                                         repCount: sportsDay.exercises[i].repCount,
                                                         setCount: sportsDay.exercises[i].setCount);
-                                                  });
-                                                },
-                                              ),),
-                                            widthSpacer,
-                                            Expanded(flex: 6, child: TextFormField(
-                                              initialValue: sportsDay.exercises[i].name,
-                                              onChanged: (text) {
-                                                sportsDay.exercises[i] = Exercise(
-                                                    muscleGroup: sportsDay.exercises[i].muscleGroup,
-                                                    name: text,
-                                                    repCount: sportsDay.exercises[i].repCount,
-                                                    setCount: sportsDay.exercises[i].setCount);
-                                              },
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                hintText: 'Exercise',
+                                                  },
+                                                  decoration: const InputDecoration(
+                                                    border: OutlineInputBorder(),
+                                                    hintText: 'Exercise',
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          heightSpacer,
+                                          Row(
+                                            children: [
+                                              Expanded(flex: 1,
+                                                  child: TextFormField(
+                                                    initialValue: sportsDay.exercises[i].setCount > 0 ? sportsDay.exercises[i].setCount.toString() : '',
+                                                    onChanged: (text) {
+                                                      if (text.isNotEmpty) {
+                                                        sportsDay.exercises[i] = Exercise(
+                                                            muscleGroup: sportsDay.exercises[i].muscleGroup,
+                                                            name: sportsDay.exercises[i].name,
+                                                            repCount: sportsDay.exercises[i].repCount,
+                                                            setCount: int.parse(text));
+                                                      }
+                                                    },
+                                                    keyboardType: TextInputType.number,
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter.digitsOnly
+                                                    ],
+                                                    decoration: const InputDecoration(
+                                                      border: OutlineInputBorder(),
+                                                      hintText: 'Set count',
+                                                    ),
+                                                  )
                                               ),
-                                            ),)
-                                          ],
-                                        ),
-                                        heightSpacer,
-                                        Row(
-                                          children: [
-                                            Expanded(flex: 1, child: TextFormField(
-                                              initialValue: sportsDay.exercises[i].setCount > 0 ? sportsDay.exercises[i].setCount.toString() : '',
-                                              onChanged: (text) {
-                                                if (text.isNotEmpty) {
-                                                  sportsDay.exercises[i] = Exercise(
-                                                      muscleGroup: sportsDay.exercises[i].muscleGroup,
-                                                      name: sportsDay.exercises[i].name,
-                                                      repCount: sportsDay.exercises[i].repCount,
-                                                      setCount: int.parse(text));
-                                                }
-                                              },
-                                              keyboardType: TextInputType.number,
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter.digitsOnly
-                                              ],
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                hintText: 'Set count',
-                                              ),
-                                            )),
-                                            widthSpacer,
-                                            Expanded(flex: 1, child: TextFormField(
-                                              initialValue: sportsDay.exercises[i].repCount > 0 ? sportsDay.exercises[i].repCount.toString() : '',
-                                              onChanged: (text) {
-                                                if (text.isNotEmpty) {
-                                                  sportsDay.exercises[i] = Exercise(
-                                                      muscleGroup: sportsDay.exercises[i].muscleGroup,
-                                                      name: sportsDay.exercises[i].name,
-                                                      repCount: int.parse(text),
-                                                      setCount: sportsDay.exercises[i].setCount);
-                                                }
-                                              },
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                hintText: 'Rep count',
-                                              ),
-                                            ))
-                                          ],
-                                        ),
-                                        heightSpacer,
-                                      ],
+                                              widthSpacer,
+                                              Expanded(flex: 1,
+                                                  child: TextFormField(
+                                                    initialValue: sportsDay.exercises[i].repCount > 0 ? sportsDay.exercises[i].repCount.toString() : '',
+                                                    onChanged: (text) {
+                                                      if (text.isNotEmpty) {
+                                                        sportsDay.exercises[i] = Exercise(
+                                                            muscleGroup: sportsDay.exercises[i].muscleGroup,
+                                                            name: sportsDay.exercises[i].name,
+                                                            repCount: int.parse(text),
+                                                            setCount: sportsDay.exercises[i].setCount);
+                                                      }
+                                                    },
+                                                    decoration: const InputDecoration(
+                                                      border: OutlineInputBorder(),
+                                                      hintText: 'Rep count',
+                                                    ),
+                                                  )
+                                              )
+                                            ],
+                                          ),
+                                          heightSpacer,
+                                        ],
+                                      ),
                                     );
                                   },
 
@@ -245,32 +277,42 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                     )
                 ),
                 Row(children: [
-                  Expanded(child: Padding(padding: const EdgeInsets.only(top: 20.0), child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: () => {
-                      setState(() => {
-                        widget.sportsPlan.sportsDays[widget.sportsPlan.sportsDays.length - 1].exercises.add(const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)),
-                        scrollDown()
-                      }),
-                    },
-                    child: const Text("Add exercise"),
-                  ),),),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).primaryColor,
+                            minimumSize: Size(w / 1.1, h / 15)),
+                        onPressed: () => {
+                          setState(() => {
+                            widget.sportsPlan.sportsDays[widget.sportsPlan.sportsDays.length - 1].exercises.add(const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)),
+                            scrollDown()
+                          }),
+                        },
+                        child: const Text("Add exercise"),
+                      ),
+                    ),
+                  ),
                   widthSpacer,
-                  Expanded(child: Padding(padding: const EdgeInsets.only(top: 20.0), child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: () => {
-                      setState(() => {
-                        widget.sportsPlan.sportsDays.add(SportsDay(exercises: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true))),
-                        scrollDown()
-                      }),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).primaryColor,
+                            minimumSize: Size(w / 1.1, h / 15)),
+                        onPressed: () => {
+                          setState(() => {
+                            widget.sportsPlan.sportsDays.add(SportsDay(exercises: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true))),
+                            scrollDown()
+                          }),
 
-                    },
-                    child: const Text("Add day"),
-                  ),),),
+                        },
+                        child: const Text("Add day"),
+                      ),
+                    ),
+                  ),
                   widthSpacer,
                   Expanded(
                       child: Padding(
@@ -301,7 +343,8 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         ),
                       )
                   )
-                ],)
+                ],
+                )
               ],
             )
         )
