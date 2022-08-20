@@ -15,8 +15,6 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       /// APP BAR
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
         automaticallyImplyLeading: true,
         title: const Text("SIGN UP"),
         centerTitle: true,
@@ -28,7 +26,6 @@ class SignUpScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
                   minimumSize: Size(w / 1.1, h / 15)),
               onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
@@ -42,7 +39,6 @@ class SignUpScreen extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
                   minimumSize: Size(w / 1.1, h / 15)),
               onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(

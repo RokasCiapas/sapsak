@@ -167,8 +167,6 @@ class _SignUpCoachState extends State<SignUpCoach> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
           automaticallyImplyLeading: true,
           title: const Text("SIGN UP"),
           centerTitle: true,
@@ -176,24 +174,22 @@ class _SignUpCoachState extends State<SignUpCoach> {
 
         /// Body
         body: Center(
-          child: SizedBox(
-            width: w / 1.5,
-            height: h,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 200,
+                    height: 50,
                   ),
                   /// FLUTTER IMAGE
-                  Container(
-                    margin: const EdgeInsets.only(right: 35),
+                  SizedBox(
                     height: h / 8,
                     width: w / 3,
                     child: SvgPicture.asset(
-                        'assets/images/logo_small.svg',
+                        'assets/images/logo.svg',
                         semanticsLabel: 'Acme Logo'
                     ),
                   ),
@@ -201,7 +197,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                     height: 100,
                   ),
                   /// Username TextField
-                  TextField(
+                  TextFormField(
                     controller: _usernameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -212,7 +208,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                     height: 15,
                   ),
                   /// Email TextField
-                  TextField(
+                  TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -224,7 +220,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   ),
 
                   /// Password TextField
-                  TextField(
+                  TextFormField(
                     obscureText: true,
                     controller: _passwordController,
                     decoration: const InputDecoration(
@@ -237,7 +233,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   ),
 
                   /// Confrim Password TextField
-                  TextField(
+                  TextFormField(
                     obscureText: true,
                     controller: _confirmPasswordController,
                     decoration: const InputDecoration(
@@ -252,7 +248,6 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   /// SIGN UP BUTTON
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
                         minimumSize: Size(w / 1.1, h / 15)),
                     onPressed: signUp,
                     child: const Text("Sign Up"),
@@ -264,20 +259,10 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   /// LOGIN TEXT
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
-                    child: Text.rich(
-                      TextSpan(
-                          text: "Have an account?",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: " Log in",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor))
-                          ]
+                    child: const Text("Have an account? Log in",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   )

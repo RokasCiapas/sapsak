@@ -30,18 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: const Color(0xff35b9d6),
-          foregroundColor: Colors.white,
           automaticallyImplyLeading: false,
           title: Center(child: Text('Howdy, ${user.displayName}')),
           bottom: const TabBar(
-            unselectedLabelColor: Colors.white,
-            labelColor: Colors.white,
-            indicatorColor: Colors.white,
             tabs: [
-              Tab(icon: Icon(Icons.people_outline), text: 'Clients'),
+              Tab(icon: Icon(Icons.people_outline),
+                  text: 'Clients'),
               Tab(icon: Icon(Icons.ac_unit)),
             ],
           ),
@@ -53,14 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    print(snapshot.error);
                     return const Text('Something went wrong');
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return LoadingAnimationWidget.fourRotatingDots(color: Theme
-                        .of(context)
-                        .primaryColor, size: 30);
+                    return LoadingAnimationWidget.fourRotatingDots(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 30);
                   }
 
                   return Column(
@@ -98,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: Theme.of(context).primaryColor,
                                         minimumSize: Size(w / 1.1, h / 15)),
                                     onPressed: () {
                                       setState(() {});
@@ -117,20 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if (client.name.toLowerCase().contains(clientSearchController.text.toLowerCase())) {
                                   return ListTile(
                                     leading: CircleAvatar(
-                                        backgroundColor: const Color(0xff176087),
-                                        child: Text(client.name[0] + client.surname[0],
-                                          style: const TextStyle(
-                                              color: Colors.white),)),
-                                    title: Text('${client.name} ${client.surname}',
-                                      style: const TextStyle(color: Colors.white),),
-                                    tileColor: const Color(0xff35b9d6),
+                                        child: Text(client.name[0] + client.surname[0])),
+                                    title: Text('${client.name} ${client.surname}'),
                                     onTap: () =>
                                         Navigator.push(context, MaterialPageRoute(
                                             builder: (context) =>
                                                 ClientDetails(client: client))),
                                   );
                                 }
-                                return SizedBox();
+                                return const SizedBox();
 
                               }
 

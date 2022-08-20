@@ -25,8 +25,6 @@ class SportsPlanListScreen extends StatelessWidget {
     return Scaffold(
       /// APP BAR
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
           automaticallyImplyLeading: true,
           title: Text('Sports plan list of ${client.name} ${client.surname}'),
           centerTitle: true,
@@ -36,11 +34,10 @@ class SportsPlanListScreen extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
             if (snapshot.hasError) {
-              print(snapshot.error);
               return const Text('Something went wrong');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30);
+              return LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).colorScheme.primary, size: 30);
             }
 
 
@@ -51,11 +48,9 @@ class SportsPlanListScreen extends StatelessWidget {
                 document.data()! as SportsPlan;
 
                 return ListTile(
-                  leading: sportsPlan.isDraft ? const Icon(Icons.drafts_rounded, color: Colors.white) : null,
+                  leading: sportsPlan.isDraft ? const Icon(Icons.drafts_rounded) : null,
                   title: Text(
-                    '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt!.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()).toString()}',
-                    style: const TextStyle(color: Colors.white),),
-                  tileColor: const Color(0xff35b9d6),
+                    '${DateFormat('yyyy-MM-dd').format(sportsPlan.createdAt!.toDate()).toString()} - ${DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()).toString()}'),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client, sportsPlan: sportsPlan, isEdit: true, sportsPlanId: document.id))),
                 );
               })

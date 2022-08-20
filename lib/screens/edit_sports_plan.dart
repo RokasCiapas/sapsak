@@ -58,8 +58,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
 
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: const Color(0xff35b9d6),
-            foregroundColor: Colors.white,
             automaticallyImplyLeading: true,
             title: Text('${widget.client.name} ${widget.client.surname}')
         ),
@@ -138,7 +136,7 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                   child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text('Day ${index + 1}',
-                                          style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor)
+                                          style: TextStyle(fontSize: 18)
                                       )
                                   ),),
                                 ListView.builder(
@@ -146,9 +144,9 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                   itemCount: sportsDay.exercises.length,
                                   itemBuilder: (BuildContext context, int i) {
                                     return Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).colorScheme.secondary
-                                      ),
+                                      // decoration: BoxDecoration(
+                                      //   color: Theme.of(context).colorScheme.secondary
+                                      // ),
                                       child: Column(
                                         children: [
                                           Row(
@@ -158,7 +156,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                                                 padding: const EdgeInsets.only(top: 20.0),
                                                 child: ElevatedButton(
                                                   style: ElevatedButton.styleFrom(
-                                                      primary: Theme.of(context).primaryColor,
                                                       minimumSize: Size(w / 12, h / 15)
                                                   ),
                                                   onPressed: () => {
@@ -282,7 +279,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                       padding: const EdgeInsets.only(top: 20.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
                             minimumSize: Size(w / 1.1, h / 15)),
                         onPressed: () => {
                           setState(() => {
@@ -300,7 +296,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                       padding: const EdgeInsets.only(top: 20.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
                             minimumSize: Size(w / 1.1, h / 15)),
                         onPressed: () => {
                           setState(() => {
@@ -319,7 +314,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor,
                               minimumSize: Size(w / 1.1, h / 15)),
                           onPressed: () => {
                             widget.isEdit ? editSportsPlan(widget.sportsPlanId, false) : addSportsPlan()
@@ -334,7 +328,6 @@ class _EditSportsPlanState extends State<EditSportsPlan> {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor,
                               minimumSize: Size(w / 1.1, h / 15)),
                           onPressed: () => {
                             widget.isEdit ? editSportsPlan(widget.sportsPlanId, true) : addSportsPlan(isDraft: true)

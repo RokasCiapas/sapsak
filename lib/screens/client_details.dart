@@ -19,8 +19,6 @@ class ClientDetails extends StatelessWidget {
     final h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color(0xff35b9d6),
-          foregroundColor: Colors.white,
           automaticallyImplyLeading: true,
           title: Text('${client.name} ${client.surname}')
       ),
@@ -28,51 +26,45 @@ class ClientDetails extends StatelessWidget {
           children: [
             SizedBox(
                 height: 50,
-                child: ColoredBox(color: Theme.of(context).primaryColor, child: Row(
+                child: Row(
                   children: [
-                    const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Birth date', style: TextStyle(color: Colors.white)),)),
-                    Expanded(child: Text(client.birthday.toDate().toString(), style: const TextStyle(color: Colors.white),)),
+                    const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Birth date'),)),
+                    Expanded(child: Text(client.birthday.toDate().toString(),)),
                   ],
-                ),
                 )
             ),
             SizedBox(
                 height: 50,
-                child: ColoredBox(color: Theme.of(context).primaryColor, child: Row(children: [
-                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Email', style: TextStyle(color: Colors.white)),)),
-                  Expanded(child: Text(client.email, style: const TextStyle(color: Colors.white))),
-                ],),
-                )
+                child: Row(children: [
+                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Email'),)),
+                  Expanded(child: Text(client.email)),
+                ],)
             ),
             SizedBox(
                 height: 50,
-                child: ColoredBox(color: Theme.of(context).primaryColor, child: Row(children: [
-                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Phone number', style: TextStyle(color: Colors.white)),)),
-                  Expanded(child: Text(client.phoneNumber.toString(), style: const TextStyle(color: Colors.white))),
-                ],),
-                )
+                child: Row(children: [
+                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('Phone number'),)),
+                  Expanded(child: Text(client.phoneNumber.toString())),
+                ],)
             ),
             SizedBox(
                 height: 50,
-                child: ColoredBox(color: Theme.of(context).primaryColor, child: Row(children: [
-                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('HealthIssues', style: TextStyle(color: Colors.white)),)),
-                  Expanded(child: Text(client.healthIssues != null ? client.healthIssues.toString() : '-', style: const TextStyle(color: Colors.white))),
-                ],),
-                )
+                child: Row(children: [
+                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('HealthIssues'),)),
+                  Expanded(child: Text(client.healthIssues != null ? client.healthIssues.toString() : '-')),
+                ],)
             ),
             SizedBox(
                 height: 50,
-                child: ColoredBox(color: Theme.of(context).primaryColor, child: Row(children: [
-                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('First Login', style: TextStyle(color: Colors.white)),)),
-                  Expanded(child: Text(DateFormat('yyyy-MM-dd hh:mm').format(client.firstLogin.toDate()).toString(), style: const TextStyle(color: Colors.white))),
-                ],),
-                )
+                child: Row(children: [
+                  const Expanded(child: Padding(padding: EdgeInsets.only(left: 20.0), child: Text('First Login'),)),
+                  Expanded(child: Text(DateFormat('yyyy-MM-dd hh:mm').format(client.firstLogin.toDate()).toString())),
+                ],)
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
                     minimumSize: Size(w / 1.1, h / 15)),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SportsPlanListScreen(client: client))),
                 child: const Text("View all sports plans"),
@@ -82,7 +74,6 @@ class ClientDetails extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
                     minimumSize: Size(w / 1.1, h / 15)),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditSportsPlan(client: client, sportsPlan: defaultSportsPlan))),
                 child: const Text("Create sports plan"),

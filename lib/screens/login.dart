@@ -104,29 +104,25 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
-          // backgroundColor: Theme.of(context).colorScheme.primary,
-          // foregroundColor: Theme.of(context).colorScheme.surface,
           automaticallyImplyLeading: false,
           title: const Text("LOG IN"),
-          centerTitle: true,
+          centerTitle: true
         ),
 
         /// Body
         body: Center(
-          child: SizedBox(
-            width: w / 1.5,
-            height: h,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 200,
+                    height: 50,
                   ),
                   /// FLUTTER IMAGE
-                  Container(
-                    margin: const EdgeInsets.only(right: 35),
+                  SizedBox(
                     height: h / 8,
                     width: w / 3,
                     child: SvgPicture.asset('assets/images/logo.svg'),
@@ -136,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   /// Email TextField
-                  TextField(
+                  TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
@@ -149,14 +145,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   /// Password TextField
-                  TextField(
+                  TextFormField(
                     obscureText: true,
                     controller: _passwordController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Password',
                     ),
-                    onSubmitted: (x) {
+                    onSaved: (x) {
                       signIn();
                     },
                   ),

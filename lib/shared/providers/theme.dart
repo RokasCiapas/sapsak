@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_color_utilities/material_color_utilities.dart';
 
 class NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
@@ -98,9 +98,9 @@ class ThemeProvider extends InheritedWidget {
 
   AppBarTheme appBarTheme(ColorScheme colors) {
     return AppBarTheme(
-      elevation: 0,
-      backgroundColor: colors.surface,
-      foregroundColor: colors.onSurface,
+        elevation: 0,
+        backgroundColor: colors.surface,
+        foregroundColor: colors.onSurface,
     );
   }
 
@@ -162,6 +162,7 @@ class ThemeProvider extends InheritedWidget {
       drawerTheme: drawerTheme(_colors),
       scaffoldBackgroundColor: _colors.background,
       useMaterial3: true,
+      primaryTextTheme: GoogleFonts.balooBhai2TextTheme(),
     );
   }
 
@@ -180,6 +181,7 @@ class ThemeProvider extends InheritedWidget {
       drawerTheme: drawerTheme(_colors),
       scaffoldBackgroundColor: _colors.background,
       useMaterial3: true,
+      primaryTextTheme: GoogleFonts.balooBhai2TextTheme(),
     );
   }
 
