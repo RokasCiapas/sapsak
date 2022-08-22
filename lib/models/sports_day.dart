@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sapsak/models/exercise.dart';
+
 class SportsDay {
-  List<dynamic> exercises;
+  List<Exercise> exercises;
 
   SportsDay({
     required this.exercises
@@ -22,5 +24,12 @@ class SportsDay {
     return {
       "exercises": exercises.map((e) => e.toFirestore()),
     };
+  }
+
+  static SportsDay fromJson(Map<String, dynamic> json) {
+    var test = SportsDay(
+        exercises: json['exercises'].map((exercise) => Exercise.fromJson(exercise)).toList()
+    );
+    return test;
   }
 }

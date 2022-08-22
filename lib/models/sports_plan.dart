@@ -10,6 +10,7 @@ class SportsPlan {
   final String notes;
   final String goal;
   final bool isDraft;
+  final String id;
 
   SportsPlan({
     required this.sportsDays,
@@ -19,6 +20,7 @@ class SportsPlan {
     required this.notes,
     required this.goal,
     required this.isDraft,
+    required this.id,
   });
 
   factory SportsPlan.fromFirestore(
@@ -35,7 +37,9 @@ class SportsPlan {
                       muscleGroup: x['muscleGroup'],
                       name: x['name'],
                       repCount: x['repCount'],
-                      setCount: x['setCount']
+                      setCount: x['setCount'],
+                      id: x['id'],
+                      supersetWidth: x['supersetWidth']
                   )
               ))
           )
@@ -46,6 +50,7 @@ class SportsPlan {
       notes: data?['notes'] ?? '',
       goal: data?['goal'] ?? '',
       isDraft: data?['isDraft'] ?? false,
+      id: data?['id'] ?? false,
     );
   }
 
@@ -58,16 +63,20 @@ class SportsPlan {
       "notes": notes,
       "goal": goal,
       "isDraft": isDraft,
+      "id": id,
     };
   }
-}
 
-SportsPlan defaultSportsPlan = SportsPlan(
-    sportsDays: List.filled(1, SportsDay(exercises: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)), growable: true),
-    ownerEmail: '',
-    createdAt: null,
-    bestUntil: null,
-    notes: '',
-    goal: '',
-    isDraft: true
-);
+  static SportsPlan fromJson(QueryDocumentSnapshot json) {
+    return SportsPlan(
+      id: json.id,
+      sportsDays: List.from(json.get('sportsDays').map((Map<String, dynamic> day) => SportsDay.fromJson(day))),
+      ownerEmail: json.get('ownerEmail'),
+      notes: json.get('notes'),
+      goal: json.get('goal'),
+      isDraft: json.get('isDraft'),
+      createdAt: json.get('createdAt'),
+      bestUntil: json.get('bestUntil'),
+    );
+  }
+}

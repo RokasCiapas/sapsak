@@ -1,6 +1,9 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sapsak/providers/client_provider.dart';
+import 'package:sapsak/providers/sports_plan_list_provider.dart';
 import 'package:sapsak/shared/providers/theme.dart';
 import 'firebase_options.dart';
 import 'auth/main_page.dart';
@@ -13,8 +16,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider<ClientProvider>(create: (_) => ClientProvider()),
+      // ChangeNotifierProvider<SportsPlanProvider>(create: (_) => SportsPlanProvider()),
+      ListenableProxyProvider<ClientProvider, SportsPlanProvider>(
+          update: (context, clientProvider, sportsPlanProvider) =>
+          SportsPlanProvider(clientProvider: clientProvider))
+    ],
+    child: const MyApp())
+  );
 }
 
 class MyApp extends StatefulWidget {

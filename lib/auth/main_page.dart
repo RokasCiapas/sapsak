@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
         stream: FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.SESSION).authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30));
+            return Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).colorScheme.primary, size: 30));
           } else {
             if (snapshot.hasData) {
               return const HomeScreen();
