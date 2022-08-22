@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../shared/button.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
@@ -46,11 +48,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /// Currrent Width and Height
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
-
-    ///
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -65,25 +62,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         /// Body
         body: Center(
           child: SizedBox(
-            width: w / 1.5,
-            height: h,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  /// FLUTTER IMAGE
                   const SizedBox(
                     height: 200,
                   ),
-                  /// FLUTTER IMAGE
                   Container(
                     margin: const EdgeInsets.only(right: 35),
-                    height: h / 8,
-                    width: w / 3,
-                    child: SvgPicture.asset(
-                        'assets/images/logo_small.svg',
-                        semanticsLabel: 'Acme Logo'
-                    ),
+                    height: 100,
+                    width: 150,
+                    child: SvgPicture.asset('assets/images/logo_small.svg'),
                   ),
                   const SizedBox(
                     height: 100,
@@ -102,12 +92,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
 
                   /// LOG IN BUTTON
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: resetPassword,
-                    child: const Text("Reset Password"),
+                  Button(
+                    onClick: resetPassword,
+                    text: 'Reset Password',
                   ),
                 ],
               ),

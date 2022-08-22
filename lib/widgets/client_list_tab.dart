@@ -10,8 +10,6 @@ class ClientListTab extends StatelessWidget {
   const ClientListTab({
     Key? key,
     required this.clientStream,
-    required this.w,
-    required this.h,
     required this.clientSearchController,
     required this.onNavigate,
     required this.onSearch,
@@ -19,8 +17,6 @@ class ClientListTab extends StatelessWidget {
   }) : super(key: key);
 
   final Stream<QuerySnapshot<Client>> clientStream;
-  final double w;
-  final double h;
   final TextEditingController clientSearchController;
   final Function(Client) onNavigate;
   final VoidCallback onSearch;
@@ -48,8 +44,6 @@ class ClientListTab extends StatelessWidget {
             Expanded(
                 flex: 0,
                 child: ClientSearch(
-                  w: w,
-                  h: h,
                   clientSearchController: clientSearchController,
                   onSubmitted: () {
                     onSearch();

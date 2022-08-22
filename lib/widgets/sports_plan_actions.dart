@@ -10,13 +10,12 @@ import '../models/exercise.dart';
 import '../models/sports_day.dart';
 import '../models/sports_plan.dart';
 import '../services/sports_plan_service.dart';
+import '../shared/button.dart';
 
 class SportsPlanActions extends StatelessWidget {
   const SportsPlanActions({
     Key? key,
     required this.isEdit,
-    required this.w,
-    required this.h,
     required this.widthSpacer,
     required this.scrollController,
     required this.expirationDateController,
@@ -25,8 +24,6 @@ class SportsPlanActions extends StatelessWidget {
   }) : super(key: key);
 
   final bool isEdit;
-  final double w;
-  final double h;
   final SizedBox widthSpacer;
   final ScrollController scrollController;
   final TextEditingController expirationDateController;
@@ -52,12 +49,9 @@ class SportsPlanActions extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: ()
+            child: Button(
+              onClick: ()
               {
-
                 sportsPlan.sportsDays[sportsPlan.sportsDays.length - 1].exercises.add(Exercise(
                     muscleGroup: 'Shoulders',
                     name: '',
@@ -72,7 +66,7 @@ class SportsPlanActions extends StatelessWidget {
 
                 scrollDown();
               },
-              child: const Text("Add exercise"),
+              text: 'Add exercise',
             ),
           ),
         ),
@@ -80,10 +74,8 @@ class SportsPlanActions extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: () {
+            child: Button(
+              onClick: () {
                 sportsPlan.sportsDays.add(SportsDay(
                     exercises: List.filled(
                         1,
@@ -103,7 +95,7 @@ class SportsPlanActions extends StatelessWidget {
 
                 scrollDown();
               },
-              child: const Text("Add day"),
+              text: 'Add day',
             ),
           ),
         ),
@@ -111,34 +103,30 @@ class SportsPlanActions extends StatelessWidget {
         Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size(w / 1.1, h / 15)),
-                onPressed: () {
+              child: Button(
+                onClick: () {
                   if (isEdit) {
                     editSportsPlan(sportsPlan, client, false).then((value) => Navigator.pop(context));
                   } else {
                     addSportsPlan(sportsPlan, client).then((value) => Navigator.pop(context));
                   }
                 },
-                child: const Text("Save"),
+                text: 'Save',
               ),
             )),
         widthSpacer,
         Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size(w / 1.1, h / 15)),
-                onPressed: () {
+              child: Button(
+                onClick: () {
                   if (isEdit) {
                     editSportsPlan(sportsPlan, client, true).then((value) => Navigator.pop(context));
                   } else {
                     addSportsPlan(sportsPlan, client, isDraft: true).then((value) => Navigator.pop(context));
                   }
                 },
-                child: const Text("Save as Draft"),
+                text: 'Save as Draft',
               ),
             ))
       ],

@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/login.dart';
 
+import '../shared/button.dart';
+
 class SignUpCoach extends StatefulWidget {
   const SignUpCoach({Key? key})
       : super(key: key);
@@ -157,11 +159,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
 
   @override
   Widget build(BuildContext context) {
-    /// CURRENT WIDTH AND HEIGHT
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
 
-    ///
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -184,13 +182,11 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   const SizedBox(
                     height: 50,
                   ),
-                  /// FLUTTER IMAGE
                   SizedBox(
-                    height: h / 8,
-                    width: w / 3,
+                    height: 150,
+                    width: 100,
                     child: SvgPicture.asset(
                         'assets/images/logo.svg',
-                        semanticsLabel: 'Acme Logo'
                     ),
                   ),
                   const SizedBox(
@@ -246,11 +242,9 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   ),
 
                   /// SIGN UP BUTTON
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: signUp,
-                    child: const Text("Sign Up"),
+                  Button(
+                    onClick: signUp,
+                    text: 'Sign Up',
                   ),
                   const SizedBox(
                     height: 20,

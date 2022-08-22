@@ -10,8 +10,6 @@ class ExerciseList extends StatelessWidget {
   const ExerciseList({
     Key? key,
     required this.sportsDay,
-    required this.h,
-    required this.w,
     required this.heightSpacer,
     required this.widthSpacer,
     required this.makeSuperset,
@@ -22,8 +20,6 @@ class ExerciseList extends StatelessWidget {
   }) : super(key: key, );
 
   final SportsDay sportsDay;
-  final double h;
-  final double w;
   final SizedBox heightSpacer;
   final SizedBox widthSpacer;
   final Function(Exercise) makeSuperset;
@@ -45,8 +41,6 @@ class ExerciseList extends StatelessWidget {
 
           if (exercise.supersetWidth.isEmpty) {
             return ExerciseTile(
-              w: w,
-              h: h,
               heightSpacer: heightSpacer,
               widthSpacer: widthSpacer,
               muscleGroup: exercise.muscleGroup,
@@ -71,8 +65,6 @@ class ExerciseList extends StatelessWidget {
             );
           } else {
             return ExerciseTile(
-              w: w,
-              h: h,
               heightSpacer: heightSpacer,
               widthSpacer: widthSpacer,
               muscleGroup: exercise.muscleGroup,

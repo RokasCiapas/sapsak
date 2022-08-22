@@ -27,8 +27,6 @@ class EditSportsPlan extends StatelessWidget {
     final notesController = TextEditingController();
     final goalController = TextEditingController();
     final expirationDateController = TextEditingController();
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
 
     const widthSpacer = SizedBox(
       width: 15,
@@ -68,7 +66,6 @@ class EditSportsPlan extends StatelessWidget {
             title: Text('${client.name} ${client.surname}'),
           ),
           body: Container(
-              width: w,
               margin: const EdgeInsets.all(17),
               child: Column(
                 children: [
@@ -85,18 +82,14 @@ class EditSportsPlan extends StatelessWidget {
                               widthSpacer: widthSpacer,
                               notesController: notesController
                           ),
-                          SportsPlanContainer(
+                          const SportsPlanContainer(
                             heightSpacer: heightSpacer,
                             widthSpacer: widthSpacer,
-                            h: h,
-                            w: w,
                           )
                         ],
                       )),
                   SportsPlanActions(
                       isEdit: isEdit,
-                      w: w,
-                      h: h,
                       widthSpacer: widthSpacer,
                       scrollController: listViewScrollController,
                       expirationDateController: expirationDateController,

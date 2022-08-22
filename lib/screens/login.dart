@@ -5,6 +5,8 @@ import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/forgot_password.dart';
 import 'package:sapsak/screens/signup.dart';
 
+import '../shared/button.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key})
       : super(key: key);
@@ -95,11 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    /// currrent Width and Height
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
-
-    ///
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -124,8 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   /// FLUTTER IMAGE
                   SizedBox(
-                    height: h / 8,
-                    width: w / 3,
+                    height: 150,
+                    width: 100,
                     child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                   const SizedBox(
@@ -190,11 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   /// LOG IN BUTTON
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: signIn,
-                    child: const Text("Log In"),
+                  Button(
+                    onClick: signIn,
+                    text: 'Log In',
                   ),
                   const SizedBox(
                     height: 20,

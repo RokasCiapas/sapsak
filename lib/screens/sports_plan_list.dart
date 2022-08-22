@@ -62,7 +62,7 @@ class SportsPlanListScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      EditSportsPlan(isEdit: true)));
+                                      const EditSportsPlan(isEdit: true)));
                         },
                       );
                     });

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../shared/button.dart';
+
 class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
     Key? key,
-    required this.w,
-    required this.h,
     required this.heightSpacer,
     required this.widthSpacer,
     required this.muscleGroup,
@@ -19,8 +19,6 @@ class ExerciseTile extends StatelessWidget {
     required this.changeRepCount
   }) : super(key: key);
 
-  final double w;
-  final double h;
   final SizedBox heightSpacer;
   final SizedBox widthSpacer;
   final String muscleGroup;
@@ -43,11 +41,9 @@ class ExerciseTile extends StatelessWidget {
             makeSuperset == null ? const SizedBox() : Padding(
               padding: const EdgeInsets.only(
                   top: 20.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size(w / 12, h / 15)),
-                onPressed: makeSuperset,
-                child: const Text("Make Superset"),
+              child: Button(
+                onClick: () => makeSuperset,
+                text: 'Make Superset',
               ),
             ),
           ],

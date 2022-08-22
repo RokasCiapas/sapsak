@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../shared/button.dart';
+
 class ClientSearch extends StatelessWidget {
   const ClientSearch({
     Key? key,
     required this.clientSearchController,
-    required this.w,
-    required this.h,
     required this.onSubmitted,
     required this.onClear,
   }) : super(key: key);
 
   final TextEditingController clientSearchController;
-  final double w;
-  final double h;
   final VoidCallback onSubmitted;
   final VoidCallback onClear;
 
@@ -44,13 +42,11 @@ class ClientSearch extends StatelessWidget {
           width: 15,
         ),
         Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: () {
+            child: Button(
+              onClick: () {
                 onSubmitted();
               },
-              child: const Text("Search"),
+              text: 'Search',
             )
         ),
       ],

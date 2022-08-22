@@ -12,14 +12,10 @@ import 'exercise_list.dart';
 class SportsPlanContainer extends StatelessWidget {
   const SportsPlanContainer({
     Key? key,
-    required this.h,
-    required this.w,
     required this.heightSpacer,
     required this.widthSpacer,
   }) : super(key: key);
 
-  final double h;
-  final double w;
   final SizedBox heightSpacer;
   final SizedBox widthSpacer;
 
@@ -49,8 +45,6 @@ class SportsPlanContainer extends StatelessWidget {
               child: ExerciseList(
                 heightSpacer: heightSpacer,
                 widthSpacer: widthSpacer,
-                h: h,
-                w: w,
                 sportsDay: sportsDay,
                 makeSuperset: (exercise) {
                   String supersetWidth = const Uuid().v1();

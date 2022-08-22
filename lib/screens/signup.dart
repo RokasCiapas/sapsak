@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../shared/button.dart';
 import 'signup_client.dart';
 import 'signup_coach.dart';
 
@@ -9,8 +10,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       /// APP BAR
@@ -24,28 +23,25 @@ class SignUpScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: () => Navigator.of(context).push(
+            Button(
+              onClick: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
                     const SignUpCoach(),
                   )),
-              child: const Text("Coach"),
+              text: 'Coach',
             ),
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(w / 1.1, h / 15)),
-              onPressed: () => Navigator.of(context).push(
+            Button(
+              onClick: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
                     const SignUpClient(),
-                  )),
-              child: const Text("Client"),
+                  )
+              ),
+              text: 'Client',
             ),
           ],
         ),

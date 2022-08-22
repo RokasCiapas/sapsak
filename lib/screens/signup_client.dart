@@ -9,6 +9,8 @@ import 'package:sapsak/models/client.dart';
 import 'package:sapsak/screens/login.dart';
 import 'package:sapsak/services/client_service.dart';
 
+import '../shared/button.dart';
+
 class SignUpClient extends StatefulWidget {
   const SignUpClient({Key? key})
       : super(key: key);
@@ -176,11 +178,7 @@ class _SignUpClientState extends State<SignUpClient> {
 
   @override
   Widget build(BuildContext context) {
-    /// CURRENT WIDTH AND HEIGHT
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
 
-    ///
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -205,11 +203,10 @@ class _SignUpClientState extends State<SignUpClient> {
                   ),
                   /// FLUTTER IMAGE
                   SizedBox(
-                    height: h / 8,
-                    width: w / 3,
+                    height: 150,
+                    width: 100,
                     child: SvgPicture.asset(
                         'assets/images/logo.svg',
-                        semanticsLabel: 'Acme Logo'
                     ),
                   ),
                   const SizedBox(
@@ -353,11 +350,9 @@ class _SignUpClientState extends State<SignUpClient> {
                   ),
 
                   /// SIGN UP BUTTON
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size(w / 1.1, h / 15)),
-                    onPressed: signUp,
-                    child: const Text("Sign Up"),
+                  Button(
+                    onClick: signUp,
+                    text: 'Sign Up',
                   ),
                   const SizedBox(
                     height: 20,

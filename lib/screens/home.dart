@@ -27,9 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot<Client>> clientStream = context.watch<ClientProvider>().clientList;
 
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -51,8 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ClientListTab(
                 clientStream: clientStream,
-                w: w,
-                h: h,
                 clientSearchController: clientSearchController,
                 onNavigate: (client) {
                   context.read<ClientProvider>().selectClient(client);
