@@ -6,6 +6,8 @@ import 'package:sapsak/screens/forgot_password.dart';
 import 'package:sapsak/screens/signup.dart';
 
 import '../shared/button.dart';
+import '../shared/input.dart';
+import '../shared/logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key})
@@ -35,7 +37,116 @@ class _LoginScreenState extends State<LoginScreen> {
     content: Text('Email field Must Fill!'),
   );
 
-  /// SIGNIN METHOD TO FIREBASE
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        /// APP BAR
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text("LOG IN"),
+            centerTitle: true
+        ),
+
+        /// Body
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Logo(),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Input(
+                    controller: _emailController,
+                    hintText: 'Email',
+                    type: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Input(
+                    hideValue: true,
+                    controller: _passwordController,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (x) {
+                      signIn();
+                    },
+                    hintText: 'Password',
+                  ),
+
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                        const ForgotPasswordScreen(),
+                      ),
+                    ),
+                    child: const Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Button(
+                    onClick: signIn,
+                    text: 'Log In',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
+                    child: const Text.rich(
+                      TextSpan(
+                          text: "Don't have an account?",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: " Register")
+                          ]
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ),
+    );
+  }
+
   Future signIn() async {
     try {
       /// In the below, with if statement we have some simple validate
@@ -87,140 +198,4 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        /// APP BAR
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: const Text("LOG IN"),
-            centerTitle: true
-        ),
-
-        /// Body
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  /// FLUTTER IMAGE
-                  SizedBox(
-                    height: 150,
-                    width: 100,
-                    child: SvgPicture.asset('assets/images/logo.svg'),
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-
-                  /// Email TextField
-                  TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Email',
-                      ),
-                      textInputAction: TextInputAction.next
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-
-                  /// Password TextField
-                  TextFormField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Password',
-                    ),
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (x) {
-                      signIn();
-                    },
-                  ),
-
-                  const SizedBox(
-                    height: 15,
-                  ),
-
-                  /// Forgot Password TEXT
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const ForgotPasswordScreen(),
-                          ),
-                        ),
-                        child: const Text(
-                          "Forgot Password?",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-
-                  /// LOG IN BUTTON
-                  Button(
-                    onClick: signIn,
-                    text: 'Log In',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  /// REGISTER TEXT
-                  GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
-                    child: const Text.rich(
-                      TextSpan(
-                          text: "Don't have an account?",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: " Register")
-                          ]
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
-      ),
-    );
-  }
 }

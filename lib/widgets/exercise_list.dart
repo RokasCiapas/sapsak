@@ -32,7 +32,7 @@ class ExerciseList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: sportsDay.exercises.length,

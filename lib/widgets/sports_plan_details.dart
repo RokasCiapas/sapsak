@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../shared/input.dart';
+
 class SportsPlanDetails extends StatelessWidget {
   const SportsPlanDetails({
     Key? key,
@@ -55,12 +57,9 @@ class SportsPlanDetails extends StatelessWidget {
                 },
               ),
               heightSpacer,
-              TextField(
+              Input(
                 controller: goalController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Goal',
-                ),
+                hintText: 'Goal',
               )
             ],
           ),
@@ -68,13 +67,10 @@ class SportsPlanDetails extends StatelessWidget {
         widthSpacer,
         Expanded(
             flex: 4,
-            child: TextField(
+            child: Input(
               controller: notesController,
               maxLines: 3,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Notes',
-              ),
+              hintText: 'Notes',
             )),
       ],
     );

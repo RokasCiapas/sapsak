@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:sapsak/shared/input.dart';
 
 import '../shared/button.dart';
+import '../shared/logo.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -21,7 +22,50 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  /// FireBase Reset Password Method
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Colors.white,
+            title: const Text("FORGOT PASSWORD"),
+            centerTitle: true,
+          ),
+          body: Center(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 200,
+                    ),
+                    const Logo(),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Input(
+                      controller: _emailController,
+                      hintText: 'Email',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Button(
+                      onClick: resetPassword,
+                      text: 'Reset Password',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+      ),
+    );
+  }
+
   Future resetPassword() async {
     try {
       await FirebaseAuth.instance
@@ -44,64 +88,5 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message.toString())));
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        /// APPBAR
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
-          title: const Text("FORGOT PASSWORD"),
-          centerTitle: true,
-        ),
-
-        /// Body
-        body: Center(
-          child: SizedBox(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 200,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 35),
-                    height: 100,
-                    width: 150,
-                    child: SvgPicture.asset('assets/images/logo_small.svg'),
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-
-                  /// Email TextField
-                  TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  /// LOG IN BUTTON
-                  Button(
-                    onClick: resetPassword,
-                    text: 'Reset Password',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
-      ),
-    );
   }
 }

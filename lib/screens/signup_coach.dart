@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/login.dart';
+import 'package:sapsak/shared/input.dart';
 
 import '../shared/button.dart';
 
@@ -15,57 +16,46 @@ class SignUpCoach extends StatefulWidget {
 }
 
 class _SignUpCoachState extends State<SignUpCoach> {
-  /// TextFields Controller
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  // Username is empty
   var uSnackBar = const SnackBar(
     content: Text('The username field must be filled!'),
   );
-  /// Password =! ConfirmPassword
   var aSnackBar = const SnackBar(
     content: Text('The password in not match with confirm password'),
   );
 
-  /// Password & ConfirmPassword is Empty
   var bSnackBar = const SnackBar(
     content: Text('The Password & Confirm Password fields must fill!'),
   );
 
-  /// Confirm Password is Empty
   var cSnackBar = const SnackBar(
     content: Text('The Confirm Password field must be filled!'),
   );
 
-  /// Password is Empty
   var dSnackBar = const SnackBar(
     content: Text('The Password field must be filled!'),
   );
 
-  /// Email & Confirm Password is Empty
   var eSnackBar = const SnackBar(
     content: Text('The Email & Confirm Password fields must be filled!'),
   );
 
-  /// Email is Empty
   var fSnackBar = const SnackBar(
     content: Text('The Email field must be filled!'),
   );
 
-  /// Email & password is Empty
   var gSnackBar = const SnackBar(
     content: Text('The Email & Password fields must be filled!'),
   );
 
-  /// All Fields Empty
   var xSnackBar = const SnackBar(
     content: Text('You must fill all fields'),
   );
 
-  /// SIGNING UP METHOD TO FIREBASE
   Future signUp() async {
     if (_usernameController.text.isNotEmpty &
     _emailController.text.isNotEmpty &
@@ -86,60 +76,44 @@ class _SignUpCoachState extends State<SignUpCoach> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(aSnackBar);
       }
-
-      /// In the below, with if statement we have some simple validate
     } else if (_usernameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(bSnackBar);
     }
-
     else if (_emailController.text.isNotEmpty &
     _passwordController.text.isEmpty &
     _confirmPasswordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(bSnackBar);
     }
-
-    ///
     else if (_emailController.text.isNotEmpty &
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(cSnackBar);
     }
-
-    ///
     else if (_emailController.text.isNotEmpty &
     _passwordController.text.isEmpty &
     _confirmPasswordController.text.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(dSnackBar);
     }
-
-    ///
     else if (_emailController.text.isEmpty &
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(eSnackBar);
     }
-
-    ///
     else if (_emailController.text.isEmpty &
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(fSnackBar);
     }
-
-    ///
     else if (_emailController.text.isEmpty &
     _passwordController.text.isEmpty &
     _confirmPasswordController.text.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(gSnackBar);
     }
-
-    ///
     else {
       ScaffoldMessenger.of(context).showSnackBar(xSnackBar);
     }
   }
 
-  /// CHECK IF PASSWORD CONFIREMD OR NOT
   bool passwordConfirmed() {
     if (_passwordController.text.trim() ==
         _confirmPasswordController.text.trim()) {
@@ -163,14 +137,12 @@ class _SignUpCoachState extends State<SignUpCoach> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        /// APP BAR
         appBar: AppBar(
           automaticallyImplyLeading: true,
           title: const Text("SIGN UP"),
           centerTitle: true,
         ),
 
-        /// Body
         body: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -185,63 +157,41 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   SizedBox(
                     height: 150,
                     width: 100,
-                    child: SvgPicture.asset(
-                        'assets/images/logo.svg',
-                    ),
+                    child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                   const SizedBox(
                     height: 100,
                   ),
-                  /// Username TextField
-                  TextFormField(
+                  Input(
                     controller: _usernameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Username',
-                    ),
+                    hintText: 'Username',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  /// Email TextField
-                  TextFormField(
+                  Input(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
+                    hintText: 'Email',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-
-                  /// Password TextField
-                  TextFormField(
-                    obscureText: true,
+                  Input(
+                    hideValue: true,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Password',
-                    ),
+                    hintText: 'Password',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-
-                  /// Confrim Password TextField
-                  TextFormField(
-                    obscureText: true,
+                  Input(
+                    hideValue: true,
                     controller: _confirmPasswordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Confirm Password',
-                    ),
+                    hintText: 'Confirm Password',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-
-                  /// SIGN UP BUTTON
                   Button(
                     onClick: signUp,
                     text: 'Sign Up',
@@ -249,8 +199,6 @@ class _SignUpCoachState extends State<SignUpCoach> {
                   const SizedBox(
                     height: 20,
                   ),
-
-                  /// LOGIN TEXT
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
                     child: const Text("Have an account? Log in",

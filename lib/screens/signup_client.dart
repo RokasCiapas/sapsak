@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/models/client.dart';
 import 'package:sapsak/screens/login.dart';
 import 'package:sapsak/services/client_service.dart';
+import 'package:sapsak/shared/input.dart';
+import 'package:sapsak/shared/logo.dart';
 
 import '../shared/button.dart';
+import '../shared/phone_number_input.dart';
 
 class SignUpClient extends StatefulWidget {
   const SignUpClient({Key? key})
@@ -20,7 +21,6 @@ class SignUpClient extends StatefulWidget {
 }
 
 class _SignUpClientState extends State<SignUpClient> {
-  /// TextFields Controller
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
   final _birthDateController = TextEditingController();
@@ -31,134 +31,46 @@ class _SignUpClientState extends State<SignUpClient> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  /// name is empty
   var nameEmptySnackBar = const SnackBar(
     content: Text('The name field must be filled!'),
   );
-  /// surname is empty
+
   var surnameEmptySnackBar = const SnackBar(
     content: Text('The surname field must be filled!'),
   );
-  /// birth date is empty
+
   var birthEmptySnackBar = const SnackBar(
     content: Text('The birth date field must be filled!'),
   );
-  /// phone number is empty
+
   var phoneNumberEmptySnackBar = const SnackBar(
     content: Text('The phone number field must be filled!'),
   );
-  /// Password =! ConfirmPassword
+
   var passwordMatchSnackBar = const SnackBar(
     content: Text('The password in not match with confirm password'),
   );
 
-  /// Password & ConfirmPassword is Empty
   var passwordAndConfirmPasswordEmptySnackBar = const SnackBar(
     content: Text('The Password & Confirm Password fields must fill!'),
   );
 
-  /// Confirm Password is Empty
   var confirmPasswordEmptySnackBar = const SnackBar(
     content: Text('The Confirm Password field must be filled!'),
   );
 
-  /// Password is Empty
   var passwordEmptySnackBar = const SnackBar(
     content: Text('The Password field must be filled!'),
   );
 
-  /// Email is Empty
   var emailEmptySnackBar = const SnackBar(
     content: Text('The Email field must be filled!'),
   );
 
-  /// All Fields Empty
   var allEmptySnackBar = const SnackBar(
     content: Text('You must fill all fields'),
   );
 
-  /// SIGNING UP METHOD TO FIREBASE
-  Future signUp() async {
-    if (_nameController.text.isNotEmpty &
-    _surnameController.text.isNotEmpty &
-    _birthDateController.text.isNotEmpty &
-    _phoneNumberController.text.isNotEmpty &
-    _emailController.text.isNotEmpty &
-    _passwordController.text.isNotEmpty &
-    _confirmPasswordController.text.isNotEmpty) {
-      if (passwordConfirmed()) {
-        Client client;
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        ).then((UserCredential data) => {
-          data.user!.updateDisplayName(_nameController.text).then((value) =>
-          {
-            client = Client(
-                firstLogin: Timestamp.fromDate(DateTime.now()),
-                name: _nameController.text,
-                surname: _surnameController.text,
-                email: _emailController.text,
-                phoneNumber: _phoneNumberController.text,
-                birthday: Timestamp.fromDate(DateTime.parse(_birthDateController.text)),
-                acceptMarketing: _marketingController,
-                healthIssues: _healthIssuesController.text
-            ),
-            ClientService().addClient(data.user!.uid, client).then((value) => Navigator.of(context)
-                .push(MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            )),
-            ),
-          }),
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(passwordMatchSnackBar);
-      }
-
-      /// In the below, with if statement we have some simple validate
-    } else if (_nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(nameEmptySnackBar);
-    }
-
-    else if (_surnameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(surnameEmptySnackBar);
-    }
-
-    else if (_birthDateController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(birthEmptySnackBar);
-    }
-
-    else if (_phoneNumberController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(birthEmptySnackBar);
-    }
-
-    else if (_passwordController.text.isEmpty &
-    _confirmPasswordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(passwordAndConfirmPasswordEmptySnackBar);
-    }
-
-    ///
-    else if (_confirmPasswordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(confirmPasswordEmptySnackBar);
-    }
-
-    ///
-    else if (_passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(passwordEmptySnackBar);
-    }
-
-    ///
-    else if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(emailEmptySnackBar);
-    }
-
-    ///
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(allEmptySnackBar);
-    }
-  }
-
-  /// CHECK IF PASSWORD CONFIREMD OR NOT
   bool passwordConfirmed() {
     if (_passwordController.text.trim() ==
         _confirmPasswordController.text.trim()) {
@@ -201,40 +113,24 @@ class _SignUpClientState extends State<SignUpClient> {
                   const SizedBox(
                     height: 50,
                   ),
-                  /// FLUTTER IMAGE
-                  SizedBox(
-                    height: 150,
-                    width: 100,
-                    child: SvgPicture.asset(
-                        'assets/images/logo.svg',
-                    ),
-                  ),
+                  const Logo(),
                   const SizedBox(
                     height: 100,
                   ),
-                  /// name TextField
-                  TextField(
+                  Input(
                     controller: _nameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Name',
-                    ),
+                    hintText: 'Name',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  /// surname TextField
-                  TextField(
+                  Input(
                     controller: _surnameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Surname',
-                    ),
+                    hintText: 'Surname',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  /// birth date TextField
                   TextField(
                     controller: _birthDateController,
                     readOnly: true,
@@ -260,96 +156,55 @@ class _SignUpClientState extends State<SignUpClient> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      /// phone number TextField
-                      Expanded(
-                        flex: 3,
-                        child: InternationalPhoneNumberInput(
-                          onInputChanged: (PhoneNumber number) {
-                          },
-                          selectorConfig: const SelectorConfig(
-                              selectorType: PhoneInputSelectorType.DIALOG,
-                              showFlags: false
-                          ),
-                          ignoreBlank: false,
-                          autoValidateMode: AutovalidateMode.disabled,
-                          initialValue: null,
-                          textFieldController: _phoneNumberController,
-                          formatInput: false,
-                          keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
-                          inputBorder: const OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      /// allow marketing
-                      Expanded(flex: 1,
-                        child: CheckboxListTile(
-                            title: const Text('Allow marketing'),
-                            value: _marketingController,
-                            onChanged: (value) => {
-                              _marketingController = value!,
-
-                            }
-                        ),)
-                    ],
+                  SizedBox(width: 345, child: PhoneNumberInput(phoneNumberController: _phoneNumberController)),
+                  const SizedBox(
+                    width: 15,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  /// Health issues TextField
-                  TextField(
+                  Input(
                     controller: _healthIssuesController,
                     maxLines: 3,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Health issues',
-                    ),
+                    hintText: 'Health issues',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  /// Email TextField
-                  TextField(
+                  Input(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
+                    hintText: 'Email',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-
-                  /// Password TextField
-                  TextField(
-                    obscureText: true,
+                  Input(
+                    hideValue: true,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Password',
-                    ),
+                    hintText: 'Password',
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-
-                  /// Confrim Password TextField
-                  TextField(
-                    obscureText: true,
+                  Input(
+                    hideValue: true,
                     controller: _confirmPasswordController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Confirm Password',
-                    ),
+                    hintText: 'Confirm Password',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
+                  SizedBox(
+                    width: 300,
+                    child: CheckboxListTile(
+                        title: const Text('Allow marketing'),
+                        value: _marketingController,
+                        onChanged: (value) => {
+                          _marketingController = value!,
 
-                  /// SIGN UP BUTTON
+                        }
+                    ),
+                  ),
                   Button(
                     onClick: signUp,
                     text: 'Sign Up',
@@ -357,8 +212,6 @@ class _SignUpClientState extends State<SignUpClient> {
                   const SizedBox(
                     height: 20,
                   ),
-
-                  /// LOGIN TEXT
                   GestureDetector(
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
                       child: const Text.rich(
@@ -383,4 +236,71 @@ class _SignUpClientState extends State<SignUpClient> {
       ),
     );
   }
+
+  Future signUp() async {
+    if (_nameController.text.isNotEmpty &
+    _surnameController.text.isNotEmpty &
+    _birthDateController.text.isNotEmpty &
+    _phoneNumberController.text.isNotEmpty &
+    _emailController.text.isNotEmpty &
+    _passwordController.text.isNotEmpty &
+    _confirmPasswordController.text.isNotEmpty) {
+      if (passwordConfirmed()) {
+        Client client;
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ).then((UserCredential data) => {
+          data.user!.updateDisplayName(_nameController.text).then((value) =>
+          {
+            client = Client(
+                firstLogin: Timestamp.fromDate(DateTime.now()),
+                name: _nameController.text,
+                surname: _surnameController.text,
+                email: _emailController.text,
+                phoneNumber: _phoneNumberController.text,
+                birthday: Timestamp.fromDate(DateTime.parse(_birthDateController.text)),
+                acceptMarketing: _marketingController,
+                healthIssues: _healthIssuesController.text
+            ),
+            ClientService().addClient(data.user!.uid, client).then((value) => Navigator.of(context)
+                .push(MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            )),
+            ),
+          }),
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(passwordMatchSnackBar);
+      }
+    } else if (_nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(nameEmptySnackBar);
+    }
+    else if (_surnameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(surnameEmptySnackBar);
+    }
+    else if (_birthDateController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(birthEmptySnackBar);
+    }
+    else if (_phoneNumberController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(birthEmptySnackBar);
+    }
+    else if (_passwordController.text.isEmpty &
+    _confirmPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(passwordAndConfirmPasswordEmptySnackBar);
+    }
+    else if (_confirmPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(confirmPasswordEmptySnackBar);
+    }
+    else if (_passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(passwordEmptySnackBar);
+    }
+    else if (_emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(emailEmptySnackBar);
+    }
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(allEmptySnackBar);
+    }
+  }
+
 }
