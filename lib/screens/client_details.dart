@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sapsak/models/client.dart';
+import 'package:intl/intl.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
 import 'package:sapsak/screens/edit_sports_plan.dart';
+import 'package:sapsak/screens/sports_plan_list.dart';
 
-import 'package:sapsak/screens/sports_plan_list.dart';import '../widgets/client_details_container.dart';
+import '../widgets/client_details_container.dart';
 
 class ClientDetails extends StatelessWidget {
   const ClientDetails({
