@@ -26,8 +26,9 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     double lineHeight = 50;
+
+    bool listenForOnChange = onChanged != null;
 
     return SizedBox(
       width: 350,
@@ -44,7 +45,9 @@ class Input extends StatelessWidget {
         obscureText: hideValue,
         onFieldSubmitted: (value) => onSubmitted!(value),
         onChanged: (value) {
-          onChanged!(value);
+          if(listenForOnChange) {
+            onChanged!(value);
+          }
         },
         maxLines: maxLines,
       ),
