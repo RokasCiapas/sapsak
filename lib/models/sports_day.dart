@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sapsak/models/exercise.dart';
+
+import 'multiset.dart';
 
 class SportsDay {
-  List<Exercise> exercises;
+  Map<int, Multiset> multisets;
 
   SportsDay({
-    required this.exercises
+    required this.multisets
   });
 
   factory SportsDay.fromFirestore(
@@ -16,19 +17,19 @@ class SportsDay {
     final data = snapshot.data();
 
     return SportsDay(
-        exercises: List.from(data?['exercises'])
+        multisets: Map.from(data?['multiset'])
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      "exercises": exercises.map((e) => e.toFirestore()),
+      "multisets": multisets.map((key, value) => MapEntry(key, value.toFirestore())),
     };
   }
 
   static SportsDay fromJson(Map<String, dynamic> json) {
     var test = SportsDay(
-        exercises: json['exercises'].map((exercise) => Exercise.fromJson(exercise)).toList()
+        multisets: json['multisets'].map((multiset) => Multiset.fromJson(multiset)).toList()
     );
     return test;
   }

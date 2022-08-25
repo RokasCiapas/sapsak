@@ -32,14 +32,12 @@ class SportsPlan {
     return SportsPlan(
       sportsDays: List.from((data?['sportsDays']).map((e) =>
           SportsDay(
-              exercises: List.from((e['exercises']).map((x) =>
+              multisets: Map.from((e['multiset']).map((x) =>
                   Exercise(
                       muscleGroup: x['muscleGroup'],
                       name: x['name'],
                       repCount: x['repCount'],
-                      setCount: x['setCount'],
-                      id: x['id'],
-                      supersetWidth: x['supersetWidth']
+                      setCount: x['setCount']
                   )
               ))
           )

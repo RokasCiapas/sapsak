@@ -125,6 +125,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();

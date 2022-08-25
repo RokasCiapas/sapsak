@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sapsak/shared/height_spacer.dart';
+import 'package:sapsak/shared/width_spacer.dart';
 
 import '../shared/button.dart';
 
 class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
     Key? key,
-    required this.heightSpacer,
-    required this.widthSpacer,
     required this.muscleGroup,
     required this.exercise,
     required this.setCount,
@@ -19,8 +19,6 @@ class ExerciseTile extends StatelessWidget {
     required this.changeRepCount
   }) : super(key: key);
 
-  final SizedBox heightSpacer;
-  final SizedBox widthSpacer;
   final String muscleGroup;
   final String exercise;
   final String setCount;
@@ -42,13 +40,15 @@ class ExerciseTile extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 20.0),
               child: Button(
-                onClick: () => makeSuperset,
-                text: 'Make Superset',
+                onClick: () {
+                  makeSuperset!();
+                },
+                text: 'Add exercise',
               ),
             ),
           ],
         ),
-        heightSpacer,
+        const HeightSpacer(),
         Row(
           children: [
             Expanded(
@@ -68,7 +68,7 @@ class ExerciseTile extends StatelessWidget {
                 },
               ),
             ),
-            widthSpacer,
+            const WidthSpacer(),
             Expanded(
               flex: 6,
               child: TextFormField(
@@ -84,7 +84,7 @@ class ExerciseTile extends StatelessWidget {
             )
           ],
         ),
-        heightSpacer,
+        const WidthSpacer(),
         Row(
           children: [
             Expanded(
@@ -106,7 +106,7 @@ class ExerciseTile extends StatelessWidget {
                   ),
                 )
             ),
-            widthSpacer,
+            const WidthSpacer(),
             Expanded(
                 flex: 1,
                 child: TextFormField(
@@ -124,7 +124,7 @@ class ExerciseTile extends StatelessWidget {
             )
           ],
         ),
-        heightSpacer,
+        const HeightSpacer(),
       ],
     );
   }

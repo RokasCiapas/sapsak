@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/models/sports_plan.dart';
 import 'package:sapsak/providers/client_provider.dart';
-import 'package:supercharged/supercharged.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/client.dart';
@@ -21,9 +20,17 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final Client? client = ClientProvider().selectedClient;
 
   SportsPlan selectedSportsPlan = SportsPlan(
-      sportsDays: List.filled(1, SportsDay(
-          exercises: List.filled(1, Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, id: const Uuid().v1(), supersetWidth: ''), growable: true)
-      ), growable: true),
+      sportsDays: List.filled(
+          1,
+          SportsDay(
+              multisets: [
+                Multiset(
+                  multiset: [
+                    Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)
+                  ]
+              )].asMap()
+          )
+      ),
       ownerEmail: '',
       createdAt: null,
       bestUntil: null,
@@ -40,7 +47,11 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
   Stream<SportsPlan> sportsPlanListByUserAndPlanId(String planId) {
     if (planId.isEmpty) {
       return Stream.value(SportsPlan(
-          sportsDays: List.filled(1, SportsDay(exercises: List.filled(1, Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, supersetWidth: '', id: const Uuid().v1()), growable: true)), growable: true),
+          sportsDays: List.filled(1,
+              SportsDay(
+                  multisets: Map.fromIterable([Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)])
+              ),
+              growable: true),
           ownerEmail: '',
           createdAt: null,
           bestUntil: null,
@@ -66,7 +77,17 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void resetSelectedSportsPlan() {
     setSelectedSportsPlan(
         SportsPlan(
-            sportsDays: List.filled(1, SportsDay(exercises: List.filled(1, Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, supersetWidth: '', id: const Uuid().v1()), growable: true)), growable: true),
+            sportsDays: List.filled(
+                1,
+                SportsDay(
+                    multisets: Map.fromIterable(
+                        [
+                          Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)
+                        ]
+                    ))
+                ,
+                growable: true
+            ),
             ownerEmail: '',
             createdAt: null,
             bestUntil: null,

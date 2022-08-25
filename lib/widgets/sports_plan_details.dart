@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sapsak/shared/height_spacer.dart';
+import 'package:sapsak/shared/width_spacer.dart';
 
 import '../shared/input.dart';
 
@@ -7,16 +9,12 @@ class SportsPlanDetails extends StatelessWidget {
   const SportsPlanDetails({
     Key? key,
     required this.expirationDateController,
-    required this.heightSpacer,
     required this.goalController,
-    required this.widthSpacer,
     required this.notesController,
   }) : super(key: key);
 
   final TextEditingController expirationDateController;
-  final SizedBox heightSpacer;
   final TextEditingController goalController;
-  final SizedBox widthSpacer;
   final TextEditingController notesController;
 
   @override
@@ -56,7 +54,7 @@ class SportsPlanDetails extends StatelessWidget {
                   }
                 },
               ),
-              heightSpacer,
+              const HeightSpacer(),
               Input(
                 controller: goalController,
                 hintText: 'Goal',
@@ -64,7 +62,7 @@ class SportsPlanDetails extends StatelessWidget {
             ],
           ),
         ),
-        widthSpacer,
+        const WidthSpacer(),
         Expanded(
             flex: 4,
             child: Input(

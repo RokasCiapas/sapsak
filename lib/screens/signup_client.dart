@@ -82,7 +82,12 @@ class _SignUpClientState extends State<SignUpClient> {
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _surnameController.dispose();
+    _birthDateController.dispose();
+    _phoneNumberController.dispose();
     _emailController.dispose();
+    _healthIssuesController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();

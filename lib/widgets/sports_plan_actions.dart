@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
-import 'package:uuid/uuid.dart';
+import 'package:sapsak/shared/width_spacer.dart';
 
 import '../models/client.dart';
 import '../models/exercise.dart';
@@ -16,7 +17,6 @@ class SportsPlanActions extends StatelessWidget {
   const SportsPlanActions({
     Key? key,
     required this.isEdit,
-    required this.widthSpacer,
     required this.scrollController,
     required this.expirationDateController,
     required this.notesController,
@@ -24,7 +24,6 @@ class SportsPlanActions extends StatelessWidget {
   }) : super(key: key);
 
   final bool isEdit;
-  final SizedBox widthSpacer;
   final ScrollController scrollController;
   final TextEditingController expirationDateController;
   final TextEditingController notesController;
@@ -52,44 +51,42 @@ class SportsPlanActions extends StatelessWidget {
             child: Button(
               onClick: ()
               {
-                sportsPlan.sportsDays[sportsPlan.sportsDays.length - 1].exercises.add(Exercise(
+
+                SportsPlan newSportsPlan = sportsPlan;
+
+                SportsDay lastSportsDay = newSportsPlan.sportsDays.last;
+
+                int lastKey = lastSportsDay.multisets.keys.last;
+
+                lastSportsDay.multisets[lastKey + 1] =  const Multiset(multiset: [
+                  Exercise(
                     muscleGroup: 'Shoulders',
                     name: '',
                     repCount: 0,
-                    setCount: 0,
-                    id: const Uuid().v1(),
-                    supersetWidth: ''
+                    setCount: 0
+                )]);
 
-                ));
-
-                context.read<SportsPlanProvider>().setSelectedSportsPlan(sportsPlan);
+                context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
 
                 scrollDown();
               },
-              text: 'Add exercise',
+              text: 'Add multiset',
             ),
           ),
         ),
-        widthSpacer,
+        const WidthSpacer(),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Button(
               onClick: () {
                 sportsPlan.sportsDays.add(SportsDay(
-                    exercises: List.filled(
-                        1,
-                        Exercise(
-                            muscleGroup: 'Shoulders',
-                            name: '',
-                            repCount: 0,
-                            setCount: 0,
-                            id: const Uuid().v1(),
-                            supersetWidth: ''
-
-                        ),
-                        growable: true)));
-
+                    multisets: Map.fromIterable([Exercise(
+                        muscleGroup: 'Shoulders',
+                        name: '',
+                        repCount: 0,
+                        setCount: 0
+                    )])));
 
                 context.read<SportsPlanProvider>().setSelectedSportsPlan(sportsPlan);
 
@@ -99,7 +96,7 @@ class SportsPlanActions extends StatelessWidget {
             ),
           ),
         ),
-        widthSpacer,
+        const WidthSpacer(),
         Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
@@ -114,7 +111,7 @@ class SportsPlanActions extends StatelessWidget {
                 text: 'Save',
               ),
             )),
-        widthSpacer,
+        const WidthSpacer(),
         Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
@@ -134,38 +131,38 @@ class SportsPlanActions extends StatelessWidget {
   }
 
   Future<DocumentReference<SportsPlan>> addSportsPlan(SportsPlan sportsPlan, Client client, {bool isDraft = false}) {
-      return SportsPlanService().addSportsPlan(SportsPlan(
-          sportsDays: sportsPlan.sportsDays,
-          ownerEmail: client.email,
-          createdAt:
-          Timestamp.fromDate(DateTime.parse(DateTime.now()
-              .toString())),
-          bestUntil:
-          Timestamp.fromDate(
-              DateTime.parse(expirationDateController.text)),
-          notes: notesController.text,
-          goal: goalController.text,
-          isDraft: isDraft,
-          id: sportsPlan.id
-      ));
+    return SportsPlanService().addSportsPlan(SportsPlan(
+        sportsDays: sportsPlan.sportsDays,
+        ownerEmail: client.email,
+        createdAt:
+        Timestamp.fromDate(DateTime.parse(DateTime.now()
+            .toString())),
+        bestUntil:
+        Timestamp.fromDate(
+            DateTime.parse(expirationDateController.text)),
+        notes: notesController.text,
+        goal: goalController.text,
+        isDraft: isDraft,
+        id: sportsPlan.id
+    ));
   }
 
   Future<void> editSportsPlan(SportsPlan sportsPlan, Client client, bool isDraft) {
-      return SportsPlanService().editSportsPlan(
-          SportsPlan(
-              sportsDays: sportsPlan.sportsDays,
-              ownerEmail: client.email,
-              createdAt:
-              Timestamp.fromDate(DateTime.parse(DateTime.now()
-                  .toString())),
-              bestUntil: Timestamp.fromDate(
-                  DateTime.parse(expirationDateController.text)),
-              notes: notesController.text,
-              goal: goalController.text,
-              isDraft: isDraft,
-              id: sportsPlan.id
-          ),
-          sportsPlan.id
-      );
+    return SportsPlanService().editSportsPlan(
+        SportsPlan(
+            sportsDays: sportsPlan.sportsDays,
+            ownerEmail: client.email,
+            createdAt:
+            Timestamp.fromDate(DateTime.parse(DateTime.now()
+                .toString())),
+            bestUntil: Timestamp.fromDate(
+                DateTime.parse(expirationDateController.text)),
+            notes: notesController.text,
+            goal: goalController.text,
+            isDraft: isDraft,
+            id: sportsPlan.id
+        ),
+        sportsPlan.id
+    );
   }
 }

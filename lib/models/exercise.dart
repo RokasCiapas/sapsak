@@ -5,16 +5,12 @@ class Exercise {
   final String name;
   final int repCount;
   final int setCount;
-  final String id;
-  final String supersetWidth;
 
   const Exercise({
     required this.muscleGroup,
     required this.name,
     required this.repCount,
     required this.setCount,
-    required this.id,
-    required this.supersetWidth,
   });
 
   factory Exercise.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) {
@@ -24,9 +20,7 @@ class Exercise {
       muscleGroup: data?['muscleGroup'],
       name: data?['name'],
       repCount: data?['repCount'],
-      setCount: data?['setCount'],
-      id: data?['id'],
-      supersetWidth: data?['supersetWidth'],
+      setCount: data?['setCount']
     );
   }
 
@@ -44,9 +38,7 @@ class Exercise {
       muscleGroup: json['muscleGroup'],
       name: json['name'],
       repCount: json['repCount'],
-      setCount: json['setCount'],
-      id: json['id'],
-      supersetWidth: json['supersetWidth'],
+      setCount: json['setCount']
     );
   }
 

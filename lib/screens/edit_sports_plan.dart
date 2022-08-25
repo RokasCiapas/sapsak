@@ -28,13 +28,6 @@ class EditSportsPlan extends StatelessWidget {
     final goalController = TextEditingController();
     final expirationDateController = TextEditingController();
 
-    const widthSpacer = SizedBox(
-      width: 15,
-    );
-    const heightSpacer = SizedBox(
-      height: 15,
-    );
-
     if (client != null) {
       SportsPlan sportsPlan = context.watch<SportsPlanProvider>().selectedSportsPlan;
 
@@ -77,20 +70,14 @@ class EditSportsPlan extends StatelessWidget {
                         children: [
                           SportsPlanDetails(
                               expirationDateController: expirationDateController,
-                              heightSpacer: heightSpacer,
                               goalController: goalController,
-                              widthSpacer: widthSpacer,
                               notesController: notesController
                           ),
-                          const SportsPlanContainer(
-                            heightSpacer: heightSpacer,
-                            widthSpacer: widthSpacer,
-                          )
+                          const SportsPlanContainer()
                         ],
                       )),
                   SportsPlanActions(
                       isEdit: isEdit,
-                      widthSpacer: widthSpacer,
                       scrollController: listViewScrollController,
                       expirationDateController: expirationDateController,
                       notesController: notesController,
@@ -108,5 +95,6 @@ class EditSportsPlan extends StatelessWidget {
 
 
 }
+
 
 
