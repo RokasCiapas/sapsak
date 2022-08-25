@@ -51,23 +51,7 @@ class SportsPlanActions extends StatelessWidget {
             child: Button(
               onClick: ()
               {
-
-                SportsPlan newSportsPlan = sportsPlan;
-
-                SportsDay lastSportsDay = newSportsPlan.sportsDays.last;
-
-                int lastKey = lastSportsDay.multisets.keys.last;
-
-                lastSportsDay.multisets[lastKey + 1] =  const Multiset(multiset: [
-                  Exercise(
-                    muscleGroup: 'Shoulders',
-                    name: '',
-                    repCount: 0,
-                    setCount: 0
-                )]);
-
-                context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
-
+                _addMultiset(sportsPlan, context);
                 scrollDown();
               },
               text: 'Add multiset',
@@ -80,16 +64,7 @@ class SportsPlanActions extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0),
             child: Button(
               onClick: () {
-                sportsPlan.sportsDays.add(SportsDay(
-                    multisets: Map.fromIterable([Exercise(
-                        muscleGroup: 'Shoulders',
-                        name: '',
-                        repCount: 0,
-                        setCount: 0
-                    )])));
-
-                context.read<SportsPlanProvider>().setSelectedSportsPlan(sportsPlan);
-
+                _addSportsDay(sportsPlan, context);
                 scrollDown();
               },
               text: 'Add day',
@@ -128,6 +103,41 @@ class SportsPlanActions extends StatelessWidget {
             ))
       ],
     );
+  }
+
+  void _addMultiset(SportsPlan sportsPlan, BuildContext context) {
+    SportsPlan newSportsPlan = sportsPlan;
+
+    SportsDay lastSportsDay = newSportsPlan.sportsDays.last;
+
+    int lastKey = lastSportsDay.multisets.keys.last;
+
+    lastSportsDay.multisets[lastKey + 1] = Multiset(multiset: [
+      Exercise(
+          muscleGroup: 'Shoulders',
+          name: '',
+          repCount: 0,
+          setCount: 0
+      )]);
+
+    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+
+  }
+
+  void _addSportsDay(SportsPlan sportsPlan, BuildContext context) {
+    SportsPlan newSportsPlan = sportsPlan;
+
+    newSportsPlan.sportsDays.add(SportsDay(
+        multisets: {
+          0: Multiset(multiset: [Exercise(
+              muscleGroup: 'Shoulders',
+              name: '',
+              repCount: 0,
+              setCount: 0
+          )])
+        }));
+
+    context.read<SportsPlanProvider>().setSelectedSportsPlan(sportsPlan);
   }
 
   Future<DocumentReference<SportsPlan>> addSportsPlan(SportsPlan sportsPlan, Client client, {bool isDraft = false}) {

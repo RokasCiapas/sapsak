@@ -8,6 +8,7 @@ import '../shared/button.dart';
 class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
     Key? key,
+    required this.sequenceNumber,
     required this.muscleGroup,
     required this.exercise,
     required this.setCount,
@@ -19,6 +20,7 @@ class ExerciseTile extends StatelessWidget {
     required this.changeRepCount
   }) : super(key: key);
 
+  final int sequenceNumber;
   final String muscleGroup;
   final String exercise;
   final String setCount;
@@ -35,6 +37,8 @@ class ExerciseTile extends StatelessWidget {
       children: [
         Row(
           children: [
+            Text('Exercise no: $sequenceNumber', style: const TextStyle(
+                fontSize: 16),),
             const Spacer(),
             makeSuperset == null ? const SizedBox() : Padding(
               padding: const EdgeInsets.only(

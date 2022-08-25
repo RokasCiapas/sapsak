@@ -39,7 +39,7 @@ class ClientDetails extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Button(
                     onClick: () {
-                      // context.read<SportsPlanProvider>().resetSelectedSportsPlan();
+                      context.read<SportsPlanProvider>().resetSelectedSportsPlan();
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const EditSportsPlan()));
                     },
                     text: 'Create sports plan'

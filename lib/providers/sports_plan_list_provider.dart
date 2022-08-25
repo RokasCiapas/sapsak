@@ -23,13 +23,12 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
       sportsDays: List.filled(
           1,
           SportsDay(
-              multisets: [
-                Multiset(
-                  multiset: [
-                    Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)
-                  ]
-              )].asMap()
-          )
+              multisets: {
+                0: Multiset(
+                    multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)
+                )
+              }),
+        growable: true
       ),
       ownerEmail: '',
       createdAt: null,
@@ -42,27 +41,6 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   Stream<QuerySnapshot<SportsPlan>> get sportsPlanListByUser {
     return SportsPlanService().sportsPlanByUserStream(_clientProvider.selectedClient?.email);
-  }
-
-  Stream<SportsPlan> sportsPlanListByUserAndPlanId(String planId) {
-    if (planId.isEmpty) {
-      return Stream.value(SportsPlan(
-          sportsDays: List.filled(1,
-              SportsDay(
-                  multisets: Map.fromIterable([Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)])
-              ),
-              growable: true),
-          ownerEmail: '',
-          createdAt: null,
-          bestUntil: null,
-          notes: '',
-          goal: '',
-          isDraft: true,
-          id: ''
-      ));
-    }
-    return SportsPlanService().sportsPlanByUserStream(_clientProvider.selectedClient?.email)
-        .map((QuerySnapshot<SportsPlan> event) => event.docs.firstWhere((e) => e.id == planId).data());
   }
 
   Stream<List<SportsPlan>> getAllSportsPlans() {
@@ -80,12 +58,11 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
             sportsDays: List.filled(
                 1,
                 SportsDay(
-                    multisets: Map.fromIterable(
-                        [
-                          Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)
-                        ]
-                    ))
-                ,
+                    multisets: {
+                      0: Multiset(
+                          multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)
+                      )
+                    }),
                 growable: true
             ),
             ownerEmail: '',
@@ -94,7 +71,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
             notes: '',
             goal: '',
             isDraft: true,
-            id: ''
+            id: const Uuid().v1()
         )
     );
   }

@@ -54,7 +54,7 @@ class SportsPlan {
 
   Map<String, dynamic> toFirestore() {
     return {
-      "sportsDays": sportsDays.map((e) => e.toFirestore()),
+      "sportsDays": sportsDays.map((SportsDay sportsDay) => sportsDay.toFirestore()),
       "ownerEmail": ownerEmail,
       "createdAt": createdAt,
       "bestUntil": bestUntil,

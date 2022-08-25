@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
-import 'package:supercharged/supercharged.dart';
 
 import '../models/exercise.dart';
 import '../models/sports_day.dart';
@@ -63,7 +62,8 @@ class SportsPlanContainer extends StatelessWidget {
 
   void _addExerciseToMultiset(int sportsDayIndex, int multisetIndex, SportsPlan sportsPlan, BuildContext context) {
     SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]?.multiset.add(
+
+    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]!.multiset.add(
         const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0)
     );
     context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);

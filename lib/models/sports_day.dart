@@ -23,7 +23,7 @@ class SportsDay {
 
   Map<String, dynamic> toFirestore() {
     return {
-      "multisets": multisets.map((key, value) => MapEntry(key, value.toFirestore())),
+      "multisets": multisets.map((key, Multiset multiset) => MapEntry(key, multiset.toFirestore())),
     };
   }
 

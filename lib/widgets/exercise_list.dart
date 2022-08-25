@@ -41,6 +41,7 @@ class ExerciseList extends StatelessWidget {
                   Exercise exercise = multiset[exerciseIndex];
 
                   return ExerciseTile(
+                    sequenceNumber: exerciseIndex,
                     muscleGroup: exercise.muscleGroup,
                     exercise: exercise.name,
                     setCount: exercise.setCount > 0 ? exercise.setCount.toString() : '',

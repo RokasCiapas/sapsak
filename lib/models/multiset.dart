@@ -4,9 +4,9 @@ import 'package:sapsak/models/exercise.dart';
 import 'exercise.dart';
 
 class Multiset {
-  final List<Exercise> multiset;
+  List<Exercise> multiset;
 
-  const Multiset({
+  Multiset({
     required this.multiset,
   });
 
@@ -20,7 +20,7 @@ class Multiset {
 
   Map<String, dynamic> toFirestore() {
     return {
-      "multiset": multiset,
+      "multiset": multiset.map((Exercise e) => e.toFirestore()),
     };
   }
 
