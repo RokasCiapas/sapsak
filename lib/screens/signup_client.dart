@@ -112,7 +112,7 @@ class _SignUpClientState extends State<SignUpClient> {
                   ),
                   const Logo(),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   Input(
                     controller: _nameController,

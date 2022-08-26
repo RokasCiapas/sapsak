@@ -155,7 +155,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                     child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   Input(
                     controller: _usernameController,

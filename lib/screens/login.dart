@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const Logo(),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   Input(
                     controller: _emailController,
