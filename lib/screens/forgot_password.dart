@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sapsak/screens/login.dart';
 import 'package:sapsak/shared/input.dart';
 
 import '../shared/button.dart';
@@ -27,12 +28,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            foregroundColor: Colors.white,
-            title: const Text("FORGOT PASSWORD"),
-            centerTitle: true,
-          ),
           body: Center(
             child: SizedBox(
               child: SingleChildScrollView(
@@ -56,6 +51,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Button(
                       onClick: resetPassword,
                       text: 'Reset Password',
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                          const LoginScreen(),
+                        ),
+                      ),
+                      child: const Text(
+                        "Have an account? Log in",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ],
                 ),

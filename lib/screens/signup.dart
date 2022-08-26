@@ -15,8 +15,6 @@ class SignUpScreen extends StatelessWidget {
       /// APP BAR
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text("SIGN UP"),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(

@@ -99,14 +99,6 @@ class _SignUpClientState extends State<SignUpClient> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        /// APP BAR
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          title: const Text("SIGN UP"),
-          centerTitle: true,
-        ),
-
-        /// Body
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -136,27 +128,30 @@ class _SignUpClientState extends State<SignUpClient> {
                   const SizedBox(
                     height: 15,
                   ),
-                  TextField(
-                    controller: _birthDateController,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Birth date',
-                    ),
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context, initialDate: DateTime.now(),
-                          firstDate: DateTime(1950), //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2101)
-                      );
+                  SizedBox(
+                    width: 350,
+                    child: TextField(
+                      controller: _birthDateController,
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Birth date',
+                      ),
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context, initialDate: DateTime.now(),
+                            firstDate: DateTime(1950), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(2101)
+                        );
 
-                      if(pickedDate != null ){
-                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                        setState(() {
-                          _birthDateController.text = formattedDate; //set output date to TextField value.
-                        });
-                      }
-                    },
+                        if(pickedDate != null ){
+                          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                          setState(() {
+                            _birthDateController.text = formattedDate; //set output date to TextField value.
+                          });
+                        }
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 15,

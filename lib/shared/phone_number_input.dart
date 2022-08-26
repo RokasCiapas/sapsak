@@ -11,6 +11,7 @@ class PhoneNumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InternationalPhoneNumberInput(
       onInputChanged: (PhoneNumber number) {
       },
@@ -20,7 +21,7 @@ class PhoneNumberInput extends StatelessWidget {
       ),
       ignoreBlank: false,
       autoValidateMode: AutovalidateMode.disabled,
-      initialValue: null,
+      initialValue: PhoneNumber(isoCode: 'LT'),
       textFieldController: _phoneNumberController,
       formatInput: false,
       keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),

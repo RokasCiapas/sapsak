@@ -138,12 +138,6 @@ class _SignUpCoachState extends State<SignUpCoach> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          title: const Text("SIGN UP"),
-          centerTitle: true,
-        ),
-
         body: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -208,7 +202,7 @@ class _SignUpCoachState extends State<SignUpCoach> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

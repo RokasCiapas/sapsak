@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
 import 'package:sapsak/screens/forgot_password.dart';
 import 'package:sapsak/screens/signup.dart';
@@ -50,15 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        /// APP BAR
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: const Text("LOG IN"),
-            centerTitle: true
-        ),
-
-        /// Body
-        body: Center(
+          body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: SingleChildScrollView(
