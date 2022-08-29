@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sapsak/shared/height_spacer.dart';
-import 'package:sapsak/shared/width_spacer.dart';
-
-import '../shared/button.dart';
 
 class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
@@ -13,7 +9,6 @@ class ExerciseTile extends StatelessWidget {
     required this.exercise,
     required this.setCount,
     required this.repCount,
-    this.makeSuperset,
     required this.changeMuscleGroup,
     required this.changeExercise,
     required this.changeSetCount,
@@ -25,7 +20,6 @@ class ExerciseTile extends StatelessWidget {
   final String exercise;
   final String setCount;
   final String repCount;
-  final VoidCallback? makeSuperset;
   final Function(String?) changeMuscleGroup;
   final Function(String) changeExercise;
   final Function(String) changeSetCount;
@@ -33,102 +27,92 @@ class ExerciseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+
+    return Wrap(
+      spacing: 15,
+      runSpacing: 15,
+      alignment: WrapAlignment.start,
       children: [
-        Row(
-          children: [
-            Text('Exercise no: $sequenceNumber', style: const TextStyle(
-                fontSize: 16),),
-            const Spacer(),
-            makeSuperset == null ? const SizedBox() : Padding(
-              padding: const EdgeInsets.only(
-                  top: 20.0),
-              child: Button(
-                onClick: () {
-                  makeSuperset!();
-                },
-                text: 'Add exercise',
-              ),
-            ),
-          ],
+        DropdownButton<String>(
+          value: muscleGroup,
+          hint:
+          const Text('Muscle group'),
+          items: <String>['Shoulders', 'Biceps', 'Triceps', 'Chest', 'Abs', 'Back', 'Legs'].map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            changeMuscleGroup(newValue);
+          },
         ),
-        const HeightSpacer(),
-        Row(
-          children: [
-            Expanded(
-              flex: 0,
-              child: DropdownButton<String>(
-                value: muscleGroup,
-                hint:
-                const Text('Muscle group'),
-                items: <String>['Shoulders', 'Biceps', 'Triceps', 'Chest', 'Abs', 'Back', 'Legs'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  changeMuscleGroup(newValue);
-                },
-              ),
+        SizedBox(
+          width: 350,
+          child: TextFormField(
+            initialValue: exercise,
+            onChanged: (text) {
+              changeExercise(text);
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Exercise',
             ),
-            const WidthSpacer(),
-            Expanded(
-              flex: 6,
-              child: TextFormField(
-                initialValue: exercise,
-                onChanged: (text) {
-                  changeExercise(text);
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Exercise',
-                ),
-              ),
-            )
-          ],
+          ),
         ),
-        const WidthSpacer(),
-        Row(
-          children: [
-            Expanded(
-                flex: 1,
-                child: TextFormField(
-                  initialValue: setCount,
-                  onChanged: (text) {
-                    changeSetCount(text);
-                  },
-                  keyboardType:
-                  TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  decoration:
-                  const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Set count',
-                  ),
-                )
+        SizedBox(
+          width: 100,
+          child: TextFormField(
+            initialValue: setCount,
+            onChanged: (text) {
+              changeSetCount(text);
+            },
+            keyboardType:
+            TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            decoration:
+            const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Set count',
             ),
-            const WidthSpacer(),
-            Expanded(
-                flex: 1,
-                child: TextFormField(
-                  initialValue: repCount,
-                  onChanged: (text) {
-                    changeRepCount(text);
-                  },
-                  decoration:
-                  const InputDecoration(
-                    border:
-                    OutlineInputBorder(),
-                    hintText: 'Rep count',
-                  ),
-                )
-            )
-          ],
+          ),
         ),
-        const HeightSpacer(),
+        SizedBox(
+          width: 150,
+          child: TextFormField(
+            initialValue: repCount,
+            onChanged: (text) {
+              changeRepCount(text);
+            },
+            decoration:
+            const InputDecoration(
+              border:
+              OutlineInputBorder(),
+              hintText: 'Rep count',
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 132,
+          child: TextFormField(
+            initialValue: exercise,
+            onChanged: (text) {},
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Weight',
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(20)
+          ),
+          child: const Icon(Icons.close),
+        ),
       ],
     );
   }

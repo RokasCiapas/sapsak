@@ -19,57 +19,46 @@ class SportsPlanDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment
-          .start,
+    return Wrap(
+      spacing: 15,
+      runSpacing: 15,
+      alignment: WrapAlignment.start,
       children: [
-        Expanded(
-          flex: 1,
-          child: Column(
-            children: [
-              TextField(
-                controller: expirationDateController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Expiration date',
-                ),
-                onTap: () async {
-                  DateTime? pickedDate =
-                  await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(
-                          1950),
-                      //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101));
+        SizedBox(
+          width: 110,
+          child: TextField(
+            controller: expirationDateController,
+            readOnly: true,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Expiration date',
+            ),
+            onTap: () async {
+              DateTime? pickedDate =
+              await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950), lastDate: DateTime(2101)
+              );
 
-                  if (pickedDate != null) {
-                    String formattedDate =
-                    DateFormat('yyyy-MM-dd')
-                        .format(pickedDate);
-                    expirationDateController
-                        .text =
-                        formattedDate;
-                  }
-                },
-              ),
-              const HeightSpacer(),
-              Input(
-                controller: goalController,
-                hintText: 'Goal',
-              )
-            ],
+              if (pickedDate != null) {
+                String formattedDate =
+                DateFormat('yyyy-MM-dd').format(pickedDate);expirationDateController.text = formattedDate;
+              }
+            },
           ),
         ),
-        const WidthSpacer(),
-        Expanded(
-            flex: 4,
-            child: Input(
-              controller: notesController,
-              maxLines: 3,
-              hintText: 'Notes',
-            )),
+        Input(
+          controller: goalController,
+          hintText: 'Goal',
+          width: 250,
+        ),
+        Input(
+          controller: notesController,
+          maxLines: 2,
+          hintText: 'Notes',
+          flexibleWidth: true,
+        ),
       ],
     );
   }

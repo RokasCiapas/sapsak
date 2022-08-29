@@ -34,25 +34,23 @@ class SportsPlanContainer extends StatelessWidget {
                       const TextStyle(
                           fontSize: 18))),
             ),
-            Card(
-              child: ExerciseList(
-                sportsDay: sportsDay,
-                addExerciseToMultiset: (int multisetIndex) {
-                  _addExerciseToMultiset(sportsDayIndex, multisetIndex, sportsPlan, context);
-                },
-                changeMuscleGroup: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                  _changeMuscleGroup(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
-                },
-                changeExercise: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                  _changeExercise(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
-                },
-                changeSetCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                  _changeSetCount(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
-                },
-                changeRepCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                  _changeRepCount(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
-                },
-              ),
+            ExerciseList(
+              sportsDay: sportsDay,
+              addExerciseToMultiset: (int multisetIndex) {
+                _addExerciseToMultiset(sportsDayIndex, multisetIndex, sportsPlan, context);
+              },
+              changeMuscleGroup: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
+                _changeMuscleGroup(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
+              },
+              changeExercise: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
+                _changeExercise(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
+              },
+              changeSetCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
+                _changeSetCount(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
+              },
+              changeRepCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
+                _changeRepCount(sportsDayIndex, multisetIndex, sportsPlan, exercise, exerciseIndex, newValue, context);
+              },
             )
           ],
         );

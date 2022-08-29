@@ -12,6 +12,8 @@ class Input extends StatelessWidget {
     this.onChanged,
     this.readonly = false,
     this.maxLines = 1,
+    this.flexibleWidth = false,
+    this.width = 350,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -23,6 +25,8 @@ class Input extends StatelessWidget {
   final Function(String)? onChanged;
   final bool readonly;
   final int? maxLines;
+  final bool? flexibleWidth;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class Input extends StatelessWidget {
     bool listenForOnChange = onChanged != null;
 
     return SizedBox(
-      width: 350,
+      width: flexibleWidth == false ? width : null,
       height: maxLines! > 1 ? lineHeight * (maxLines!.toDouble()/1.65) : lineHeight,
       child: TextFormField(
         readOnly: readonly,

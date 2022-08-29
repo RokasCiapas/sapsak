@@ -59,6 +59,8 @@ class EditSportsPlan extends StatelessWidget {
             title: Text('${client.name} ${client.surname}'),
           ),
           body: Container(
+              width: 992,
+              alignment: Alignment.topLeft,
               margin: const EdgeInsets.all(17),
               child: Column(
                 children: [
