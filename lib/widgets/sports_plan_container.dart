@@ -17,6 +17,7 @@ class SportsPlanContainer extends StatelessWidget {
     SportsPlan sportsPlan = context.watch<SportsPlanProvider>().selectedSportsPlan;
 
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: sportsPlan.sportsDays.length,
       itemBuilder: (BuildContext context,

@@ -34,6 +34,7 @@ class MultisetTile extends StatelessWidget {
           ListView.builder(
               shrinkWrap: true,
               itemCount: multiset.length,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int exerciseIndex) {
                 Exercise exercise = multiset[exerciseIndex];
 

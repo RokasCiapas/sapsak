@@ -26,6 +26,7 @@ class ExerciseList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: sportsDay.multisets.length,
         itemBuilder: (BuildContext context, int multisetIndex) {
