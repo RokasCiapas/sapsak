@@ -42,24 +42,19 @@ class SportsPlanContainer extends StatelessWidget {
               addExerciseToMultiset: (int multisetIndex) {
                 _addExerciseToMultiset(sportsDayIndex, multisetIndex, context);
               },
-              changeMuscleGroup: (int multisetIndex, int exerciseIndex,
-                  Exercise exercise, String? newValue) {
+              changeMuscleGroup: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
                 _changeMuscleGroup(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
               },
-              changeExercise: (int multisetIndex, int exerciseIndex,
-                  Exercise exercise, String? newValue) {
+              changeExercise: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
                 _changeExercise(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
               },
-              changeSetCount: (int multisetIndex, int exerciseIndex,
-                  Exercise exercise, String? newValue) {
+              changeSetCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
                 _changeSetCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
               },
-              changeRepCount: (int multisetIndex, int exerciseIndex,
-                  Exercise exercise, String? newValue) {
+              changeRepCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
                 _changeRepCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
               },
-              changeWeight: (int multisetIndex, int exerciseIndex,
-                  Exercise exercise, String? newValue) {
+              changeWeight: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
                 _changeWeight(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
               },
               removeExercise: (int multisetIndex, int exerciseIndex) {
