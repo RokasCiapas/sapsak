@@ -52,8 +52,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void addExerciseToMultiset(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan) {
+  void addExerciseToMultiset(int sportsDayIndex, int multisetIndex) {
 
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]!.multiset
         .add(
@@ -66,15 +65,13 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void removeExercise(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan, int exerciseIndex) {
+  void removeExercise(int sportsDayIndex, int multisetIndex, int exerciseIndex) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]?.multiset.removeAt(exerciseIndex);
     notifyListeners();
 
   }
 
-  void changeExercise(int sportsDayIndex, int multisetIndex,
-  SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+  void changeExercise(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
       String? newValue) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
         ?.multiset[exerciseIndex] = Exercise(
@@ -88,8 +85,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   }
 
-  void changeSetCount(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+  void changeSetCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
       String? newValue) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
         ?.multiset[exerciseIndex] = Exercise(
@@ -102,8 +98,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void changeRepCount(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex, String? newValue) {
+  void changeRepCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
         ?.multiset[exerciseIndex] = Exercise(
         muscleGroup: exercise.muscleGroup,
@@ -115,8 +110,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void changeWeight(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex, String? newValue) {
+  void changeWeight(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
         ?.multiset[exerciseIndex] = Exercise(
         muscleGroup: exercise.muscleGroup,
@@ -129,8 +123,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void changeMuscleGroup(int sportsDayIndex, int multisetIndex,
-      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+  void changeMuscleGroup(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
       String? newValue) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
         ?.multiset[exerciseIndex] = Exercise(
