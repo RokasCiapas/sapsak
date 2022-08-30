@@ -73,30 +73,25 @@ class SportsPlanContainer extends StatelessWidget {
     context.read<SportsPlanProvider>().addExerciseToMultiset(sportsDayIndex, multisetIndex);
   }
 
-  void _changeMuscleGroup(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
-      String? newValue, BuildContext context) {
+  void _changeMuscleGroup(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
 
     context.read<SportsPlanProvider>().changeMuscleGroup(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
   }
 
-  void _changeExercise(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
-      String? newValue, BuildContext context) {
+  void _changeExercise(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
 
     context.read<SportsPlanProvider>().changeExercise(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
   }
 
-  void _changeSetCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
-      String? newValue, BuildContext context) {
+  void _changeSetCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
     context.read<SportsPlanProvider>().changeSetCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
   }
 
-  void _changeRepCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
-      String? newValue, BuildContext context) {
+  void _changeRepCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
     context.read<SportsPlanProvider>().changeRepCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
   }
 
-  void _changeWeight(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex,
-      String? newValue, BuildContext context) {
+  void _changeWeight(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
 
     context.read<SportsPlanProvider>().changeWeight(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
   }
