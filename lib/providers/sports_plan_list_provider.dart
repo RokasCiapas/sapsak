@@ -25,7 +25,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
           SportsDay(
               multisets: {
                 0: Multiset(
-                    multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)
+                    multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, weight: ''), growable: true)
                 )
               }),
         growable: true
@@ -60,7 +60,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
                 SportsDay(
                     multisets: {
                       0: Multiset(
-                          multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0), growable: true)
+                          multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, weight: ''), growable: true)
                       )
                     }),
                 growable: true

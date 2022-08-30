@@ -14,6 +14,7 @@ class Input extends StatelessWidget {
     this.maxLines = 1,
     this.flexibleWidth = false,
     this.width = 350,
+    this.isDense = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -27,6 +28,7 @@ class Input extends StatelessWidget {
   final int? maxLines;
   final bool? flexibleWidth;
   final double? width;
+  final bool? isDense;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +40,15 @@ class Input extends StatelessWidget {
       width: flexibleWidth == false ? width : null,
       height: maxLines! > 1 ? lineHeight * (maxLines!.toDouble()/1.65) : lineHeight,
       child: TextFormField(
+        style: isDense == true ? const TextStyle(fontSize: 15) : null,
         readOnly: readonly,
         controller: controller,
         keyboardType: type,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: hintText,
+            border: const OutlineInputBorder(),
+            contentPadding: isDense == true ? const EdgeInsets.all(12) : null,
+            hintText: hintText,
+            isDense: isDense
         ),
         textInputAction: textInputAction,
         obscureText: hideValue,

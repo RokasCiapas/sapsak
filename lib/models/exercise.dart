@@ -5,12 +5,14 @@ class Exercise {
   final String name;
   final int repCount;
   final int setCount;
+  final String weight;
 
   const Exercise({
     required this.muscleGroup,
     required this.name,
     required this.repCount,
     required this.setCount,
+    required this.weight,
   });
 
   factory Exercise.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) {
@@ -20,7 +22,8 @@ class Exercise {
       muscleGroup: data?['muscleGroup'],
       name: data?['name'],
       repCount: data?['repCount'],
-      setCount: data?['setCount']
+      setCount: data?['setCount'],
+      weight: data?['weight'],
     );
   }
 
@@ -30,15 +33,17 @@ class Exercise {
       "name": name,
       "repCount": repCount,
       "setCount": setCount,
+      "weight": weight,
     };
   }
 
   static Exercise fromJson(Map<String, dynamic> json) {
     return Exercise(
-      muscleGroup: json['muscleGroup'],
-      name: json['name'],
-      repCount: json['repCount'],
-      setCount: json['setCount']
+        muscleGroup: json['muscleGroup'],
+        name: json['name'],
+        repCount: json['repCount'],
+        setCount: json['setCount'],
+        weight: json['weight']
     );
   }
 

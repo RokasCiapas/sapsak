@@ -9,10 +9,13 @@ class ExerciseTile extends StatelessWidget {
     required this.exercise,
     required this.setCount,
     required this.repCount,
+    required this.weight,
     required this.changeMuscleGroup,
     required this.changeExercise,
     required this.changeSetCount,
-    required this.changeRepCount
+    required this.changeRepCount,
+    required this.changeWeight,
+    required this.removeExercise,
   }) : super(key: key);
 
   final int sequenceNumber;
@@ -20,14 +23,16 @@ class ExerciseTile extends StatelessWidget {
   final String exercise;
   final String setCount;
   final String repCount;
+  final String weight;
   final Function(String?) changeMuscleGroup;
   final Function(String) changeExercise;
   final Function(String) changeSetCount;
   final Function(String) changeRepCount;
+  final Function(String) changeWeight;
+  final Function(int) removeExercise;
 
   @override
   Widget build(BuildContext context) {
-
     return Wrap(
       spacing: 15,
       runSpacing: 15,
@@ -107,8 +112,10 @@ class ExerciseTile extends StatelessWidget {
           width: 132,
           child: TextFormField(
             style: const TextStyle(fontSize: 15),
-            initialValue: exercise,
-            onChanged: (text) {},
+            initialValue: weight,
+            onChanged: (text) {
+              changeWeight(text);
+            },
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.all(12),
               isDense: true,
@@ -118,7 +125,9 @@ class ExerciseTile extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            removeExercise(sequenceNumber);
+          },
           style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               padding: const EdgeInsets.all(10)

@@ -34,10 +34,11 @@ class SportsPlan {
           SportsDay(
               multisets: Map.from((e['multiset']).map((x) =>
                   Exercise(
-                      muscleGroup: x['muscleGroup'],
-                      name: x['name'],
-                      repCount: x['repCount'],
-                      setCount: x['setCount']
+                    muscleGroup: x['muscleGroup'],
+                    name: x['name'],
+                    repCount: x['repCount'],
+                    setCount: x['setCount'],
+                    weight: x['weight'],
                   )
               ))
           )

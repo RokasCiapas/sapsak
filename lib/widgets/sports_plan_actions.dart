@@ -113,11 +113,12 @@ class SportsPlanActions extends StatelessWidget {
     int lastKey = lastSportsDay.multisets.keys.last;
 
     lastSportsDay.multisets[lastKey + 1] = Multiset(multiset: [
-      Exercise(
+      const Exercise(
           muscleGroup: 'Shoulders',
           name: '',
           repCount: 0,
-          setCount: 0
+          setCount: 0,
+          weight: ''
       )]);
 
     context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
@@ -129,11 +130,12 @@ class SportsPlanActions extends StatelessWidget {
 
     newSportsPlan.sportsDays.add(SportsDay(
         multisets: {
-          0: Multiset(multiset: [Exercise(
+          0: Multiset(multiset: [const Exercise(
               muscleGroup: 'Shoulders',
               name: '',
               repCount: 0,
-              setCount: 0
+              setCount: 0,
+              weight: ''
           )])
         }));
 

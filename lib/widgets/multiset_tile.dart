@@ -14,6 +14,8 @@ class MultisetTile extends StatelessWidget {
     required this.changeExercise,
     required this.changeSetCount,
     required this.changeRepCount,
+    required this.changeWeight,
+    required this.removeExercise,
   }) : super(key: key);
 
   final List<Exercise> multiset;
@@ -23,6 +25,8 @@ class MultisetTile extends StatelessWidget {
   final Function(int p1, int p2, Exercise p3, String? p4) changeExercise;
   final Function(int p1, int p2, Exercise p3, String? p4) changeSetCount;
   final Function(int p1, int p2, Exercise p3, String? p4) changeRepCount;
+  final Function(int p1, int p2, Exercise p3, String? p4) changeWeight;
+  final Function(int p1, int p2) removeExercise;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,7 @@ class MultisetTile extends StatelessWidget {
                   exercise: exercise.name,
                   setCount: exercise.setCount > 0 ? exercise.setCount.toString() : '',
                   repCount: exercise.repCount > 0 ? exercise.repCount.toString() : '',
+                  weight: exercise.weight,
                   changeMuscleGroup: (newValue) {
                     changeMuscleGroup(multisetIndex, exerciseIndex, exercise, newValue);
                   },
@@ -55,6 +60,12 @@ class MultisetTile extends StatelessWidget {
                   },
                   changeRepCount: (newValue) => {
                     changeRepCount(multisetIndex, exerciseIndex, exercise, newValue)
+                  },
+                  changeWeight: (newValue) => {
+                    changeWeight(multisetIndex, exerciseIndex, exercise, newValue)
+                  },
+                  removeExercise: (index) => {
+                    removeExercise(multisetIndex, index)
                   },
                 );
               }

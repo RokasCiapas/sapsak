@@ -12,7 +12,9 @@ class ExerciseList extends StatelessWidget {
     required this.changeMuscleGroup,
     required this.changeExercise,
     required this.changeSetCount,
-    required this.changeRepCount
+    required this.changeRepCount,
+    required this.changeWeight,
+    required this.removeExercise,
   }) : super(key: key, );
 
   final SportsDay sportsDay;
@@ -21,6 +23,8 @@ class ExerciseList extends StatelessWidget {
   final Function(int, int, Exercise, String?) changeExercise;
   final Function(int, int, Exercise, String?) changeSetCount;
   final Function(int, int, Exercise, String?) changeRepCount;
+  final Function(int, int, Exercise, String?) changeWeight;
+  final Function(int, int) removeExercise;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,17 @@ class ExerciseList extends StatelessWidget {
 
           List<Exercise> multiset = sportsDay.multisets[multisetIndex]!.multiset;
 
-          return MultisetTile(multiset: multiset, multisetIndex: multisetIndex, addExerciseToMultiset: addExerciseToMultiset, changeMuscleGroup: changeMuscleGroup, changeExercise: changeExercise, changeSetCount: changeSetCount, changeRepCount: changeRepCount);
+          return MultisetTile(
+            multiset: multiset,
+            multisetIndex: multisetIndex,
+            addExerciseToMultiset: addExerciseToMultiset,
+            changeMuscleGroup: changeMuscleGroup,
+            changeExercise: changeExercise,
+            changeSetCount: changeSetCount,
+            changeRepCount: changeRepCount,
+            changeWeight: changeWeight,
+            removeExercise: removeExercise,
+          );
         }
     );
   }
