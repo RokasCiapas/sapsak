@@ -28,7 +28,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
                     multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, weight: ''), growable: true)
                 )
               }),
-        growable: true
+          growable: true
       ),
       ownerEmail: '',
       createdAt: null,
@@ -49,6 +49,97 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   void setSelectedSportsPlan(SportsPlan sportsPlan) {
     selectedSportsPlan = sportsPlan;
+    notifyListeners();
+  }
+
+  void addExerciseToMultiset(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan) {
+
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]!.multiset
+        .add(
+        const Exercise(muscleGroup: 'Shoulders',
+            name: '',
+            repCount: 0,
+            setCount: 0,
+            weight: '')
+    );
+    notifyListeners();
+  }
+
+  void removeExercise(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan, int exerciseIndex) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]?.multiset.removeAt(exerciseIndex);
+    notifyListeners();
+
+  }
+
+  void changeExercise(int sportsDayIndex, int multisetIndex,
+  SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+      String? newValue) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
+        ?.multiset[exerciseIndex] = Exercise(
+        muscleGroup: exercise.muscleGroup,
+        name: newValue!,
+        repCount: exercise.repCount,
+        setCount: exercise.setCount,
+        weight: exercise.weight
+    );
+    notifyListeners();
+
+  }
+
+  void changeSetCount(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+      String? newValue) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
+        ?.multiset[exerciseIndex] = Exercise(
+        muscleGroup: exercise.muscleGroup,
+        name: exercise.name,
+        repCount: exercise.repCount,
+        setCount: int.parse(newValue!),
+        weight: exercise.weight
+    );
+    notifyListeners();
+  }
+
+  void changeRepCount(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex, String? newValue) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
+        ?.multiset[exerciseIndex] = Exercise(
+        muscleGroup: exercise.muscleGroup,
+        name: exercise.name,
+        repCount: int.parse(newValue!),
+        setCount: exercise.repCount,
+        weight: exercise.weight
+    );
+    notifyListeners();
+  }
+
+  void changeWeight(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex, String? newValue) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
+        ?.multiset[exerciseIndex] = Exercise(
+        muscleGroup: exercise.muscleGroup,
+        name: exercise.name,
+        repCount: exercise.repCount,
+        setCount: exercise.repCount,
+        weight: newValue!
+    );
+
+    notifyListeners();
+  }
+
+  void changeMuscleGroup(int sportsDayIndex, int multisetIndex,
+      SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
+      String? newValue) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
+        ?.multiset[exerciseIndex] = Exercise(
+        muscleGroup: newValue!,
+        name: exercise.name,
+        repCount: exercise.repCount,
+        setCount: exercise.setCount,
+        weight: ''
+    );
     notifyListeners();
   }
 

@@ -115,101 +115,52 @@ class SportsPlanContainer extends StatelessWidget {
 
   void _addExerciseToMultiset(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
 
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]!.multiset
-        .add(
-        const Exercise(muscleGroup: 'Shoulders',
-            name: '',
-            repCount: 0,
-            setCount: 0,
-            weight: '')
-    );
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+    context.read<SportsPlanProvider>().addExerciseToMultiset(sportsDayIndex, multisetIndex, sportsPlan);
   }
 
   void _changeMuscleGroup(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
       String? newValue, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
-        ?.multiset[exerciseIndex] = Exercise(
-        muscleGroup: newValue!,
-        name: exercise.name,
-        repCount: exercise.repCount,
-        setCount: exercise.setCount,
-        weight: ''
-    );
 
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+    context.read<SportsPlanProvider>().changeMuscleGroup(sportsDayIndex, multisetIndex,
+        sportsPlan, exercise, exerciseIndex, newValue);
   }
 
   void _changeExercise(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
       String? newValue, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
-        ?.multiset[exerciseIndex] = Exercise(
-        muscleGroup: exercise.muscleGroup,
-        name: newValue!,
-        repCount: exercise.repCount,
-        setCount: exercise.setCount,
-        weight: exercise.weight
-    );
 
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+    context.read<SportsPlanProvider>().changeExercise(sportsDayIndex, multisetIndex,
+        sportsPlan, exercise, exerciseIndex, newValue);
   }
 
   void _changeSetCount(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
       String? newValue, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
-        ?.multiset[exerciseIndex] = Exercise(
-        muscleGroup: exercise.muscleGroup,
-        name: exercise.name,
-        repCount: exercise.repCount,
-        setCount: int.parse(newValue!),
-        weight: exercise.weight
-    );
-
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+    context.read<SportsPlanProvider>().changeSetCount(sportsDayIndex, multisetIndex,
+    sportsPlan, exercise, exerciseIndex, newValue);
   }
 
   void _changeRepCount(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
       String? newValue, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
-        ?.multiset[exerciseIndex] = Exercise(
-        muscleGroup: exercise.muscleGroup,
-        name: exercise.name,
-        repCount: int.parse(newValue!),
-        setCount: exercise.repCount,
-        weight: exercise.weight
-    );
+    context.read<SportsPlanProvider>().changeRepCount(sportsDayIndex, multisetIndex,
+        sportsPlan, exercise, exerciseIndex, newValue);
   }
 
   void _changeWeight(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, Exercise exercise, int exerciseIndex,
       String? newValue, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]
-        ?.multiset[exerciseIndex] = Exercise(
-        muscleGroup: exercise.muscleGroup,
-        name: exercise.name,
-        repCount: exercise.repCount,
-        setCount: exercise.repCount,
-        weight: newValue!
-    );
 
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+    context.read<SportsPlanProvider>().changeWeight(sportsDayIndex, multisetIndex,
+        sportsPlan, exercise, exerciseIndex, newValue);
   }
 
   void _removeExercise(int sportsDayIndex, int multisetIndex,
       SportsPlan sportsPlan, int exerciseIndex, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-    newSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]?.multiset.removeAt(exerciseIndex);
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
+
+    context.read<SportsPlanProvider>().removeExercise(sportsDayIndex, multisetIndex,
+        sportsPlan, exerciseIndex);
   }
 }
