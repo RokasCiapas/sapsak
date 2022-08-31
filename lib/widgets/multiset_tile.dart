@@ -36,6 +36,7 @@ class MultisetTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ListView.builder(
+              key: Key(multiset.length.toString()),
               shrinkWrap: true,
               itemCount: multiset.length,
               physics: const NeverScrollableScrollPhysics(),
