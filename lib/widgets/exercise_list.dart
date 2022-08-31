@@ -15,6 +15,7 @@ class ExerciseList extends StatelessWidget {
     required this.changeRepCount,
     required this.changeWeight,
     required this.removeExercise,
+    required this.removeMultiset,
   }) : super(key: key, );
 
   final SportsDay sportsDay;
@@ -25,29 +26,51 @@ class ExerciseList extends StatelessWidget {
   final Function(int, int, Exercise, String?) changeRepCount;
   final Function(int, int, Exercise, String?) changeWeight;
   final Function(int, int) removeExercise;
+  final Function(int) removeMultiset;
 
   @override
   Widget build(BuildContext context) {
 
     return ListView.builder(
+        key: Key(sportsDay.multisets.length.toString()),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: sportsDay.multisets.length,
         itemBuilder: (BuildContext context, int multisetIndex) {
+          int key = sportsDay.multisets.keys.elementAt(multisetIndex);
 
-          List<Exercise> multiset = sportsDay.multisets[multisetIndex]!.multiset;
+          List<Exercise>? multiset = sportsDay.multisets[key]?.multiset;
 
-          return MultisetTile(
-            multiset: multiset,
-            multisetIndex: multisetIndex,
-            addExerciseToMultiset: addExerciseToMultiset,
-            changeMuscleGroup: changeMuscleGroup,
-            changeExercise: changeExercise,
-            changeSetCount: changeSetCount,
-            changeRepCount: changeRepCount,
-            changeWeight: changeWeight,
-            removeExercise: removeExercise,
-          );
+          if (multiset != null) {
+            return Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Multiset ${multisetIndex + 1}',
+                            style:
+                            const TextStyle(
+                                fontSize: 15))),
+                  ),
+                  MultisetTile(
+                    multiset: multiset,
+                    multisetIndex: key,
+                    addExerciseToMultiset: addExerciseToMultiset,
+                    changeMuscleGroup: changeMuscleGroup,
+                    changeExercise: changeExercise,
+                    changeSetCount: changeSetCount,
+                    changeRepCount: changeRepCount,
+                    changeWeight: changeWeight,
+                    removeExercise: removeExercise,
+                    removeMultiset: removeMultiset,
+                  ),
+                  Divider()
+                ]
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
         }
     );
   }

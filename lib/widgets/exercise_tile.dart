@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sapsak/shared/width_spacer.dart';
 
 class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
@@ -33,11 +34,11 @@ class ExerciseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 15,
-      runSpacing: 15,
-      alignment: WrapAlignment.start,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    return Row(
+      // spacing: 15,
+      // runSpacing: 15,
+      // alignment: WrapAlignment.start,
+      // crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         DropdownButton<String>(
           isDense: true,
@@ -53,8 +54,9 @@ class ExerciseTile extends StatelessWidget {
             changeMuscleGroup(newValue);
           },
         ),
-        SizedBox(
-          width: 300,
+        const WidthSpacer(),
+        Expanded(
+          flex: 1,
           child: TextFormField(
             style: const TextStyle(fontSize: 15),
             initialValue: exercise,
@@ -69,6 +71,7 @@ class ExerciseTile extends StatelessWidget {
             ),
           ),
         ),
+        const WidthSpacer(),
         SizedBox(
           width: 100,
           child: TextFormField(
@@ -91,6 +94,7 @@ class ExerciseTile extends StatelessWidget {
             ),
           ),
         ),
+        const WidthSpacer(),
         SizedBox(
           width: 150,
           child: TextFormField(
@@ -108,6 +112,7 @@ class ExerciseTile extends StatelessWidget {
             ),
           ),
         ),
+        const WidthSpacer(),
         SizedBox(
           width: 132,
           child: TextFormField(
@@ -124,6 +129,7 @@ class ExerciseTile extends StatelessWidget {
             ),
           ),
         ),
+        const WidthSpacer(),
         ElevatedButton(
           onPressed: () {
             removeExercise(sequenceNumber);

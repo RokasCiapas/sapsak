@@ -16,6 +16,7 @@ class MultisetTile extends StatelessWidget {
     required this.changeRepCount,
     required this.changeWeight,
     required this.removeExercise,
+    required this.removeMultiset,
   }) : super(key: key);
 
   final List<Exercise> multiset;
@@ -27,6 +28,7 @@ class MultisetTile extends StatelessWidget {
   final Function(int p1, int p2, Exercise p3, String? p4) changeRepCount;
   final Function(int p1, int p2, Exercise p3, String? p4) changeWeight;
   final Function(int p1, int p2) removeExercise;
+  final Function(int p1) removeMultiset;
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +73,32 @@ class MultisetTile extends StatelessWidget {
                 );
               }
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 20.0),
-            child: Button(
-              onClick: () {
-                addExerciseToMultiset(multisetIndex);
-              },
-              text: 'Add exercise',
-            ),
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0),
+                child: Button(
+                  onClick: () {
+                    addExerciseToMultiset(multisetIndex);
+                  },
+                  text: 'Add exercise',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20.0,
+                    top: 20.0),
+                child: Button(
+                  onClick: () {
+                    removeMultiset(multisetIndex);
+                  },
+                  text: 'Remove multiset',
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

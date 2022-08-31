@@ -52,6 +52,20 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
+  void addMultiset(int sportsDayIndex) {
+    int lastKey = selectedSportsPlan.sportsDays[sportsDayIndex].multisets.keys.last;
+
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets[lastKey + 1] = Multiset(multiset: [
+      const Exercise(
+          muscleGroup: 'Shoulders',
+          name: '',
+          repCount: 0,
+          setCount: 0,
+          weight: ''
+      )]);
+    notifyListeners();
+  }
+
   void addExerciseToMultiset(int sportsDayIndex, int multisetIndex) {
 
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]!.multiset
@@ -67,6 +81,16 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   void removeExercise(int sportsDayIndex, int multisetIndex, int exerciseIndex) {
     selectedSportsPlan.sportsDays[sportsDayIndex].multisets[multisetIndex]?.multiset.removeAt(exerciseIndex);
+    notifyListeners();
+  }
+
+  void removeMultiset(int sportsDayIndex, int multisetIndex) {
+    selectedSportsPlan.sportsDays[sportsDayIndex].multisets.remove(multisetIndex);
+    notifyListeners();
+  }
+
+  void removeDay(int sportsDayIndex) {
+    selectedSportsPlan.sportsDays.removeAt(sportsDayIndex);
     notifyListeners();
   }
 

@@ -45,19 +45,6 @@ class SportsPlanActions extends StatelessWidget {
 
     return Row(
       children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Button(
-              onClick: ()
-              {
-                _addMultiset(sportsPlan, context);
-                scrollDown();
-              },
-              text: 'Add multiset',
-            ),
-          ),
-        ),
         const WidthSpacer(),
         Expanded(
           child: Padding(
@@ -103,26 +90,6 @@ class SportsPlanActions extends StatelessWidget {
             ))
       ],
     );
-  }
-
-  void _addMultiset(SportsPlan sportsPlan, BuildContext context) {
-    SportsPlan newSportsPlan = sportsPlan;
-
-    SportsDay lastSportsDay = newSportsPlan.sportsDays.last;
-
-    int lastKey = lastSportsDay.multisets.keys.last;
-
-    lastSportsDay.multisets[lastKey + 1] = Multiset(multiset: [
-      const Exercise(
-          muscleGroup: 'Shoulders',
-          name: '',
-          repCount: 0,
-          setCount: 0,
-          weight: ''
-      )]);
-
-    context.read<SportsPlanProvider>().setSelectedSportsPlan(newSportsPlan);
-
   }
 
   void _addSportsDay(SportsPlan sportsPlan, BuildContext context) {
