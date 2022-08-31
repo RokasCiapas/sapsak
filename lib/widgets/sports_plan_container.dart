@@ -16,133 +16,128 @@ class SportsPlanContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     SportsPlan sportsPlan = context.watch<SportsPlanProvider>().selectedSportsPlan;
 
-    return ExpansionPanelList.radio(
-      key: Key(sportsPlan.sportsDays.length.toString()),
-      expansionCallback: (index, isExpanded) {
+    return ChangeNotifierProvider(
+      create: (_) => ExpansionState(listLength: sportsPlan.sportsDays.length),
+      builder: (context, child) {
+        if(sportsPlan.sportsDays.length > context.read<ExpansionState>()._list.length) {
+          context.read<ExpansionState>().addItem();
+        }
+        List<bool> expansionList = context.watch<ExpansionState>()._list;
 
-      },
-      children: sportsPlan.sportsDays.map((sportsDay) {
-        int sportsDayIndex = sportsPlan.sportsDays.indexOf(sportsDay);
-        return ExpansionPanelRadio(
-            canTapOnHeader: true,
-            headerBuilder: (BuildContext context, bool isOpen) {
-              return Padding(
-                padding: EdgeInsets.all(15),
-                child: Text('Day ${sportsDayIndex + 1}',
-                    style: const TextStyle(fontSize: 18)),);
-            },
-            body: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  ExerciseList(
-                    sportsDay: sportsDay,
-                    addExerciseToMultiset: (int multisetIndex) {
-                      _addExerciseToMultiset(sportsDayIndex, multisetIndex, context);
-                    },
-                    changeMuscleGroup: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                      _changeMuscleGroup(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
-                    },
-                    changeExercise: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                      _changeExercise(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
-                    },
-                    changeSetCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                      _changeSetCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
-                    },
-                    changeRepCount: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                      _changeRepCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
-                    },
-                    changeWeight: (int multisetIndex, int exerciseIndex, Exercise exercise, String? newValue) {
-                      _changeWeight(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue, context);
-                    },
-                    removeExercise: (int multisetIndex, int exerciseIndex) {
-                      _removeExercise(sportsDayIndex, multisetIndex, exerciseIndex, context);
-                    },
-                    removeMultiset: (int multisetIndex) {
-                      _removeMultiset(sportsDayIndex, multisetIndex, context);
-                    },
-
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+        return ExpansionPanelList(
+          key: Key(sportsPlan.sportsDays.length.toString()),
+          expansionCallback: (int panelIndex, bool isExpanded) {
+            context.read<ExpansionState>().changeState(panelIndex, isExpanded);
+          },
+          children: sportsPlan.sportsDays.map((sportsDay) {
+            int sportsDayIndex = sportsPlan.sportsDays.indexOf(sportsDay);
+            return ExpansionPanel(
+                isExpanded: expansionList[sportsDayIndex],
+                canTapOnHeader: true,
+                headerBuilder: (BuildContext context, bool isOpen) {
+                  return Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text('Day ${sportsDayIndex + 1}',
+                        style: const TextStyle(fontSize: 18)),);
+                },
+                body: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
                     children: [
-                      Button(
-                        onClick: ()
-                        {
-                          _addMultiset(sportsDayIndex, context);
-                          // scrollDown();
+                      ExerciseList(
+                        sportsDay: sportsDay,
+                        addExerciseToMultiset: (int multisetIndex) {
+                          context.read<SportsPlanProvider>()
+                              .addExerciseToMultiset(
+                              sportsDayIndex, multisetIndex);
                         },
-                        text: 'Add multiset',
+                        changeMuscleGroup: (int multisetIndex,
+                            int exerciseIndex, Exercise exercise,
+                            String? newValue) {
+                          context.read<SportsPlanProvider>()
+                              .changeMuscleGroup(
+                              sportsDayIndex, multisetIndex, exercise,
+                              exerciseIndex, newValue);
+                        },
+                        changeExercise: (int multisetIndex, int exerciseIndex,
+                            Exercise exercise, String? newValue) {
+                          context.read<SportsPlanProvider>().changeExercise(
+                              sportsDayIndex, multisetIndex, exercise,
+                              exerciseIndex, newValue);
+                        },
+                        changeSetCount: (int multisetIndex, int exerciseIndex,
+                            Exercise exercise, String? newValue) {
+                          context.read<SportsPlanProvider>().changeSetCount(
+                              sportsDayIndex, multisetIndex, exercise,
+                              exerciseIndex, newValue);
+                        },
+                        changeRepCount: (int multisetIndex, int exerciseIndex,
+                            Exercise exercise, String? newValue) {
+                          context.read<SportsPlanProvider>().changeRepCount(
+                              sportsDayIndex, multisetIndex, exercise,
+                              exerciseIndex, newValue);
+                        },
+                        changeWeight: (int multisetIndex, int exerciseIndex,
+                            Exercise exercise, String? newValue) {
+                          context.read<SportsPlanProvider>().changeWeight(
+                              sportsDayIndex, multisetIndex, exercise,
+                              exerciseIndex, newValue);
+                        },
+                        removeExercise: (int multisetIndex, int exerciseIndex) {
+                          context.read<SportsPlanProvider>().removeExercise(sportsDayIndex, multisetIndex, exerciseIndex);
+                        },
+                        removeMultiset: (int multisetIndex) {
+                          context.read<SportsPlanProvider>().removeMultiset(sportsDayIndex, multisetIndex);
+                        },
+
                       ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Button(
-                            onClick: ()
-                            {
-                              _removeDay(sportsDayIndex, context);
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Button(
+                            onClick: () {
+                              context.read<SportsPlanProvider>().addMultiset(sportsDayIndex);
+                              // scrollDown();
                             },
-                            text: 'Remove day',
+                            text: 'Add multiset',
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Button(
+                              onClick: () {
+                                context.read<SportsPlanProvider>().removeDay(sportsDayIndex);
+                              },
+                              text: 'Remove day',
+                            ),
+                          )
+
+                        ],
                       )
-
                     ],
-                  )
-                ],
-              ),
-            ),
-          value: sportsDayIndex
+                  ),
+                )
+            );
+          }).toList(),
         );
-      }).toList(),
-    );
+      }
+      ,);
+  }
+}
+
+class ExpansionState with ChangeNotifier {
+  ExpansionState({required int listLength}): _list = List.generate(listLength, (index) => true);
+
+  List<bool> _list;
+
+
+  changeState(int index, bool isExpanded) {
+    _list[index] = !isExpanded;
+    notifyListeners();
   }
 
-  void _addExerciseToMultiset(int sportsDayIndex, int multisetIndex, BuildContext context) {
-
-    context.read<SportsPlanProvider>().addExerciseToMultiset(sportsDayIndex, multisetIndex);
+  addItem() {
+    _list.add(true);
+    notifyListeners();
   }
 
-  void _changeMuscleGroup(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
-
-    context.read<SportsPlanProvider>().changeMuscleGroup(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
-  }
-
-  void _changeExercise(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
-
-    context.read<SportsPlanProvider>().changeExercise(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
-  }
-
-  void _changeSetCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
-    context.read<SportsPlanProvider>().changeSetCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
-  }
-
-  void _changeRepCount(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
-    context.read<SportsPlanProvider>().changeRepCount(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
-  }
-
-  void _changeWeight(int sportsDayIndex, int multisetIndex, Exercise exercise, int exerciseIndex, String? newValue, BuildContext context) {
-
-    context.read<SportsPlanProvider>().changeWeight(sportsDayIndex, multisetIndex, exercise, exerciseIndex, newValue);
-  }
-
-  void _removeExercise(int sportsDayIndex, int multisetIndex, int exerciseIndex, BuildContext context) {
-
-    context.read<SportsPlanProvider>().removeExercise(sportsDayIndex, multisetIndex, exerciseIndex);
-  }
-
-  void _removeMultiset(int sportsDayIndex, int multisetIndex, BuildContext context) {
-
-    context.read<SportsPlanProvider>().removeMultiset(sportsDayIndex, multisetIndex);
-  }
-
-  void _removeDay(int sportsDayIndex, BuildContext context) {
-
-    context.read<SportsPlanProvider>().removeDay(sportsDayIndex);
-  }
-
-  void _addMultiset(int sportsDayIndex, BuildContext context) {
-
-
-    context.read<SportsPlanProvider>().addMultiset(sportsDayIndex);
-
-  }
 }

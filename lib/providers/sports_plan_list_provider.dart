@@ -183,6 +183,6 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    // properties.add(IntProperty('count', count));
+    properties.add(ObjectFlagProperty('selectedSportsPlan', selectedSportsPlan));
   }
 }
