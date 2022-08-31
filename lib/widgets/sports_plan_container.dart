@@ -16,12 +16,10 @@ class SportsPlanContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     SportsPlan sportsPlan = context.watch<SportsPlanProvider>().selectedSportsPlan;
 
-    return ChangeNotifierProvider(
-      create: (_) => ExpansionState(listLength: sportsPlan.sportsDays.length),
+    return ChangeNotifierProxyProvider<SportsPlanProvider, ExpansionState>(
+      create: (_) => ExpansionState(),
+      update: (_, __, expansionState) => expansionState!..addItem(),
       builder: (context, child) {
-        if(sportsPlan.sportsDays.length > context.read<ExpansionState>()._list.length) {
-          context.read<ExpansionState>().addItem();
-        }
         List<bool> expansionList = context.watch<ExpansionState>()._list;
 
         return ExpansionPanelList(
@@ -110,7 +108,6 @@ class SportsPlanContainer extends StatelessWidget {
                               text: 'Remove day',
                             ),
                           )
-
                         ],
                       )
                     ],
@@ -125,10 +122,7 @@ class SportsPlanContainer extends StatelessWidget {
 }
 
 class ExpansionState with ChangeNotifier {
-  ExpansionState({required int listLength}): _list = List.generate(listLength, (index) => true);
-
-  List<bool> _list;
-
+  List<bool> _list = [];
 
   changeState(int index, bool isExpanded) {
     _list[index] = !isExpanded;
