@@ -82,12 +82,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Future resetPassword() async {
     try {
       await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: _emailController.text.trim());
-
-      /// Showing Message That user enters email correctly and reset password will be sent
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Password reset link sent! Check your Email"),
-      ));
+          .sendPasswordResetEmail(email: _emailController.text.trim()).then((value) {
+        /// Showing Message That user enters email correctly and reset password will be sent
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Password reset link sent! Check your Email"),
+        ));
+      });
 
       /// After 2 seconds we automatically pop forgot screen
       Future.delayed(const Duration(seconds: 2), () => Navigator.pop(context));

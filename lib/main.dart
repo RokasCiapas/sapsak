@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
+import 'package:sapsak/shared/custom_colors.dart';
 import 'firebase_options.dart';
 import 'auth/main_page.dart';
 
@@ -25,9 +26,6 @@ void main() async {
   );
 }
 
-bool _isDemoUsingDynamicColors = false;
-
-// Fictitious brand color.
 const _brandYellow = Color(0xfffed813);
 
 CustomColors lightCustomColors = const CustomColors(danger: Color(0xFFE53935));
@@ -65,7 +63,6 @@ class _MyAppState extends State<MyApp> {
             darkColorScheme = darkColorScheme.copyWith(secondary: _brandYellow);
             darkCustomColors = darkCustomColors.harmonized(darkColorScheme);
 
-            _isDemoUsingDynamicColors = false; // ignore, only for demo purposes
           } else {
             // Otherwise, use fallback schemes.
             lightColorScheme = ColorScheme.fromSeed(
@@ -93,40 +90,5 @@ class _MyAppState extends State<MyApp> {
           );
         }
     );
-
-
-
-
-
-  }
-}
-
-@immutable
-class CustomColors extends ThemeExtension<CustomColors> {
-  const CustomColors({
-    required this.danger,
-  });
-
-  final Color? danger;
-
-  @override
-  CustomColors copyWith({Color? danger}) {
-    return CustomColors(
-      danger: danger ?? this.danger,
-    );
-  }
-
-  @override
-  CustomColors lerp(ThemeExtension<CustomColors>? other, double t) {
-    if (other is! CustomColors) {
-      return this;
-    }
-    return CustomColors(
-      danger: Color.lerp(danger, other.danger, t),
-    );
-  }
-
-  CustomColors harmonized(ColorScheme dynamic) {
-    return copyWith(danger: danger!.harmonizeWith(dynamic.primary));
   }
 }
