@@ -45,31 +45,34 @@ class MultisetTile extends StatelessWidget {
               itemBuilder: (BuildContext context, int exerciseIndex) {
                 Exercise exercise = multiset[exerciseIndex];
 
-                return ExerciseTile(
-                  sequenceNumber: exerciseIndex,
-                  muscleGroup: exercise.muscleGroup,
-                  exercise: exercise.name,
-                  setCount: exercise.setCount > 0 ? exercise.setCount.toString() : '',
-                  repCount: exercise.repCount > 0 ? exercise.repCount.toString() : '',
-                  weight: exercise.weight,
-                  changeMuscleGroup: (newValue) {
-                    changeMuscleGroup(multisetIndex, exerciseIndex, exercise, newValue);
-                  },
-                  changeExercise: (newValue) {
-                    changeExercise(multisetIndex, exerciseIndex, exercise, newValue);
-                  },
-                  changeSetCount: (newValue) => {
-                    changeSetCount(multisetIndex, exerciseIndex, exercise, newValue)
-                  },
-                  changeRepCount: (newValue) => {
-                    changeRepCount(multisetIndex, exerciseIndex, exercise, newValue)
-                  },
-                  changeWeight: (newValue) => {
-                    changeWeight(multisetIndex, exerciseIndex, exercise, newValue)
-                  },
-                  removeExercise: (index) => {
-                    removeExercise(multisetIndex, index)
-                  },
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 5),
+                  child: ExerciseTile(
+                    sequenceNumber: exerciseIndex,
+                    muscleGroup: exercise.muscleGroup,
+                    exercise: exercise.name,
+                    setCount: exercise.setCount > 0 ? exercise.setCount.toString() : '',
+                    repCount: exercise.repCount > 0 ? exercise.repCount.toString() : '',
+                    weight: exercise.weight,
+                    changeMuscleGroup: (newValue) {
+                      changeMuscleGroup(multisetIndex, exerciseIndex, exercise, newValue);
+                    },
+                    changeExercise: (newValue) {
+                      changeExercise(multisetIndex, exerciseIndex, exercise, newValue);
+                    },
+                    changeSetCount: (newValue) => {
+                      changeSetCount(multisetIndex, exerciseIndex, exercise, newValue)
+                    },
+                    changeRepCount: (newValue) => {
+                      changeRepCount(multisetIndex, exerciseIndex, exercise, newValue)
+                    },
+                    changeWeight: (newValue) => {
+                      changeWeight(multisetIndex, exerciseIndex, exercise, newValue)
+                    },
+                    removeExercise: (index) => {
+                      removeExercise(multisetIndex, index)
+                    },
+                  ),
                 );
               }
           ),
