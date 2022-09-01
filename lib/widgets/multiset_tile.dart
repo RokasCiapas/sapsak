@@ -47,7 +47,7 @@ class MultisetTile extends StatelessWidget {
                 Exercise exercise = multiset[exerciseIndex];
 
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.only(bottom: 5),
                   child: ExerciseTile(
                     sequenceNumber: exerciseIndex,
                     muscleGroup: exercise.muscleGroup,

@@ -89,7 +89,7 @@ class EditSportsPlan extends StatelessWidget {
           )
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
 
   }

@@ -19,7 +19,6 @@ class ClientSearch extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-            flex: 5,
             child: TextField(
               autofocus: true,
               controller: clientSearchController,
@@ -41,7 +40,8 @@ class ClientSearch extends StatelessWidget {
         const SizedBox(
           width: 15,
         ),
-        Expanded(
+        SizedBox(
+          width: 80,
             child: Button(
               onClick: () {
                 onSubmitted();

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -67,12 +65,12 @@ class SportsPlanListScreen extends StatelessWidget {
                       );
                     });
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             },
           ));
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 }

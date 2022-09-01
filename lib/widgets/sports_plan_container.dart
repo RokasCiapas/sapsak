@@ -35,12 +35,12 @@ class SportsPlanContainer extends StatelessWidget {
                 canTapOnHeader: true,
                 headerBuilder: (BuildContext context, bool isOpen) {
                   return Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Text('Day ${sportsDayIndex + 1}',
                         style: const TextStyle(fontSize: 18)),);
                 },
                 body: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     children: [
                       ExerciseList(
@@ -101,7 +101,7 @@ class SportsPlanContainer extends StatelessWidget {
                             text: 'Add multiset',
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(left: 15),
                             child: Button(
                               onClick: () {
                                 DialogUtils.displayDialogOKCallBack(context, 'Do you want to remove day?', '').then((value) => {
@@ -127,7 +127,7 @@ class SportsPlanContainer extends StatelessWidget {
 }
 
 class ExpansionState with ChangeNotifier {
-  List<bool> _list = [];
+  final List<bool> _list = [];
 
   changeState(int index, bool isExpanded) {
     _list[index] = !isExpanded;

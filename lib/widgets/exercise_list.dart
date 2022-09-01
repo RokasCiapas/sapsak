@@ -65,7 +65,7 @@ class ExerciseList extends StatelessWidget {
                     removeExercise: removeExercise,
                     removeMultiset: removeMultiset,
                   ),
-                  Divider()
+                  const Divider()
                 ]
             );
           } else {

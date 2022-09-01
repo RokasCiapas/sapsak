@@ -35,8 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Center(
               child: Text('Howdy, ${user.displayName}')
           ),
-          bottom: const TabBar(
-            tabs: [
+          bottom: TabBar(
+            indicatorColor: Theme.of(context).colorScheme.primary,
+            tabs: const [
               Tab(icon: Icon(Icons.people_outline),
                   text: 'Clients'
               ),

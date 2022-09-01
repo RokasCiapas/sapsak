@@ -5,7 +5,6 @@ import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
 import 'package:sapsak/shared/width_spacer.dart';
-import 'package:sapsak/widgets/sports_plan_container.dart';
 
 import '../models/client.dart';
 import '../models/exercise.dart';
