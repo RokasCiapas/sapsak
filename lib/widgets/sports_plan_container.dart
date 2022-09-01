@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
+import 'package:sapsak/shared/dialog_utils.dart';
 
 import '../models/exercise.dart';
 import '../models/sports_plan.dart';
@@ -103,7 +104,11 @@ class SportsPlanContainer extends StatelessWidget {
                             padding: EdgeInsets.only(left: 15),
                             child: Button(
                               onClick: () {
-                                context.read<SportsPlanProvider>().removeDay(sportsDayIndex);
+                                DialogUtils.displayDialogOKCallBack(context, 'Do you want to remove day?', '').then((value) => {
+                                  if (value == true) {
+                                    context.read<SportsPlanProvider>().removeDay(sportsDayIndex)
+                                  }
+                                });
                               },
                               text: 'Remove day',
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/exercise.dart';
 import '../shared/button.dart';
+import '../shared/dialog_utils.dart';
 import 'exercise_tile.dart';
 
 class MultisetTile extends StatelessWidget {
@@ -95,7 +96,11 @@ class MultisetTile extends StatelessWidget {
                     top: 20.0),
                 child: Button(
                   onClick: () {
-                    removeMultiset(multisetIndex);
+                    DialogUtils.displayDialogOKCallBack(context, 'Do you want to remove multiset?', '').then((value) => {
+                      if (value == true) {
+                        removeMultiset(multisetIndex)
+                      }
+                    });
                   },
                   text: 'Remove multiset',
                 ),

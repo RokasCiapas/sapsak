@@ -35,10 +35,6 @@ class ExerciseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // spacing: 15,
-      // runSpacing: 15,
-      // alignment: WrapAlignment.start,
-      // crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         DropdownButton<String>(
           isDense: true,
