@@ -26,6 +26,8 @@ class ClientSearch extends StatelessWidget {
                 onSubmitted();
               },
               decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(12),
+                  isDense: true,
                   border: const OutlineInputBorder(),
                   hintText: 'Client name',
                   suffixIcon: clientSearchController.text.isNotEmpty ? IconButton(
@@ -41,7 +43,8 @@ class ClientSearch extends StatelessWidget {
           width: 15,
         ),
         SizedBox(
-          width: 80,
+            width: 80,
+            height: 40,
             child: Button(
               onClick: () {
                 onSubmitted();

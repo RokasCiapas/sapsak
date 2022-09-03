@@ -58,85 +58,35 @@ class EditSportsPlan extends StatelessWidget {
             automaticallyImplyLeading: true,
             title: Text('${client.name} ${client.surname}'),
           ),
-          body: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              if (constraints.maxWidth <= 599) {
-                // work here
-                return const SizedBox();
-              }
-
-              else if (constraints.maxWidth > 599 && constraints.maxWidth <= 904) {
-                // work here
-                return Container(
-                    alignment: Alignment.topLeft,
-                    margin: const EdgeInsets.all(17),
-                    child: Column(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: ListView(
-                              shrinkWrap: true,
-                              controller: listViewScrollController,
-                              children: [
-                                SportsPlanDetails(
-                                    expirationDateController: expirationDateController,
-                                    goalController: goalController,
-                                    notesController: notesController
-                                ),
-                                const SportsPlanContainer()
-                              ],
-                            )
-                        ),
-                        SportsPlanActions(
-                            isEdit: isEdit,
-                            scrollController: listViewScrollController,
-                            expirationDateController: expirationDateController,
-                            notesController: notesController,
-                            goalController: goalController
-                        )
-                      ],
-                    )
-                );
-              }
-
-              else if (constraints.maxWidth > 904) {
-                return Container(
-                    alignment: Alignment.topLeft,
-                    margin: const EdgeInsets.all(17),
-                    child: Column(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: ListView(
-                              shrinkWrap: true,
-                              controller: listViewScrollController,
-                              children: [
-                                SportsPlanDetails(
-                                    expirationDateController: expirationDateController,
-                                    goalController: goalController,
-                                    notesController: notesController
-                                ),
-                                const SportsPlanContainer()
-                              ],
-                            )),
-                        SportsPlanActions(
-                            isEdit: isEdit,
-                            scrollController: listViewScrollController,
-                            expirationDateController: expirationDateController,
-                            notesController: notesController,
-                            goalController: goalController
-                        )
-                      ],
-                    )
-                );
-
-              }
-
-              else {
-                return const Text('Unsupported Screen size');
-              }
-
-            },
+          body: Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.all(17),
+              child: Column(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: ListView(
+                        shrinkWrap: true,
+                        controller: listViewScrollController,
+                        children: [
+                          SportsPlanDetails(
+                              expirationDateController: expirationDateController,
+                              goalController: goalController,
+                              notesController: notesController
+                          ),
+                          const SportsPlanContainer()
+                        ],
+                      )
+                  ),
+                  SportsPlanActions(
+                      isEdit: isEdit,
+                      scrollController: listViewScrollController,
+                      expirationDateController: expirationDateController,
+                      notesController: notesController,
+                      goalController: goalController
+                  )
+                ],
+              )
           )
       );
     } else {

@@ -9,9 +9,7 @@ import '../shared/button.dart';
 import 'exercise_list.dart';
 
 class SportsPlanContainer extends StatelessWidget {
-  const SportsPlanContainer({
-    Key? key,
-  }) : super(key: key);
+  const SportsPlanContainer({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
