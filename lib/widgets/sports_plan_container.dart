@@ -17,10 +17,9 @@ class SportsPlanContainer extends StatelessWidget {
 
     return ChangeNotifierProxyProvider<SportsPlanProvider, ExpansionState>(
       create: (_) => ExpansionState(),
-      update: (_, __, expansionState) => expansionState!..addItem(),
+      update: (_, sportsPlanProvider, expansionState) => expansionState!..addItem(sportsPlanProvider.selectedSportsPlan.sportsDays.length),
       builder: (context, child) {
         List<bool> expansionList = context.watch<ExpansionState>()._list;
-
         return ExpansionPanelList(
           key: Key(sportsPlan.sportsDays.length.toString()),
           expansionCallback: (int panelIndex, bool isExpanded) {
@@ -125,15 +124,22 @@ class SportsPlanContainer extends StatelessWidget {
 }
 
 class ExpansionState with ChangeNotifier {
-  final List<bool> _list = [];
+  final List<bool> _list = [true];
 
   changeState(int index, bool isExpanded) {
     _list[index] = !isExpanded;
     notifyListeners();
   }
 
-  addItem() {
-    _list.add(true);
+  addItem(int itemCountToAdd) {
+
+    if (itemCountToAdd > 1) {
+      for (var i = 1; i <= itemCountToAdd; i++) {
+        _list.add(false);
+      }
+    } else {
+      _list.add(true);
+    }
     notifyListeners();
   }
 

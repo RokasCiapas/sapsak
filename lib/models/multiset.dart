@@ -22,9 +22,9 @@ class Multiset {
     };
   }
 
-  static Multiset fromJson(Map<String, dynamic> json) {
+  static Multiset fromJson(dynamic json) {
     return Multiset(
-      multiset: json['multiset'].map((x) => Exercise.fromJson(x)).toList(),
+      multiset: List.from(json.map((dynamic x) => Exercise.fromJson(x))),
     );
   }
 

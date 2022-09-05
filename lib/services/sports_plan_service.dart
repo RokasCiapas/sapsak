@@ -6,9 +6,9 @@ class SportsPlanService {
   final CollectionReference<SportsPlan> collection = FirebaseFirestore.instance
       .collection('sportsPlans')
       .withConverter(
-          fromFirestore: SportsPlan.fromFirestore,
-          toFirestore: (SportsPlan sportsPlan, SetOptions? options) =>
-              sportsPlan.toFirestore());
+      fromFirestore: SportsPlan.fromFirestore,
+      toFirestore: (SportsPlan sportsPlan, SetOptions? options) =>
+          sportsPlan.toFirestore());
 
   Future<DocumentReference<SportsPlan>> addSportsPlan(SportsPlan sportsPlan) {
     return collection.add(sportsPlan);
@@ -18,11 +18,18 @@ class SportsPlanService {
     return collection.doc(sportsPlanId).update(sportsPlan.toFirestore());
   }
 
-  Stream<QuerySnapshot<SportsPlan>> sportsPlanByUserStream(String? email) {
+  Stream<List<SportsPlan>> sportsPlanListByUserStream(String? email) {
     return collection
         .where('ownerEmail', isEqualTo: email)
         .orderBy('createdAt', descending: true)
-        .snapshots();
+        .snapshots()
+        .map((QuerySnapshot snapshot) {
+      return snapshot.docs.map((QueryDocumentSnapshot doc) {
+        var sportsPlan = SportsPlan.fromJson(doc);
+        return sportsPlan;
+
+      }).toList();
+    });
   }
 
   Stream<List<SportsPlan>> getAllSportsPlans() {
@@ -31,6 +38,7 @@ class SportsPlanService {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
+
         var sportsPlan = SportsPlan.fromJson(doc);
         return sportsPlan;
       }).toList();

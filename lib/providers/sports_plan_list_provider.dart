@@ -39,8 +39,8 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
       id: const Uuid().v1()
   );
 
-  Stream<QuerySnapshot<SportsPlan>> get sportsPlanListByUser {
-    return SportsPlanService().sportsPlanByUserStream(_clientProvider.selectedClient?.email);
+  Stream<List<SportsPlan>> get sportsPlanListByUser {
+    return SportsPlanService().sportsPlanListByUserStream(_clientProvider.selectedClient?.email);
   }
 
   Stream<List<SportsPlan>> getAllSportsPlans() {

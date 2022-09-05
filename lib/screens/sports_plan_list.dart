@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -21,16 +22,14 @@ class SportsPlanListScreen extends StatelessWidget {
     if (client != null) {
       return Scaffold(
 
-          /// APP BAR
           appBar: AppBar(
             automaticallyImplyLeading: true,
             title: Text('Sports plan list of ${client.name} ${client.surname}'),
             centerTitle: true,
           ),
           body: StreamBuilder(
-            stream: context.watch<SportsPlanProvider>().getAllSportsPlans(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<SportsPlan>> snapshot) {
+            stream: context.watch<SportsPlanProvider>().sportsPlanListByUser,
+            builder: (BuildContext context, AsyncSnapshot<List<SportsPlan>> snapshot) {
               if (snapshot.hasError) {
                 return const Text('Something went wrong');
               }

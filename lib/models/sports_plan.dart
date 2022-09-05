@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sapsak/models/exercise.dart';
+import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/models/sports_day.dart';
 
 class SportsPlan {
@@ -67,15 +68,17 @@ class SportsPlan {
   }
 
   static SportsPlan fromJson(QueryDocumentSnapshot json) {
-    return SportsPlan(
+    var sp = SportsPlan(
       id: json.id,
-      sportsDays: List.from(json.get('sportsDays').map((Map<String, dynamic> day) => SportsDay.fromJson(day))),
-      ownerEmail: json.get('ownerEmail'),
-      notes: json.get('notes'),
-      goal: json.get('goal'),
-      isDraft: json.get('isDraft'),
+      sportsDays: List.from(json.get('sportsDays').map((dynamic day) => SportsDay.fromJson(day['multisets']))),
+      ownerEmail: json.get('ownerEmail') ?? '',
+      notes: json.get('notes') ?? '',
+      goal: json.get('goal') ?? '',
+      isDraft: json.get('isDraft') ?? false,
       createdAt: json.get('createdAt'),
       bestUntil: json.get('bestUntil'),
     );
+
+    return sp;
   }
 }

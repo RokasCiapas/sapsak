@@ -29,7 +29,7 @@ class SportsDay {
 
   static SportsDay fromJson(Map<String, dynamic> json) {
     var test = SportsDay(
-        multisets: json['multisets'].map((multiset) => Multiset.fromJson(multiset)).toList()
+        multisets: json.map((String key, dynamic value) => MapEntry(int.parse(key), Multiset.fromJson(value['multiset'])))
     );
     return test;
   }

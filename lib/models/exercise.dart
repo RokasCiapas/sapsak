@@ -37,7 +37,7 @@ class Exercise {
     };
   }
 
-  static Exercise fromJson(Map<String, dynamic> json) {
+  static Exercise fromJson(dynamic json) {
     return Exercise(
         muscleGroup: json['muscleGroup'],
         name: json['name'],
