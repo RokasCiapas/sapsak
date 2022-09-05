@@ -5,6 +5,7 @@ import 'package:sapsak/models/client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
+import 'package:sapsak/shared/height_spacer.dart';
 import 'package:sapsak/widgets/sports_plan_container.dart';
 
 import '../models/sports_plan.dart';
@@ -23,7 +24,6 @@ class EditSportsPlan extends StatelessWidget {
   Widget build(BuildContext context) {
     final Client? client = context.read<ClientProvider>().selectedClient;
 
-    final ScrollController listViewScrollController = ScrollController();
     final notesController = TextEditingController();
     final goalController = TextEditingController();
     final expirationDateController = TextEditingController();
@@ -54,40 +54,42 @@ class EditSportsPlan extends StatelessWidget {
           expirationDateController.text, sportsPlan.bestUntil);
 
       return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-            title: Text('${client.name} ${client.surname}'),
-          ),
-          body: Container(
-              alignment: Alignment.topLeft,
-              margin: const EdgeInsets.all(17),
-              child: Column(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: ListView(
-                        shrinkWrap: true,
-                        controller: listViewScrollController,
-                        children: [
-                          SportsPlanDetails(
-                              expirationDateController: expirationDateController,
-                              goalController: goalController,
-                              notesController: notesController
-                          ),
-                          const SportsPlanContainer()
-                        ],
-                      )
-                  ),
-                  SportsPlanActions(
-                      isEdit: isEdit,
-                      scrollController: listViewScrollController,
-                      expirationDateController: expirationDateController,
-                      notesController: notesController,
-                      goalController: goalController
-                  )
-                ],
-              )
-          )
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          title: Text('${client.name} ${client.surname}'),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+                flex: 1,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    SportsPlanDetails(
+                        expirationDateController: expirationDateController,
+                        goalController: goalController,
+                        notesController: notesController
+                    ),
+                    const HeightSpacer(),
+                    const SportsPlanContainer()
+                  ],
+                )
+            ),
+            SportsPlanActions(
+              isEdit: isEdit,
+              expirationDateController: expirationDateController,
+              notesController: notesController,
+              goalController: goalController,
+              onAddSportsDay: () {
+                // scrollController.animateTo(
+                //   scrollController.position.maxScrollExtent + 260,
+                //   duration: const Duration(seconds: 2),
+                //   curve: Curves.easeOut,
+                // );
+              },
+            )
+          ],
+        ),
       );
     } else {
       return const SizedBox();

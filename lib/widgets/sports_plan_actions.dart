@@ -17,25 +17,17 @@ class SportsPlanActions extends StatelessWidget {
   const SportsPlanActions({
     Key? key,
     required this.isEdit,
-    required this.scrollController,
     required this.expirationDateController,
     required this.notesController,
     required this.goalController,
+    required this.onAddSportsDay,
   }) : super(key: key);
 
   final bool isEdit;
-  final ScrollController scrollController;
   final TextEditingController expirationDateController;
   final TextEditingController notesController;
   final TextEditingController goalController;
-
-  void scrollDown() {
-    scrollController.animateTo(
-      9999999,
-      duration: const Duration(seconds: 1),
-      curve: Curves.linear,
-    );
-  }
+  final VoidCallback onAddSportsDay;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +44,7 @@ class SportsPlanActions extends StatelessWidget {
             child: Button(
               onClick: () {
                 _addSportsDay(sportsPlan, context);
-                scrollDown();
+                onAddSportsDay();
               },
               text: 'Add day',
             ),
