@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/models/sports_plan.dart';
@@ -39,8 +38,12 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
       id: const Uuid().v1()
   );
 
-  Stream<List<SportsPlan>> get sportsPlanListByUser {
-    return SportsPlanService().sportsPlanListByUserStream(_clientProvider.selectedClient?.email);
+  Stream<List<SportsPlan>> get sportsPlanListByOwner {
+    return SportsPlanService().sportsPlanListByOwnerStream(_clientProvider.selectedClient?.email);
+  }
+
+  Stream<List<SportsPlan>> getAllSportsPlansForOwner(String email) {
+    return SportsPlanService().getAllSportsPlansForOwner(email);
   }
 
   Stream<List<SportsPlan>> getAllSportsPlans() {

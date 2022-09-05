@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sapsak/Screens/home.dart';
+import 'package:sapsak/models/coach.dart';
 import 'package:sapsak/screens/login.dart';
 import 'package:sapsak/shared/input.dart';
 
+import '../services/coach_service.dart';
 import '../shared/button.dart';
+import '../shared/phone_number_input.dart';
 
 class SignUpCoach extends StatefulWidget {
   const SignUpCoach({Key? key})
@@ -16,8 +20,11 @@ class SignUpCoach extends StatefulWidget {
 }
 
 class _SignUpCoachState extends State<SignUpCoach> {
+  final _nameController = TextEditingController();
+  final _surnameController = TextEditingController();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -26,6 +33,14 @@ class _SignUpCoachState extends State<SignUpCoach> {
   );
   var aSnackBar = const SnackBar(
     content: Text('The password in not match with confirm password'),
+  );
+
+  var nameSnackBar = const SnackBar(
+    content: Text('The name field is required'),
+  );
+
+  var surnameSnackBar = const SnackBar(
+    content: Text('The surname field is required'),
   );
 
   var bSnackBar = const SnackBar(
@@ -57,7 +72,9 @@ class _SignUpCoachState extends State<SignUpCoach> {
   );
 
   Future signUp() async {
-    if (_usernameController.text.isNotEmpty &
+    if (_nameController.text.isNotEmpty &
+    _surnameController.text.isNotEmpty &
+    _usernameController.text.isNotEmpty &
     _emailController.text.isNotEmpty &
     _passwordController.text.isNotEmpty &
     _confirmPasswordController.text.isNotEmpty) {
@@ -66,17 +83,31 @@ class _SignUpCoachState extends State<SignUpCoach> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         ).then((data) => {
-          data.user?.updateDisplayName(_usernameController.text).then((value) => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) =>
-              const HomeScreen(),
-            ),
-          ),)
+          data.user?.updateDisplayName(_usernameController.text).then((value) {
+            var coach = Coach(
+              firstLogin: Timestamp.fromDate(DateTime.now()),
+              name: _nameController.text,
+              surname: _surnameController.text,
+              email: _emailController.text,
+              phoneNumber: _phoneNumberController.text,
+            );
+            return CoachService().addCoach(data.user!.uid, coach).then((value) => Navigator.of(context)
+                .push(MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            )),
+            );
+          })
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(aSnackBar);
       }
-    } else if (_usernameController.text.isEmpty) {
+    } else if (_nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(nameSnackBar);
+    }
+    else if (_surnameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(surnameSnackBar);
+    }
+    else if (_usernameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(bSnackBar);
     }
     else if (_emailController.text.isNotEmpty &
@@ -158,6 +189,20 @@ class _SignUpCoachState extends State<SignUpCoach> {
                     height: 50,
                   ),
                   Input(
+                    controller: _nameController,
+                    hintText: 'Name',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Input(
+                    controller: _surnameController,
+                    hintText: 'Surname',
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Input(
                     controller: _usernameController,
                     hintText: 'Username',
                   ),
@@ -168,6 +213,10 @@ class _SignUpCoachState extends State<SignUpCoach> {
                     controller: _emailController,
                     hintText: 'Email',
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(width: 345, child: PhoneNumberInput(phoneNumberController: _phoneNumberController)),
                   const SizedBox(
                     height: 15,
                   ),

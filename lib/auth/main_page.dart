@@ -6,19 +6,16 @@ import '../auth/auth_page.dart';
 import '../Screens/home.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  @override
   Widget build(BuildContext context) {
+    Stream<User?> session = FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.SESSION).authStateChanges();
+
     return Scaffold(
       body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.SESSION).authStateChanges(),
+        stream: session,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(

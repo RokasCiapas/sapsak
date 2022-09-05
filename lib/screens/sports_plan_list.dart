@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -28,7 +27,7 @@ class SportsPlanListScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: StreamBuilder(
-            stream: context.watch<SportsPlanProvider>().sportsPlanListByUser,
+            stream: context.watch<SportsPlanProvider>().sportsPlanListByOwner,
             builder: (BuildContext context, AsyncSnapshot<List<SportsPlan>> snapshot) {
               if (snapshot.hasError) {
                 return const Text('Something went wrong');

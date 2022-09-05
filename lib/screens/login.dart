@@ -17,21 +17,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  /// TextFields Controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  /// Email & Password Empty
   var fSnackBar = const SnackBar(
     content: Text('The Email & Password fields Must Fill!'),
   );
 
-  /// Email Fill & Password Empty
   var sSnackBar = const SnackBar(
     content: Text('Password field Must Fill!'),
   );
 
-  /// Email Empty & Password Fill
   var tSnackBar = const SnackBar(
     content: Text('Email field Must Fill!'),
   );
@@ -140,7 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future signIn() async {
     try {
-      /// In the below, with if statement we have some simple validate
       if (_emailController.text.isNotEmpty &
       _passwordController.text.isNotEmpty) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -162,7 +157,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(fSnackBar);
       }
     } catch (e) {
-      /// Showing Error with AlertDialog if the user enter the wrong Email and Password
       showDialog<void>(
         context: context,
         barrierDismissible: false,

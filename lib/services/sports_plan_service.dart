@@ -18,7 +18,7 @@ class SportsPlanService {
     return collection.doc(sportsPlanId).update(sportsPlan.toFirestore());
   }
 
-  Stream<List<SportsPlan>> sportsPlanListByUserStream(String? email) {
+  Stream<List<SportsPlan>> sportsPlanListByOwnerStream(String? email) {
     return collection
         .where('ownerEmail', isEqualTo: email)
         .orderBy('createdAt', descending: true)
@@ -35,6 +35,21 @@ class SportsPlanService {
   Stream<List<SportsPlan>> getAllSportsPlans() {
     return FirebaseFirestore.instance
         .collection('sportsPlans')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+
+        var sportsPlan = SportsPlan.fromJson(doc);
+        return sportsPlan;
+      }).toList();
+    });
+  }
+
+  Stream<List<SportsPlan>> getAllSportsPlansForOwner(String ownerEmail) {
+    return FirebaseFirestore.instance
+        .collection('sportsPlans')
+        .where('ownerEmail', isEqualTo: ownerEmail)
+        .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {

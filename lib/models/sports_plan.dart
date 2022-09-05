@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sapsak/models/exercise.dart';
-import 'package:sapsak/models/multiset.dart';
 import 'package:sapsak/models/sports_day.dart';
 
 class SportsPlan {

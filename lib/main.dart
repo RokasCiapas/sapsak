@@ -16,13 +16,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-      MultiProvider(providers: [
-        ChangeNotifierProvider<ClientProvider>(create: (_) => ClientProvider()),
-        ListenableProxyProvider<ClientProvider, SportsPlanProvider>(
-            update: (context, clientProvider, sportsPlanProvider) =>
-                SportsPlanProvider(clientProvider: clientProvider))
-      ],
-          child: const MyApp())
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider<ClientProvider>(create: (_) => ClientProvider()),
+            ListenableProxyProvider<ClientProvider, SportsPlanProvider>(
+              update: (context, clientProvider, sportsPlanProvider) => SportsPlanProvider(clientProvider: clientProvider),
+              dispose: (_, sportsPlanProvider) => sportsPlanProvider.dispose(),
+            )
+          ],
+          child: const MyApp()
+      )
   );
 }
 
@@ -42,7 +45,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
           ColorScheme lightColorScheme;

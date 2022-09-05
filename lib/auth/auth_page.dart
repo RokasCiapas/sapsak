@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//
-import '../screens/signup.dart';
 import '../screens/login.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -11,22 +9,9 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  /// SHOW THE LOGIN PAGE
-  bool showLogInPage = true;
-
-  /// TOGGLE BETWEEN LOGIN and SIGNUP SCREENS
-  void toggleScreen() {
-    setState(() {
-      showLogInPage = !showLogInPage;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (showLogInPage) {
-      return const LoginScreen();
-    } else {
-      return const SignUpScreen();
-    }
+    return const LoginScreen();
   }
 }
