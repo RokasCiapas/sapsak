@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../models/client.dart';
-import '../providers/client_provider.dart';
-import 'package:provider/provider.dart';
 import 'client_list.dart';
 import 'client_search.dart';
 

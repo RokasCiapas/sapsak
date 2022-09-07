@@ -120,8 +120,18 @@ class HomeScreen extends StatelessWidget {
               );
             }
 
-          } else {
-            return const Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30
+                )
+            );
+          }
+
+          else {
+            return Text('Something went wrong');
           }
 
         });
