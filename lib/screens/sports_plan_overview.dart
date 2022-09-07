@@ -12,7 +12,6 @@ class SportsPlanOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     SportsPlan sportsPlan = context.watch<SportsPlanProvider>().selectedSportsPlan;
 
     return Scaffold(
@@ -21,6 +20,7 @@ class SportsPlanOverview extends StatelessWidget {
         title: const Text('Sports plan'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: sportsPlan.sportsDays.map((SportsDay day) {
           Map<int, Multiset> multisets = day.multisets;
           List<DataRow> rows = [];
@@ -79,8 +79,9 @@ class SportsPlanOverview extends StatelessWidget {
             );
           }
 
-          return DataTable(
-            dataRowHeight: 90,
+            return DataTable(
+              showCheckboxColumn: false,
+              dataRowHeight: 90,
               columns: const [
                 DataColumn(label: Text('Muscle group')),
                 DataColumn(label: Text('Exercise')),

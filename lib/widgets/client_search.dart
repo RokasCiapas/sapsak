@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../shared/button.dart';
+import '../providers/client_provider.dart';
+import 'package:provider/provider.dart';
 
 class ClientSearch extends StatelessWidget {
   const ClientSearch({
     Key? key,
-    required this.clientSearchController,
-    required this.onSubmitted,
-    required this.onClear,
   }) : super(key: key);
-
-  final TextEditingController clientSearchController;
-  final VoidCallback onSubmitted;
-  final VoidCallback onClear;
 
   @override
   Widget build(BuildContext context) {
+
+    final clientSearchController = TextEditingController();
+
     return Row(
       children: [
         Expanded(
             child: TextField(
-              autofocus: true,
               controller: clientSearchController,
-              onSubmitted: (x) {
-                onSubmitted();
+              onChanged: (x) {
+                _search(context, x);
               },
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(12),
@@ -33,26 +29,20 @@ class ClientSearch extends StatelessWidget {
                   suffixIcon: clientSearchController.text.isNotEmpty ? IconButton(
                     icon: const Icon(Icons.clear),
                     onPressed: () {
-                      onClear();
+                      _search(context);
                     },
-                  ) : const SizedBox()
+                  ) : const SizedBox.shrink()
               ),
             )
         ),
         const SizedBox(
           width: 15,
-        ),
-        SizedBox(
-            width: 80,
-            height: 40,
-            child: Button(
-              onClick: () {
-                onSubmitted();
-              },
-              text: 'Search',
-            )
-        ),
+        )
       ],
     );
+  }
+
+  _search(BuildContext context, [String query = '']) {
+    context.read<ClientProvider>().setSearchString(query);
   }
 }

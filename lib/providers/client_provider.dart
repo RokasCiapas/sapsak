@@ -8,9 +8,23 @@ class ClientProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final Stream<QuerySnapshot<Client>> _clientList = ClientService().clientStream();
   Client? _selectedClient;
 
-  Stream<QuerySnapshot<Client>> get clientList => _clientList;
+  String _searchString = '';
+
+  Stream<QuerySnapshot<Client>> get clientList {
+    return _searchString.isEmpty ? _clientList : _clientList.where((QuerySnapshot<Client> querySnapshot) {
+      return querySnapshot.docs.where((QueryDocumentSnapshot<Client> doc) {
+        return doc.data().name.toLowerCase().contains(_searchString.toLowerCase());
+      }).isNotEmpty;
+
+    });
+  }
 
   Client? get selectedClient => _selectedClient;
+
+  void setSearchString(String query) {
+    _searchString = query;
+    notifyListeners();
+  }
 
   void selectClient(Client client) {
     _selectedClient = client;
