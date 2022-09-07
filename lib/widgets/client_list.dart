@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -17,12 +19,10 @@ class ClientList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot<Client>> clientStream = context.watch<ClientProvider>().clientList;
-
-    return StreamBuilder<QuerySnapshot>(
+    final Stream<List<Client>> clientStream = context.watch<ClientProvider>().searchClientList;
+    return StreamBuilder<List<Client>>(
       stream: clientStream,
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
         }
@@ -34,7 +34,7 @@ class ClientList extends StatelessWidget {
           );
         }
 
-        var list = snapshot.data!.docs;
+        var list = snapshot.data!;
 
         return Expanded(
             flex: 1,
@@ -43,7 +43,7 @@ class ClientList extends StatelessWidget {
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
 
-                  var client = (list[index]).data() as Client;
+                  var client = (list[index]) as Client;
                   return ClientTile(client: client, onNavigate: onNavigate);
                 }
 
@@ -55,4 +55,5 @@ class ClientList extends StatelessWidget {
       },
     );
   }
+
 }

@@ -11,11 +11,14 @@ class ClientProvider with ChangeNotifier, DiagnosticableTreeMixin {
   String _searchString = '';
 
   Stream<QuerySnapshot<Client>> get clientList {
-    return _searchString.isEmpty ? _clientList : _clientList.where((QuerySnapshot<Client> querySnapshot) {
-      return querySnapshot.docs.where((QueryDocumentSnapshot<Client> doc) {
-        return doc.data().name.toLowerCase().contains(_searchString.toLowerCase());
-      }).isNotEmpty;
+    return _clientList;
+  }
 
+  Stream<List<Client>> get searchClientList {
+    return clientList.map((QuerySnapshot<Client> querySnapshot) {
+      List<QueryDocumentSnapshot<Client>> a = querySnapshot.docs;
+      a.removeWhere((value) => !(value.data()).name.toLowerCase().contains(_searchString.toLowerCase()));
+      return a.map((e) => e.data()).toList();
     });
   }
 
