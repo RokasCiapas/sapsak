@@ -92,7 +92,7 @@ class SportsPlanActions extends StatelessWidget {
           0: Multiset(multiset: [const Exercise(
               muscleGroup: 'Shoulders',
               name: '',
-              repCount: 0,
+              repCount: '',
               setCount: 0,
               weight: ''
           )])

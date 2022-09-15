@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Exercise {
   final String muscleGroup;
   final String name;
-  final int repCount;
+  final String repCount;
   final int setCount;
   final String weight;
 

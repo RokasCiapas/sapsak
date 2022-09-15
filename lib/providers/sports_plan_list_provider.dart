@@ -24,7 +24,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
           SportsDay(
               multisets: {
                 0: Multiset(
-                    multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, weight: ''), growable: true)
+                    multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: '', setCount: 0, weight: ''), growable: true)
                 )
               }),
           growable: true
@@ -63,7 +63,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         const Exercise(
             muscleGroup: 'Shoulders',
             name: '',
-            repCount: 0,
+            repCount: '',
             setCount: 0,
             weight: ''
         )]);
@@ -72,7 +72,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         const Exercise(
             muscleGroup: 'Shoulders',
             name: '',
-            repCount: 0,
+            repCount: '',
             setCount: 0,
             weight: ''
         )]);
@@ -86,7 +86,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         .add(
         const Exercise(muscleGroup: 'Shoulders',
             name: '',
-            repCount: 0,
+            repCount: '',
             setCount: 0,
             weight: '')
     );
@@ -127,7 +127,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         muscleGroup: exercise.muscleGroup,
         name: exercise.name,
         repCount: exercise.repCount,
-        setCount: int.parse(newValue!),
+        setCount: newValue!.isNotEmpty ? int.parse(newValue) : 0,
         weight: exercise.weight
     );
     notifyListeners();
@@ -138,8 +138,8 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         ?.multiset[exerciseIndex] = Exercise(
         muscleGroup: exercise.muscleGroup,
         name: exercise.name,
-        repCount: int.parse(newValue!),
-        setCount: exercise.repCount,
+        repCount: newValue!.isNotEmpty ? newValue : '',
+        setCount: exercise.setCount,
         weight: exercise.weight
     );
     notifyListeners();
@@ -151,7 +151,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
         muscleGroup: exercise.muscleGroup,
         name: exercise.name,
         repCount: exercise.repCount,
-        setCount: exercise.repCount,
+        setCount: exercise.setCount,
         weight: newValue!
     );
 
@@ -178,7 +178,7 @@ class SportsPlanProvider with ChangeNotifier, DiagnosticableTreeMixin {
                 SportsDay(
                     multisets: {
                       0: Multiset(
-                          multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: 0, setCount: 0, weight: ''), growable: true)
+                          multiset: List.filled(1, const Exercise(muscleGroup: 'Shoulders', name: '', repCount: '', setCount: 0, weight: ''), growable: true)
                       )
                     }),
                 growable: true

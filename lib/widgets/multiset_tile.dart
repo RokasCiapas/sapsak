@@ -53,7 +53,7 @@ class MultisetTile extends StatelessWidget {
                     muscleGroup: exercise.muscleGroup,
                     exercise: exercise.name,
                     setCount: exercise.setCount > 0 ? exercise.setCount.toString() : '',
-                    repCount: exercise.repCount > 0 ? exercise.repCount.toString() : '',
+                    repCount: exercise.repCount.isNotEmpty ? exercise.repCount.toString() : '',
                     weight: exercise.weight,
                     changeMuscleGroup: (newValue) {
                       changeMuscleGroup(multisetIndex, exerciseIndex, exercise, newValue);
