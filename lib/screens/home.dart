@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:sapsak/auth/main_page.dart';
 import 'package:sapsak/models/sports_plan.dart';
 import 'package:sapsak/providers/client_provider.dart';
 import 'package:sapsak/providers/sports_plan_list_provider.dart';
@@ -46,6 +47,9 @@ class HomeScreen extends StatelessWidget {
                         Tab(icon: Icon(Icons.ac_unit)),
                       ],
                     ),
+                    actions: const [
+                      SignOut()
+                    ],
                   ),
                   body: TabBarView(
                       children: [
@@ -75,6 +79,9 @@ class HomeScreen extends StatelessWidget {
                   title: Center(
                       child: Text('Howdy, ${user.displayName}')
                   ),
+                  actions: const [
+                    SignOut()
+                  ],
                 ),
                 body: StreamBuilder(
                     stream: sportsPlanListByUser,
@@ -134,5 +141,22 @@ class HomeScreen extends StatelessWidget {
           }
 
         });
+  }
+}
+
+class SignOut extends StatelessWidget {
+  const SignOut({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () => {
+          FirebaseAuth.instance.signOut().then((value) => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const MainScreen()))
+          )
+        },
+        icon: const Icon(Icons.exit_to_app));
   }
 }
