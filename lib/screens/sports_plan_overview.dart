@@ -75,7 +75,7 @@ class SportsPlanOverview extends StatelessWidget {
             columnWidths: const {
               0: FixedColumnWidth(74),
               1: FlexColumnWidth(3),
-              2: FixedColumnWidth(40),
+              2: FixedColumnWidth(42),
               3: FixedColumnWidth(60),
             },
             border: TableBorder(
