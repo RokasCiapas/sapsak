@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sapsak/models/sports_plan.dart';
 
 import '../models/exercise.dart';
@@ -20,75 +21,130 @@ class SportsPlanOverview extends StatelessWidget {
         title: const Text('Sports plan'),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: sportsPlan.sportsDays.map((SportsDay day) {
-          Map<int, Multiset> multisets = day.multisets;
-          List<TableRow> rows = [
-            const TableRow(
-                children: [
-                  Padding(padding: EdgeInsets.all(5), child: Text('Muscle group'),),
-                  Padding(padding: EdgeInsets.all(5), child: Text('Exercise'),),
-                  Padding(padding: EdgeInsets.all(5), child: Text('Sets'),),
-                  Padding(padding: EdgeInsets.all(5), child: Text('Weight'),),
-                ]
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text('Best until: '),
+                Text(DateFormat('yyyy-MM-dd').format(sportsPlan.bestUntil!.toDate()))
+              ],
             ),
-          ];
-
-          for (var m in multisets.values) {
-            List<Exercise> multiset = m.multiset;
-
-            rows.add(TableRow(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: multiset.map((e) {
-                      return Padding(padding: const EdgeInsets.all(5), child: Text(e.muscleGroup));
-                    }).toList(),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: multiset.map((e) {
-                      return Padding(padding: const EdgeInsets.all(5), child: Text(e.name));
-                    }).toList(),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: multiset.map((e) {
-                      return Padding(padding: const EdgeInsets.all(5), child: Text('${e.setCount}x${e.repCount}'));
-                    }).toList(),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: multiset.map((e) {
-                      return Padding(padding: const EdgeInsets.all(5), child: Text(e.weight));
-                    }).toList(),
-                  )
-                ])
-            );
-          }
-
-          return Table(
-            columnWidths: const {
-              0: FixedColumnWidth(74),
-              1: FlexColumnWidth(3),
-              2: FixedColumnWidth(42),
-              3: FixedColumnWidth(60),
-            },
-            border: TableBorder(
-              top: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              bottom: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              right: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              left: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              horizontalInside: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              verticalInside: BorderSide(color: Theme.of(context).colorScheme.secondary),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text('Goal: '),
+                Text(sportsPlan.goal)
+              ],
             ),
-            children: rows,
-          );
-        }).toList(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text('Notes: '),
+                Text(sportsPlan.notes.isEmpty ? '-' : sportsPlan.notes)
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: sportsPlan.sportsDays.map((SportsDay day) {
+              Map<int, Multiset> multisets = day.multisets;
+              List<TableRow> rows = [
+                const TableRow(
+                    children: [
+                      Padding(padding: EdgeInsets.all(5), child: Text('Muscle group'),),
+                      Padding(padding: EdgeInsets.all(5), child: Text('Exercise'),),
+                      Padding(padding: EdgeInsets.all(5), child: Text('Sets'),),
+                      Padding(padding: EdgeInsets.all(5), child: Text('Weight'),),
+                    ]
+                ),
+              ];
+
+              for (var m in multisets.values) {
+                List<Exercise> multiset = m.multiset;
+
+                rows.add(TableRow(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: multiset.map((e) {
+                          return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: SizedBox(
+                                  height: 35,
+                                  child: Text(e.muscleGroup)
+                              )
+                          );
+                        }).toList(),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: multiset.map((e) {
+                          return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: SizedBox(
+                                  height: 35,
+                                  child: Text(e.name)
+                              )
+                          );
+                        }).toList(),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: multiset.map((e) {
+                          return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: SizedBox(
+                                  height: 35,
+                                  child: Text('${e.setCount}x${e.repCount}')
+                              )
+                          );
+                        }).toList(),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: multiset.map((e) {
+                          return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: SizedBox(
+                                  height: 35,
+                                  child: Text(e.weight)
+                              )
+                          );
+                        }).toList(),
+                      )
+                    ])
+                );
+              }
+
+              return Table(
+                columnWidths: const {
+                  0: FixedColumnWidth(74),
+                  1: FlexColumnWidth(3),
+                  2: FixedColumnWidth(42),
+                  3: FixedColumnWidth(60),
+                },
+                border: TableBorder(
+                  top: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                  bottom: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                  right: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                  left: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                  horizontalInside: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                  verticalInside: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                ),
+                children: rows,
+              );
+            }).toList(),
+          )
+        ],
       ),
     );
   }
